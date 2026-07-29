@@ -21,7 +21,8 @@
 **검색이 조용히 틀리는** 코퍼스다.
 
 측정 결과는 [`docs/portfolio.md`](docs/portfolio.md),
-설계 판단의 근거는 [`docs/decisions.md`](docs/decisions.md).
+설계 판단의 근거는 [`docs/decisions.md`](docs/decisions.md)
+(영문 발췌: [`docs/decisions-en.md`](docs/decisions-en.md) — D13·D14·D15).
 측정이 나쁘게 나온 기법은 **끈 채로 남기고 이유를 적어 두었고**(D13 하이브리드 검색),
 효과가 있었던 기법도 **그 이득의 어디까지가 진짜인지**를 같이 적었다(D15 쿼리 재작성).
 

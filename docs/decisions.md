@@ -1,5 +1,8 @@
 # 스택 결정 기록
 
+> **English readers:** three of these entries — the two failures and the one big win —
+> are translated in [`decisions-en.md`](decisions-en.md) (D13, D14, D15).
+
 이 결정들은 **취향이 아니라 제약에서 나왔다.** 바꾸기 전에 이유를 읽을 것.
 
 ---
@@ -260,7 +263,7 @@ To dump a database called mydb into an SQL-script file: <code class="prompt">$</
 공백만이 아니라 **마크업까지** 지켰다.
 
 대가는 임베딩 낭비만이 아니다. 인용을 펼치면 사용자 화면에 HTML 태그가 그대로 보인다.
-"citations you can check" 라고 팔면서 보여주는 게 태그면 그 문장이 거짓이 된다.
+확인할 수 있는 인용을 내세우면서 화면에 보여주는 게 태그면 그 주장이 거짓이 된다.
 
 빼도 공백은 지켜진다 — 파서가 `<pre>` 를 정상 요소로 읽고 `.text` 가 자식 텍스트 노드를
 그대로 이어붙이기 때문이다. 실제로 비교해 확인했다.

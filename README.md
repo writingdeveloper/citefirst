@@ -47,6 +47,11 @@ Both columns are shown rather than the better one.
 Full numbers, per-question failure analysis, and the exact model used:
 [`docs/portfolio.md`](docs/portfolio.md).
 
+**Why each of these choices was made — including the two that did not work out —**
+[`docs/decisions-en.md`](docs/decisions-en.md). The full decision log
+([`docs/decisions.md`](docs/decisions.md)) is in Korean; `decisions-en.md` translates the
+three entries where the result contradicted the expectation, two of them failures.
+
 ### How each technique earned its place
 
 Every row below is a measured run over the same 46 symptom-phrased questions. Each adds one
