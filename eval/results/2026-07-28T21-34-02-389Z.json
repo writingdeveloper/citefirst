@@ -1,0 +1,1234 @@
+{
+  "ranAt": "2026-07-28T21:34:02.390Z",
+  "mode": "retrieval-only",
+  "questionSet": "questions.yaml",
+  "config": {
+    "embeddingModel": "Xenova/bge-base-en-v1.5",
+    "embeddingDim": 768,
+    "rerankModel": "Xenova/bge-reranker-base",
+    "chunkTokens": 512,
+    "chunkOverlap": 64,
+    "retrieveTopK": 20,
+    "rerankTopN": 5,
+    "answerModel": "claude-opus-5",
+    "answerEffort": "low",
+    "judgeModel": "claude-opus-5",
+    "evalTopN": 10,
+    "recallK": 5,
+    "mrrK": 10
+  },
+  "summary": {
+    "rerankOff": {
+      "rerankEnabled": false,
+      "questions": 26,
+      "recallAt5": 0.7307692307692307,
+      "mrrAt10": 0.5042735042735043,
+      "trapRecallAt5": 0.7894736842105263,
+      "citationValidity": null,
+      "grounded": null,
+      "correct": null
+    },
+    "rerankOn": {
+      "rerankEnabled": true,
+      "questions": 26,
+      "recallAt5": 0.8076923076923077,
+      "mrrAt10": 0.556135531135531,
+      "trapRecallAt5": 0.8947368421052632,
+      "citationValidity": null,
+      "grounded": null,
+      "correct": null
+    }
+  },
+  "results": {
+    "rerankOff": [
+      {
+        "id": "q001",
+        "question": "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+        "trap": "메모리 한도를 정하는 설정이 여럿이고 설명 문장이 거의 같다",
+        "goldChunkIds": [
+          7144
+        ],
+        "retrievedIds": [
+          7144,
+          7161,
+          7969,
+          7019,
+          7145,
+          5863,
+          7221,
+          6662,
+          7968,
+          7162
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q002",
+        "question": "Does routine table cleanup get the same memory budget as an ordinary query, or its own? What is that budget by default?",
+        "trap": "q001 과 거의 동일한 문장 구조 — 검색이 둘을 구분해야 한다",
+        "goldChunkIds": [
+          7146,
+          7147,
+          7184
+        ],
+        "retrievedIds": [
+          6767,
+          6768,
+          6771,
+          9991,
+          10012,
+          6781,
+          6769,
+          9998,
+          6775,
+          6795
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0
+      },
+      {
+        "id": "q003",
+        "question": "Each automatic cleanup worker has its own memory limit. What does the default value of that limit actually mean?",
+        "trap": "-1 의 의미가 파라미터마다 다르고, q002 로 흘러가기 쉽다",
+        "goldChunkIds": [
+          7146,
+          7147
+        ],
+        "retrievedIds": [
+          7146,
+          7147,
+          6801,
+          6812,
+          7185,
+          7184,
+          7145,
+          7149,
+          7148,
+          7144
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q004",
+        "question": "Which memory setting applies only to temporary tables inside a session, and how much is it by default?",
+        "trap": "이름이 shared_buffers 와 비슷하고 설명 구조가 work_mem 계열과 같다",
+        "goldChunkIds": [
+          7142
+        ],
+        "retrievedIds": [
+          7142,
+          6821,
+          7144,
+          7161,
+          7139,
+          8616,
+          8708,
+          7190,
+          7303,
+          9877
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q005",
+        "question": "There is a setting that tells the planner how much disk cache it can assume. Does the server actually reserve that much memory?",
+        "trap": "이름 때문에 할당하는 것처럼 읽힌다. 실제로는 플래너 추정치일 뿐",
+        "goldChunkIds": [
+          7083
+        ],
+        "retrievedIds": [
+          9406,
+          7083,
+          6544,
+          7163,
+          7059,
+          7139,
+          7144,
+          7149,
+          7161,
+          7074
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5
+      },
+      {
+        "id": "q006",
+        "question": "How much memory does the server reserve for its shared buffer pool out of the box?",
+        "trap": "다른 여러 파라미터 설명이 shared_buffers 를 참조한다",
+        "goldChunkIds": [
+          7139
+        ],
+        "retrievedIds": [
+          7139,
+          7160,
+          7156,
+          7150,
+          7148,
+          7154,
+          7153,
+          7921,
+          6206,
+          7152
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q007",
+        "question": "Rewriting a table to reclaim disk space blocks even readers, while ordinary cleanup does not. Which lock causes that?",
+        "trap": "VACUUM / VACUUM FULL / autovacuum 이 같은 페이지에 붙어 있다",
+        "goldChunkIds": [
+          9991,
+          10001
+        ],
+        "retrievedIds": [
+          6771,
+          9991,
+          6768,
+          7176,
+          6765,
+          9675,
+          9678,
+          9992,
+          7178,
+          9562
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5
+      },
+      {
+        "id": "q008",
+        "question": "Can the routine table cleanup command be wrapped in BEGIN and COMMIT?",
+        "goldChunkIds": [
+          10012
+        ],
+        "retrievedIds": [
+          6771,
+          6767,
+          6087,
+          6768,
+          7234,
+          6789,
+          5929,
+          9912,
+          8739,
+          9956
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0
+      },
+      {
+        "id": "q009",
+        "question": "What fraction of a table has to change before automatic cleanup decides to process it, by default?",
+        "trap": "analyze 쪽 대응 설정과 값도 문장도 비슷하다",
+        "goldChunkIds": [
+          6806
+        ],
+        "retrievedIds": [
+          6808,
+          8683,
+          6806,
+          6807,
+          6771,
+          7785,
+          9998,
+          6805,
+          6795,
+          6775
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333
+      },
+      {
+        "id": "q010",
+        "question": "I need to move users and tablespaces to a new cluster, not just the tables in one database. Which dump tool covers that?",
+        "trap": "세 도구의 설명 문단이 서로를 참조해서 벡터 검색이 엉뚱한 쪽을 집는다",
+        "goldChunkIds": [
+          5272
+        ],
+        "retrievedIds": [
+          8749,
+          6355,
+          5404,
+          7741,
+          7471,
+          5468,
+          9677,
+          5276,
+          5285,
+          6764
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0
+      },
+      {
+        "id": "q011",
+        "question": "Which dump file formats can the restore utility read back, and which one cannot be used with it?",
+        "trap": "plain 포맷은 pg_restore 로 못 읽는다 — 문서를 안 보면 틀리기 쉽다",
+        "goldChunkIds": [
+          5730,
+          5731
+        ],
+        "retrievedIds": [
+          5559,
+          5558,
+          5560,
+          5742,
+          6351,
+          6353,
+          5741,
+          5614,
+          5730,
+          5744
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0.1111111111111111
+      },
+      {
+        "id": "q012",
+        "question": "If I dump a database without passing any format option, what kind of file do I get?",
+        "goldChunkIds": [
+          5557,
+          5608
+        ],
+        "retrievedIds": [
+          5557,
+          5551,
+          5550,
+          5572,
+          5556,
+          5630,
+          5399,
+          5553,
+          5602,
+          5547
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q013",
+        "question": "Why does building an index without blocking writes fail when I put it inside a transaction?",
+        "trap": "REINDEX 쪽 대응 기능과 제약이 겹치면서도 다르다",
+        "goldChunkIds": [
+          8340,
+          8341,
+          8342,
+          8349
+        ],
+        "retrievedIds": [
+          8340,
+          8307,
+          8341,
+          8342,
+          9678,
+          9663,
+          9669,
+          8755,
+          8977,
+          9679
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q014",
+        "question": "A non-blocking index build failed partway through. Is anything left behind on the table?",
+        "trap": "실패한 인덱스가 남는다는 사실이 별도 문단에 있다",
+        "goldChunkIds": [
+          8340,
+          8341,
+          8342
+        ],
+        "retrievedIds": [
+          9681,
+          8341,
+          9682,
+          8342,
+          9678,
+          8340,
+          9679,
+          9680,
+          8307,
+          6727
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5
+      },
+      {
+        "id": "q015",
+        "question": "Emptying a table completely in one statement — does that block other sessions from reading it?",
+        "trap": "행을 지우는 다른 방법과 비교 문단이 붙어 있어 섞이기 쉽다",
+        "goldChunkIds": [
+          9952
+        ],
+        "retrievedIds": [
+          8972,
+          9952,
+          8970,
+          9946,
+          8976,
+          9944,
+          9565,
+          9275,
+          9992,
+          5366
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5
+      },
+      {
+        "id": "q016",
+        "question": "Physically reordering a table to match an index — what lock does that take while it runs?",
+        "trap": "q007 과 같은 락이라 두 문서가 서로 헷갈린다",
+        "goldChunkIds": [
+          7963
+        ],
+        "retrievedIds": [
+          9678,
+          9816,
+          9664,
+          9562,
+          9986,
+          9679,
+          9564,
+          9669,
+          9663,
+          9812
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0
+      },
+      {
+        "id": "q017",
+        "question": "One setting kills a query that runs too long overall; another only caps how long it waits for a lock. How do they differ, and what are their defaults?",
+        "trap": "같은 페이지의 인접 문단이고 문장 구조가 동일하다",
+        "goldChunkIds": [
+          6833
+        ],
+        "retrievedIds": [
+          6833,
+          9814,
+          6965,
+          7012,
+          6830,
+          6966,
+          5596,
+          6831,
+          9812,
+          9813
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q018",
+        "question": "How long may a session sit idle with an open transaction before the server terminates it, by default?",
+        "trap": "비슷한 이름의 타임아웃 설정이 같은 절에 여러 개 있다",
+        "goldChunkIds": [
+          6831,
+          6834,
+          6835
+        ],
+        "retrievedIds": [
+          6834,
+          6835,
+          6831,
+          6832,
+          6889,
+          6825,
+          7143,
+          6833,
+          6894,
+          6827
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q019",
+        "question": "Which values can I choose from to control how much detail goes into the write-ahead log?",
+        "goldChunkIds": [
+          7202
+        ],
+        "retrievedIds": [
+          7246,
+          7201,
+          7242,
+          7047,
+          7213,
+          10056,
+          7216,
+          10048,
+          7211,
+          7229
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0
+      },
+      {
+        "id": "q020",
+        "question": "What choices are there for how much confirmation a transaction waits for before commit returns?",
+        "trap": "on/off 만 있는 줄 알기 쉽다 — 실제로는 local, remote_write, remote_apply 도 있다",
+        "goldChunkIds": [
+          7204,
+          7205,
+          7206
+        ],
+        "retrievedIds": [
+          10028,
+          7218,
+          8010,
+          7204,
+          10030,
+          5776,
+          9732,
+          10029,
+          7205,
+          10032
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.25
+      },
+      {
+        "id": "q021",
+        "question": "How often does the server force a checkpoint if nothing else triggers one?",
+        "goldChunkIds": [
+          7219,
+          7222
+        ],
+        "retrievedIds": [
+          10038,
+          7949,
+          6999,
+          7219,
+          7951,
+          10034,
+          7220,
+          7221,
+          6668,
+          5709
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.25
+      },
+      {
+        "id": "q022",
+        "question": "How many client connections will a freshly installed server accept at once?",
+        "goldChunkIds": [
+          6881,
+          6882,
+          6883
+        ],
+        "retrievedIds": [
+          8188,
+          5860,
+          6881,
+          6866,
+          8182,
+          6865,
+          7105,
+          7297,
+          8492,
+          6883
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333
+      },
+      {
+        "id": "q023",
+        "question": "What cost does the planner assume for fetching a page out of order, compared to a sequential one?",
+        "trap": "순차 읽기 비용 설정과 인접 문단이고 값 형식이 같다",
+        "goldChunkIds": [
+          7074,
+          7075
+        ],
+        "retrievedIds": [
+          7073,
+          7071,
+          7075,
+          7074,
+          9394,
+          9810,
+          7067,
+          7048,
+          7801,
+          8547
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333
+      },
+      {
+        "id": "q024",
+        "question": "How detailed are the column statistics the planner collects by default?",
+        "goldChunkIds": [
+          7048,
+          7095
+        ],
+        "retrievedIds": [
+          7928,
+          7095,
+          6773,
+          6772,
+          7918,
+          8576,
+          9405,
+          6774,
+          8573,
+          7929
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5
+      },
+      {
+        "id": "q025",
+        "question": "A backend seems stuck. Which columns of the activity view tell me what it is waiting on?",
+        "trap": "두 개로 나뉘어 있어 하나만 답하기 쉽다",
+        "goldChunkIds": [
+          6632,
+          6635,
+          6644,
+          6645,
+          6690,
+          6691,
+          6692
+        ],
+        "retrievedIds": [
+          6692,
+          6635,
+          6138,
+          6633,
+          6693,
+          6691,
+          6619,
+          5253,
+          6631,
+          7189
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q026",
+        "question": "Some rows in the activity view have no client address at all. What does that tell me about those connections?",
+        "goldChunkIds": [
+          6631,
+          6646,
+          6690
+        ],
+        "retrievedIds": [
+          6817,
+          6832,
+          6818,
+          6815,
+          6633,
+          6824,
+          6854,
+          6834,
+          7189,
+          9982
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0
+      }
+    ],
+    "rerankOn": [
+      {
+        "id": "q001",
+        "question": "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+        "trap": "메모리 한도를 정하는 설정이 여럿이고 설명 문장이 거의 같다",
+        "goldChunkIds": [
+          7144
+        ],
+        "retrievedIds": [
+          7144,
+          7161,
+          7019,
+          7145,
+          5863,
+          7969,
+          7968,
+          7160,
+          7142,
+          7178
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q002",
+        "question": "Does routine table cleanup get the same memory budget as an ordinary query, or its own? What is that budget by default?",
+        "trap": "q001 과 거의 동일한 문장 구조 — 검색이 둘을 구분해야 한다",
+        "goldChunkIds": [
+          7146,
+          7147,
+          7184
+        ],
+        "retrievedIds": [
+          7074,
+          6775,
+          6768,
+          9998,
+          10012,
+          6767,
+          6776,
+          6770,
+          6772,
+          6771
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0
+      },
+      {
+        "id": "q003",
+        "question": "Each automatic cleanup worker has its own memory limit. What does the default value of that limit actually mean?",
+        "trap": "-1 의 의미가 파라미터마다 다르고, q002 로 흘러가기 쉽다",
+        "goldChunkIds": [
+          7146,
+          7147
+        ],
+        "retrievedIds": [
+          7147,
+          7183,
+          7144,
+          7145,
+          7184,
+          7146,
+          7148,
+          7181,
+          7149,
+          6812
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q004",
+        "question": "Which memory setting applies only to temporary tables inside a session, and how much is it by default?",
+        "trap": "이름이 shared_buffers 와 비슷하고 설명 구조가 work_mem 계열과 같다",
+        "goldChunkIds": [
+          7142
+        ],
+        "retrievedIds": [
+          7142,
+          7144,
+          8708,
+          7161,
+          8616,
+          8975,
+          6821,
+          6824,
+          6495,
+          7139
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q005",
+        "question": "There is a setting that tells the planner how much disk cache it can assume. Does the server actually reserve that much memory?",
+        "trap": "이름 때문에 할당하는 것처럼 읽힌다. 실제로는 플래너 추정치일 뿐",
+        "goldChunkIds": [
+          7083
+        ],
+        "retrievedIds": [
+          7083,
+          7074,
+          7153,
+          6480,
+          7139,
+          9406,
+          7163,
+          7101,
+          7075,
+          7144
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q006",
+        "question": "How much memory does the server reserve for its shared buffer pool out of the box?",
+        "trap": "다른 여러 파라미터 설명이 shared_buffers 를 참조한다",
+        "goldChunkIds": [
+          7139
+        ],
+        "retrievedIds": [
+          7139,
+          7155,
+          7150,
+          7156,
+          7148,
+          7151,
+          7152,
+          7154,
+          7213,
+          7153
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q007",
+        "question": "Rewriting a table to reclaim disk space blocks even readers, while ordinary cleanup does not. Which lock causes that?",
+        "trap": "VACUUM / VACUUM FULL / autovacuum 이 같은 페이지에 붙어 있다",
+        "goldChunkIds": [
+          9991,
+          10001
+        ],
+        "retrievedIds": [
+          6771,
+          9992,
+          9991,
+          9562,
+          6767,
+          6768,
+          9675,
+          9678,
+          10001,
+          9669
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333
+      },
+      {
+        "id": "q008",
+        "question": "Can the routine table cleanup command be wrapped in BEGIN and COMMIT?",
+        "goldChunkIds": [
+          10012
+        ],
+        "retrievedIds": [
+          5929,
+          7935,
+          9912,
+          6087,
+          9998,
+          8726,
+          6767,
+          8739,
+          8674,
+          6768
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0
+      },
+      {
+        "id": "q009",
+        "question": "What fraction of a table has to change before automatic cleanup decides to process it, by default?",
+        "trap": "analyze 쪽 대응 설정과 값도 문장도 비슷하다",
+        "goldChunkIds": [
+          6806
+        ],
+        "retrievedIds": [
+          6808,
+          6807,
+          6806,
+          9998,
+          8683,
+          6805,
+          6795,
+          6803,
+          7785,
+          6775
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333
+      },
+      {
+        "id": "q010",
+        "question": "I need to move users and tablespaces to a new cluster, not just the tables in one database. Which dump tool covers that?",
+        "trap": "세 도구의 설명 문단이 서로를 참조해서 벡터 검색이 엉뚱한 쪽을 집는다",
+        "goldChunkIds": [
+          5272
+        ],
+        "retrievedIds": [
+          6355,
+          5276,
+          5272,
+          8749,
+          5399,
+          7741,
+          6763,
+          7471,
+          5285,
+          9677
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333
+      },
+      {
+        "id": "q011",
+        "question": "Which dump file formats can the restore utility read back, and which one cannot be used with it?",
+        "trap": "plain 포맷은 pg_restore 로 못 읽는다 — 문서를 안 보면 틀리기 쉽다",
+        "goldChunkIds": [
+          5730,
+          5731
+        ],
+        "retrievedIds": [
+          5543,
+          6351,
+          5730,
+          5559,
+          5544,
+          5731,
+          6358,
+          5296,
+          5560,
+          5273
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333
+      },
+      {
+        "id": "q012",
+        "question": "If I dump a database without passing any format option, what kind of file do I get?",
+        "goldChunkIds": [
+          5557,
+          5608
+        ],
+        "retrievedIds": [
+          5550,
+          5630,
+          5551,
+          6357,
+          5601,
+          5546,
+          5279,
+          5559,
+          5547,
+          5553
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0
+      },
+      {
+        "id": "q013",
+        "question": "Why does building an index without blocking writes fail when I put it inside a transaction?",
+        "trap": "REINDEX 쪽 대응 기능과 제약이 겹치면서도 다르다",
+        "goldChunkIds": [
+          8340,
+          8341,
+          8342,
+          8349
+        ],
+        "retrievedIds": [
+          8340,
+          8342,
+          9678,
+          9663,
+          8755,
+          8307,
+          8341,
+          9679,
+          8977,
+          9287
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q014",
+        "question": "A non-blocking index build failed partway through. Is anything left behind on the table?",
+        "trap": "실패한 인덱스가 남는다는 사실이 별도 문단에 있다",
+        "goldChunkIds": [
+          8340,
+          8341,
+          8342
+        ],
+        "retrievedIds": [
+          9679,
+          8341,
+          9680,
+          8342,
+          8340,
+          9662,
+          9674,
+          9678,
+          9683,
+          8307
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5
+      },
+      {
+        "id": "q015",
+        "question": "Emptying a table completely in one statement — does that block other sessions from reading it?",
+        "trap": "행을 지우는 다른 방법과 비교 문단이 붙어 있어 섞이기 쉽다",
+        "goldChunkIds": [
+          9952
+        ],
+        "retrievedIds": [
+          7760,
+          9115,
+          9944,
+          9565,
+          9812,
+          8970,
+          9952,
+          8956,
+          9275,
+          9869
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0.14285714285714285
+      },
+      {
+        "id": "q016",
+        "question": "Physically reordering a table to match an index — what lock does that take while it runs?",
+        "trap": "q007 과 같은 락이라 두 문서가 서로 헷갈린다",
+        "goldChunkIds": [
+          7963
+        ],
+        "retrievedIds": [
+          7963,
+          9675,
+          9678,
+          9679,
+          9669,
+          9562,
+          9986,
+          6765,
+          6550,
+          9677
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q017",
+        "question": "One setting kills a query that runs too long overall; another only caps how long it waits for a lock. How do they differ, and what are their defaults?",
+        "trap": "같은 페이지의 인접 문단이고 문장 구조가 동일하다",
+        "goldChunkIds": [
+          6833
+        ],
+        "retrievedIds": [
+          7012,
+          6965,
+          6834,
+          6833,
+          7003,
+          5261,
+          6966,
+          5596,
+          9814,
+          5298
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.25
+      },
+      {
+        "id": "q018",
+        "question": "How long may a session sit idle with an open transaction before the server terminates it, by default?",
+        "trap": "비슷한 이름의 타임아웃 설정이 같은 절에 여러 개 있다",
+        "goldChunkIds": [
+          6831,
+          6834,
+          6835
+        ],
+        "retrievedIds": [
+          6834,
+          6835,
+          6831,
+          5261,
+          6894,
+          6889,
+          6825,
+          6830,
+          9872,
+          7143
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q019",
+        "question": "Which values can I choose from to control how much detail goes into the write-ahead log?",
+        "goldChunkIds": [
+          7202
+        ],
+        "retrievedIds": [
+          7047,
+          7213,
+          10056,
+          7231,
+          7202,
+          7221,
+          7216,
+          7246,
+          10044,
+          7214
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.2
+      },
+      {
+        "id": "q020",
+        "question": "What choices are there for how much confirmation a transaction waits for before commit returns?",
+        "trap": "on/off 만 있는 줄 알기 쉽다 — 실제로는 local, remote_write, remote_apply 도 있다",
+        "goldChunkIds": [
+          7204,
+          7205,
+          7206
+        ],
+        "retrievedIds": [
+          7204,
+          10028,
+          7218,
+          9628,
+          9626,
+          7217,
+          8010,
+          9713,
+          7255,
+          7205
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q021",
+        "question": "How often does the server force a checkpoint if nothing else triggers one?",
+        "goldChunkIds": [
+          7219,
+          7222
+        ],
+        "retrievedIds": [
+          10034,
+          7951,
+          7949,
+          10033,
+          7219,
+          7221,
+          7222,
+          10035,
+          7178,
+          10038
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.2
+      },
+      {
+        "id": "q022",
+        "question": "How many client connections will a freshly installed server accept at once?",
+        "goldChunkIds": [
+          6881,
+          6882,
+          6883
+        ],
+        "retrievedIds": [
+          5860,
+          6883,
+          6881,
+          6882,
+          7105,
+          5383,
+          8188,
+          8492,
+          6894,
+          6866
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5
+      },
+      {
+        "id": "q023",
+        "question": "What cost does the planner assume for fetching a page out of order, compared to a sequential one?",
+        "trap": "순차 읽기 비용 설정과 인접 문단이고 값 형식이 같다",
+        "goldChunkIds": [
+          7074,
+          7075
+        ],
+        "retrievedIds": [
+          7071,
+          7073,
+          7074,
+          6554,
+          9394,
+          7801,
+          8754,
+          7075,
+          7097,
+          9640
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333
+      },
+      {
+        "id": "q024",
+        "question": "How detailed are the column statistics the planner collects by default?",
+        "goldChunkIds": [
+          7048,
+          7095
+        ],
+        "retrievedIds": [
+          7095,
+          7928,
+          7723,
+          8576,
+          7048,
+          7918,
+          7476,
+          9405,
+          6775,
+          7929
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q025",
+        "question": "A backend seems stuck. Which columns of the activity view tell me what it is waiting on?",
+        "trap": "두 개로 나뉘어 있어 하나만 답하기 쉽다",
+        "goldChunkIds": [
+          6632,
+          6635,
+          6644,
+          6645,
+          6690,
+          6691,
+          6692
+        ],
+        "retrievedIds": [
+          6635,
+          6631,
+          6692,
+          6691,
+          6619,
+          6633,
+          6138,
+          7013,
+          5253,
+          5425
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1
+      },
+      {
+        "id": "q026",
+        "question": "Some rows in the activity view have no client address at all. What does that tell me about those connections?",
+        "goldChunkIds": [
+          6631,
+          6646,
+          6690
+        ],
+        "retrievedIds": [
+          6817,
+          6823,
+          6818,
+          6854,
+          6826,
+          7754,
+          6816,
+          6824,
+          6827,
+          6835
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0
+      }
+    ]
+  }
+}

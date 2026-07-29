@@ -1,0 +1,108 @@
+/* 인용이 잘 보이는 것 외에는 아무것도 하지 않는다 (AGENTS.md §5 6단계). */
+
+:root {
+  --fg: #16181d;
+  --muted: #6b7280;
+  --line: #e3e5e9;
+  --bg: #fff;
+  --accent: #1f6feb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #e6e8ec;
+    --muted: #9aa1ac;
+    --line: #2a2e37;
+    --bg: #14161a;
+    --accent: #5b9dff;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.65 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+main { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 6rem; }
+
+header h1 { font-size: 1.5rem; margin: 0 0 .35rem; letter-spacing: -.01em; }
+header p { margin: 0 0 2rem; color: var(--muted); font-size: .9rem; }
+
+form { display: flex; gap: .5rem; }
+
+input[type="text"], form input:not([type]) {
+  flex: 1; padding: .7rem .85rem; font: inherit;
+  border: 1px solid var(--line); border-radius: .5rem;
+  background: var(--bg); color: var(--fg);
+}
+input:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+form button {
+  padding: .7rem 1.1rem; font: inherit; font-weight: 500;
+  border: 0; border-radius: .5rem; background: var(--accent); color: #fff; cursor: pointer;
+}
+form button:disabled { opacity: .5; cursor: default; }
+
+.toggle { display: block; margin: .75rem 0 0; font-size: .85rem; color: var(--muted); }
+.toggle input { margin-right: .4rem; }
+
+/* 재작성된 질의 — 무엇으로 검색했는지 사용자가 직접 확인할 수 있어야 한다. */
+.rewrite { margin: 1.25rem 0 0; padding: .75rem .9rem; border: 1px solid var(--line); border-radius: 6px; }
+.rewrite-label { margin: 0 0 .5rem; font-size: .78rem; color: var(--muted); }
+.rewrite ol { margin: 0; padding-left: 1.1rem; display: grid; gap: .3rem; }
+.rewrite li { font: .82rem/1.45 ui-monospace, monospace; }
+.rewrite li.original { list-style: none; margin-left: -1.1rem; }
+.rewrite .tag {
+  display: inline-block; margin-right: .45rem; padding: 0 .35rem;
+  border: 1px solid var(--line); border-radius: 3px;
+  font: .68rem/1.5 var(--font-sans, sans-serif); color: var(--muted); text-transform: uppercase;
+}
+
+.error, .warn {
+  margin-top: 1.5rem; padding: .7rem .9rem; border-radius: .5rem;
+  background: color-mix(in srgb, #d1242f 10%, transparent);
+  font-size: .85rem;
+}
+
+.answer { margin-top: 2.5rem; }
+.prose { white-space: pre-wrap; }
+
+/* 인용 각주 — 검증을 통과한 것만 이 모양이 된다. */
+.cite {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 1.15rem; height: 1.15rem; margin: 0 .1rem;
+  padding: 0 .25rem; vertical-align: super;
+  font: 600 .68rem/1 ui-monospace, monospace;
+  color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 0; border-radius: .25rem; cursor: pointer;
+}
+.cite:hover { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+
+.sources { margin: 2rem 0 0; padding: 0; list-style: none; counter-reset: src; border-top: 1px solid var(--line); }
+.sources li { counter-increment: src; border-bottom: 1px solid var(--line); }
+.sources li > button {
+  display: flex; flex-direction: column; gap: .15rem; width: 100%;
+  padding: .7rem 0 .7rem 1.6rem; position: relative;
+  font: inherit; font-size: .85rem; text-align: left;
+  background: none; border: 0; color: var(--fg); cursor: pointer;
+}
+.sources li > button::before {
+  content: counter(src); position: absolute; left: 0; top: .8rem;
+  font: 600 .68rem/1 ui-monospace, monospace; color: var(--accent);
+}
+.sources .path { color: var(--muted); font: .72rem/1.4 ui-monospace, monospace; word-break: break-all; }
+.sources pre {
+  margin: 0 0 1rem 1.6rem; padding: .8rem; overflow-x: auto;
+  background: color-mix(in srgb, var(--fg) 4%, transparent);
+  border-radius: .4rem; font-size: .8rem; white-space: pre-wrap;
+}
+
+.debug { margin-top: 2.5rem; font-size: .8rem; color: var(--muted); }
+.debug summary { cursor: pointer; }
+.debug ol { padding-left: 1.2rem; }
+.debug code { font-family: ui-monospace, monospace; }
+.debug .score { display: block; font-size: .72rem; opacity: .8; }

@@ -1,0 +1,1127 @@
+{
+  "gpt-5.6-sol::A backend seems stuck. Which columns of the activity view tell me what it is waiting on?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "A backend seems stuck. Which columns of the activity view tell me what it is waiting on?",
+      "pg_stat_activity wait_event_type and wait_event columns",
+      "backend activity view wait event information",
+      "monitoring database activity backend wait events"
+    ],
+    "ms": 2417.397100000002,
+    "inputTokens": 627,
+    "outputTokens": 31
+  },
+  "gpt-5.6-sol::A newly installed server refuses connections coming from other machines. Which setting causes that, and what is its default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "A newly installed server refuses connections coming from other machines. Which setting causes that, and what is its default?",
+      "listen_addresses default setting",
+      "listen_addresses remote TCP/IP connections",
+      "server listening addresses connection parameter"
+    ],
+    "ms": 4290.310200000007,
+    "inputTokens": 630,
+    "outputTokens": 122
+  },
+  "gpt-5.6-sol::A non-blocking index build failed partway through. Is anything left behind on the table?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "A non-blocking index build failed partway through. Is anything left behind on the table?",
+      "CREATE INDEX CONCURRENTLY failure invalid index left behind",
+      "failed concurrent index build invalid index entry in system catalogs",
+      "recovering from errors in concurrent index builds DROP INDEX and retry"
+    ],
+    "ms": 4536.506200000003,
+    "inputTokens": 627,
+    "outputTokens": 88
+  },
+  "gpt-5.6-sol::A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+      "work_mem memory for sort operations and hash tables",
+      "temporary files caused by sorts exceeding work_mem",
+      "resource consumption work_mem default setting"
+    ],
+    "ms": 1634.8029000000001,
+    "inputTokens": 640,
+    "outputTokens": 33
+  },
+  "gpt-5.6-sol::At what table age does the server force a cleanup pass even when automatic cleanup has been disabled for that table?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "At what table age does the server force a cleanup pass even when automatic cleanup has been disabled for that table?",
+      "autovacuum_freeze_max_age forced VACUUM despite autovacuum disabled",
+      "transaction ID wraparound prevention relfrozenxid age",
+      "anti-wraparound autovacuum table storage parameter autovacuum_enabled"
+    ],
+    "ms": 4659.878299999997,
+    "inputTokens": 630,
+    "outputTokens": 112
+  },
+  "gpt-5.6-sol::Binary column values come back as a string beginning with backslash-x. Which setting decides that, and what is its default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Binary column values come back as a string beginning with backslash-x. Which setting decides that, and what is its default?",
+      "bytea_output configuration parameter",
+      "bytea hex output format \\x",
+      "binary string output format for bytea values"
+    ],
+    "ms": 5631.979800000001,
+    "inputTokens": 633,
+    "outputTokens": 78
+  },
+  "gpt-5.6-sol::Building an index can be spread across several processes. Which setting limits how many, and what is its default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Building an index can be spread across several processes. Which setting limits how many, and what is its default?",
+      "max_parallel_maintenance_workers parameter default",
+      "parallel CREATE INDEX worker limit",
+      "parallel utility commands maintenance worker processes"
+    ],
+    "ms": 3499.0525000000052,
+    "inputTokens": 630,
+    "outputTokens": 63
+  },
+  "gpt-5.6-sol::Can CREATE DATABASE be executed inside a transaction block?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Can CREATE DATABASE be executed inside a transaction block?",
+      "CREATE DATABASE transaction block",
+      "CREATE DATABASE cannot run inside a transaction block",
+      "SQL CREATE DATABASE command"
+    ],
+    "ms": 2931.3273000000045,
+    "inputTokens": 618,
+    "outputTokens": 24
+  },
+  "gpt-5.6-sol::Can I speed a dump up with several worker processes no matter which output format I picked?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Can I speed a dump up with several worker processes no matter which output format I picked?",
+      "pg_dump parallel dump -j jobs directory format",
+      "pg_dump output formats parallel backup limitations",
+      "pg_dump --jobs directory archive format"
+    ],
+    "ms": 3910.637699999992,
+    "inputTokens": 626,
+    "outputTokens": 90
+  },
+  "gpt-5.6-sol::Can REINDEX CONCURRENTLY be executed inside a transaction block?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Can REINDEX CONCURRENTLY be executed inside a transaction block?",
+      "REINDEX CONCURRENTLY transaction block restriction",
+      "REINDEX command CONCURRENTLY cannot run inside a transaction block",
+      "SQL REINDEX CONCURRENTLY execution semantics"
+    ],
+    "ms": 3888.101800000004,
+    "inputTokens": 621,
+    "outputTokens": 36
+  },
+  "gpt-5.6-sol::Can VACUUM run inside a transaction block?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Can VACUUM run inside a transaction block?",
+      "VACUUM transaction block restriction",
+      "VACUUM cannot run inside a transaction block",
+      "VACUUM SQL command transaction processing"
+    ],
+    "ms": 1782.6087000000007,
+    "inputTokens": 618,
+    "outputTokens": 30
+  },
+  "gpt-5.6-sol::Can creating a new database be wrapped in BEGIN and COMMIT so I can undo it?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Can creating a new database be wrapped in BEGIN and COMMIT so I can undo it?",
+      "CREATE DATABASE cannot run inside a transaction block",
+      "CREATE DATABASE with BEGIN and COMMIT transaction commands",
+      "CREATE DATABASE rollback and transactional behavior"
+    ],
+    "ms": 4131.905400000018,
+    "inputTokens": 626,
+    "outputTokens": 89
+  },
+  "gpt-5.6-sol::Can the routine table cleanup command be wrapped in BEGIN and COMMIT?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Can the routine table cleanup command be wrapped in BEGIN and COMMIT?",
+      "VACUUM SQL command transaction block",
+      "VACUUM execution inside BEGIN and COMMIT",
+      "VACUUM transaction processing restrictions"
+    ],
+    "ms": 7089.6414,
+    "inputTokens": 622,
+    "outputTokens": 162
+  },
+  "gpt-5.6-sol::Checkpoint writes are spread out rather than done all at once. What fraction of the interval does the server aim to finish within, by default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Checkpoint writes are spread out rather than done all at once. What fraction of the interval does the server aim to finish within, by default?",
+      "checkpoint_completion_target default setting",
+      "checkpoint write activity spread across checkpoint interval",
+      "WAL checkpoint completion target configuration parameter"
+    ],
+    "ms": 2066.0056999999797,
+    "inputTokens": 636,
+    "outputTokens": 66
+  },
+  "gpt-5.6-sol::Does effective_cache_size allocate memory?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Does effective_cache_size allocate memory?",
+      "effective_cache_size planner cost parameter memory allocation",
+      "effective_cache_size estimate of available disk cache",
+      "resource consumption effective_cache_size"
+    ],
+    "ms": 2154.5985999999994,
+    "inputTokens": 615,
+    "outputTokens": 31
+  },
+  "gpt-5.6-sol::Does routine table cleanup get the same memory budget as an ordinary query, or its own?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Does routine table cleanup get the same memory budget as an ordinary query, or its own?",
+      "VACUUM memory usage maintenance_work_mem versus work_mem",
+      "autovacuum worker memory budget autovacuum_work_mem",
+      "resource consumption settings for routine vacuum maintenance operations"
+    ],
+    "ms": 6939.590500000002,
+    "inputTokens": 626,
+    "outputTokens": 160
+  },
+  "gpt-5.6-sol::Does routine table cleanup get the same memory budget as an ordinary query, or its own? What is that budget by default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Does routine table cleanup get the same memory budget as an ordinary query, or its own? What is that budget by default?",
+      "maintenance_work_mem memory for VACUUM and other maintenance operations",
+      "maintenance_work_mem default setting",
+      "work_mem versus maintenance_work_mem for routine VACUUM"
+    ],
+    "ms": 3222.8621,
+    "inputTokens": 633,
+    "outputTokens": 94
+  },
+  "gpt-5.6-sol::Each automatic cleanup worker has its own memory limit. What does the default value of that limit actually mean?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Each automatic cleanup worker has its own memory limit. What does the default value of that limit actually mean?",
+      "autovacuum_work_mem default value meaning",
+      "autovacuum worker memory uses maintenance_work_mem",
+      "resource consumption autovacuum_work_mem parameter"
+    ],
+    "ms": 3483.6659,
+    "inputTokens": 629,
+    "outputTokens": 89
+  },
+  "gpt-5.6-sol::Emptying a table completely in one statement — does that block other sessions from reading it?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Emptying a table completely in one statement — does that block other sessions from reading it?",
+      "TRUNCATE command locking behavior",
+      "TRUNCATE ACCESS EXCLUSIVE lock concurrent SELECT",
+      "table-level lock modes and conflicting locks"
+    ],
+    "ms": 6449.507099999995,
+    "inputTokens": 626,
+    "outputTokens": 96
+  },
+  "gpt-5.6-sol::How detailed are the column statistics the planner collects by default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "How detailed are the column statistics the planner collects by default?",
+      "default_statistics_target planner statistics detail",
+      "ALTER TABLE SET STATISTICS per-column statistics target",
+      "ANALYZE column statistics target"
+    ],
+    "ms": 2704.6196000000054,
+    "inputTokens": 620,
+    "outputTokens": 73
+  },
+  "gpt-5.6-sol::How large may the write-ahead log grow between automatic checkpoints before one is forced, and is that a hard ceiling?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "How large may the write-ahead log grow between automatic checkpoints before one is forced, and is that a hard ceiling?",
+      "max_wal_size automatic checkpoints soft limit",
+      "WAL growth between automatic checkpoints checkpoint forced",
+      "checkpoint scheduling WAL size limit"
+    ],
+    "ms": 3178.3712000000087,
+    "inputTokens": 632,
+    "outputTokens": 68
+  },
+  "gpt-5.6-sol::How long may a session sit idle with an open transaction before the server terminates it, by default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "How long may a session sit idle with an open transaction before the server terminates it, by default?",
+      "idle_in_transaction_session_timeout default setting",
+      "client connection defaults for terminating idle sessions with open transactions",
+      "idle-in-transaction session timeout"
+    ],
+    "ms": 5302.006000000001,
+    "inputTokens": 629,
+    "outputTokens": 74
+  },
+  "gpt-5.6-sol::How many client connections will a freshly installed server accept at once?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "How many client connections will a freshly installed server accept at once?",
+      "max_connections default setting",
+      "connection settings maximum concurrent connections",
+      "fresh installation max_connections"
+    ],
+    "ms": 3849.7204000000056,
+    "inputTokens": 621,
+    "outputTokens": 77
+  },
+  "gpt-5.6-sol::How much memory does the server reserve for its shared buffer pool out of the box?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "How much memory does the server reserve for its shared buffer pool out of the box?",
+      "shared_buffers default setting",
+      "shared memory buffer pool configuration",
+      "resource consumption shared_buffers parameter"
+    ],
+    "ms": 1274.3911000000007,
+    "inputTokens": 625,
+    "outputTokens": 22
+  },
+  "gpt-5.6-sol::How often does the server force a checkpoint if nothing else triggers one?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "How often does the server force a checkpoint if nothing else triggers one?",
+      "checkpoint_timeout automatic checkpoint interval",
+      "time-driven checkpoints when no other checkpoint is triggered",
+      "WAL configuration automatic checkpoints timeout"
+    ],
+    "ms": 4537.9853999999905,
+    "inputTokens": 622,
+    "outputTokens": 66
+  },
+  "gpt-5.6-sol::I hit an out-of-shared-memory error with a hint pointing at a lock setting. Is that setting a hard per-transaction limit, and what is its default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "I hit an out-of-shared-memory error with a hint pointing at a lock setting. Is that setting a hard per-transaction limit, and what is its default?",
+      "max_locks_per_transaction out of shared memory",
+      "max_locks_per_transaction shared lock table sizing and default",
+      "maximum number of locks per transaction is not an individual hard limit"
+    ],
+    "ms": 5866.5378000000055,
+    "inputTokens": 642,
+    "outputTokens": 92
+  },
+  "gpt-5.6-sol::I need to move users and tablespaces to a new cluster, not just the tables in one database. Which dump tool covers that?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "I need to move users and tablespaces to a new cluster, not just the tables in one database. Which dump tool covers that?",
+      "pg_dumpall cluster-wide backup of global objects",
+      "pg_dumpall roles and tablespaces",
+      "dumping all databases and cluster-wide data"
+    ],
+    "ms": 1473.3813999999984,
+    "inputTokens": 635,
+    "outputTokens": 32
+  },
+  "gpt-5.6-sol::I raised the per-table parallel worker setting but queries still start only two workers. Which setting caps how many workers a single scan node may use, and what is its default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "I raised the per-table parallel worker setting but queries still start only two workers. Which setting caps how many workers a single scan node may use, and what is its default?",
+      "max_parallel_workers_per_gather maximum workers per Gather or Gather Merge node",
+      "parallel_workers table storage parameter limited by max_parallel_workers_per_gather",
+      "default setting for max_parallel_workers_per_gather"
+    ],
+    "ms": 4291.159899999999,
+    "inputTokens": 643,
+    "outputTokens": 116
+  },
+  "gpt-5.6-sol::I want slow statements to show up in the log. Which setting does that by duration, and is it active out of the box?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "I want slow statements to show up in the log. Which setting does that by duration, and is it active out of the box?",
+      "log_min_duration_statement parameter logging statements by execution duration",
+      "runtime statistics statement logging configuration default setting",
+      "When To Log client statement duration"
+    ],
+    "ms": 2666.7161999999953,
+    "inputTokens": 635,
+    "outputTokens": 33
+  },
+  "gpt-5.6-sol::If I dump a database without passing any format option, what kind of file do I get?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "If I dump a database without passing any format option, what kind of file do I get?",
+      "pg_dump default output format",
+      "pg_dump -F --format option",
+      "pg_dump output file format selection"
+    ],
+    "ms": 3494.7114,
+    "inputTokens": 627,
+    "outputTokens": 129
+  },
+  "gpt-5.6-sol::If I empty a table and then change my mind before committing, do the rows come back?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "If I empty a table and then change my mind before committing, do the rows come back?",
+      "TRUNCATE transaction rollback table data",
+      "TRUNCATE is transaction-safe with respect to table data",
+      "DELETE rows ROLLBACK before COMMIT"
+    ],
+    "ms": 6943.927199999976,
+    "inputTokens": 627,
+    "outputTokens": 162
+  },
+  "gpt-5.6-sol::Is TRUNCATE transaction-safe — can it be rolled back?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Is TRUNCATE transaction-safe — can it be rolled back?",
+      "TRUNCATE transaction rollback semantics",
+      "TRUNCATE transactional behavior and concurrent snapshots",
+      "TRUNCATE MVCC-safe behavior"
+    ],
+    "ms": 4060.404899999994,
+    "inputTokens": 621,
+    "outputTokens": 71
+  },
+  "gpt-5.6-sol::Is max_locks_per_transaction a hard limit on the number of locks one transaction may take, and what is its default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Is max_locks_per_transaction a hard limit on the number of locks one transaction may take, and what is its default?",
+      "max_locks_per_transaction lock table sizing",
+      "max_locks_per_transaction limit on locks held by one transaction",
+      "max_locks_per_transaction default setting"
+    ],
+    "ms": 5799.545100000003,
+    "inputTokens": 633,
+    "outputTokens": 111
+  },
+  "gpt-5.6-sol::One setting kills a query that runs too long overall; another only caps how long it waits for a lock. How do they differ, and what are their defaults?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "One setting kills a query that runs too long overall; another only caps how long it waits for a lock. How do they differ, and what are their defaults?",
+      "statement_timeout maximum allowed duration of any statement defaults",
+      "lock_timeout maximum duration waiting to acquire a lock defaults",
+      "statement_timeout versus lock_timeout client connection defaults"
+    ],
+    "ms": 2185.357100000001,
+    "inputTokens": 641,
+    "outputTokens": 35
+  },
+  "gpt-5.6-sol::Oversized column values are compressed before being stored out of line. Which method is used by default, and what is the alternative?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Oversized column values are compressed before being stored out of line. Which method is used by default, and what is the alternative?",
+      "TOAST compression methods pglz lz4",
+      "default_toast_compression parameter",
+      "ALTER TABLE column COMPRESSION storage option"
+    ],
+    "ms": 12647.723999999987,
+    "inputTokens": 634,
+    "outputTokens": 154
+  },
+  "gpt-5.6-sol::Past a certain number of tables the planner stops trying to reorder joins. Which two settings decide that, and what are their defaults?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Past a certain number of tables the planner stops trying to reorder joins. Which two settings decide that, and what are their defaults?",
+      "join_collapse_limit join reordering FROM items",
+      "geqo_threshold genetic query optimizer table count",
+      "Controlling the Planner with Explicit JOIN Clauses join_collapse_limit geqo_threshold"
+    ],
+    "ms": 6434.112300000008,
+    "inputTokens": 634,
+    "outputTokens": 197
+  },
+  "gpt-5.6-sol::Physically reordering a table to match an index — what lock does that take while it runs?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Physically reordering a table to match an index — what lock does that take while it runs?",
+      "CLUSTER command locking behavior ACCESS EXCLUSIVE lock",
+      "physically reorder table based on an index with CLUSTER",
+      "CLUSTER table rewrite concurrent access and locks"
+    ],
+    "ms": 4511.778099999996,
+    "inputTokens": 628,
+    "outputTokens": 84
+  },
+  "gpt-5.6-sol::Rebuilding an index without blocking writes — can that be run inside a transaction?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Rebuilding an index without blocking writes — can that be run inside a transaction?",
+      "CREATE INDEX CONCURRENTLY transaction block restriction",
+      "REINDEX CONCURRENTLY transaction block",
+      "concurrent index build without locking out writes"
+    ],
+    "ms": 2017.1117000000086,
+    "inputTokens": 624,
+    "outputTokens": 31
+  },
+  "gpt-5.6-sol::Rewriting a table to reclaim disk space blocks even readers, while ordinary cleanup does not. Which lock causes that?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Rewriting a table to reclaim disk space blocks even readers, while ordinary cleanup does not. Which lock causes that?",
+      "VACUUM FULL table-level lock mode",
+      "VACUUM FULL AccessExclusiveLock blocks SELECT",
+      "routine VACUUM locking behavior ShareUpdateExclusiveLock"
+    ],
+    "ms": 9089.392100000001,
+    "inputTokens": 631,
+    "outputTokens": 141
+  },
+  "gpt-5.6-sol::Some rows in the activity view have no client address at all. What does that tell me about those connections?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Some rows in the activity view have no client address at all. What does that tell me about those connections?",
+      "pg_stat_activity client_addr NULL",
+      "client_addr Unix-domain socket connections",
+      "pg_stat_activity backend_type internal processes"
+    ],
+    "ms": 2566.312699999995,
+    "inputTokens": 630,
+    "outputTokens": 79
+  },
+  "gpt-5.6-sol::The connection limit says 100. Can ordinary users really open all 100 at once?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "The connection limit says 100. Can ordinary users really open all 100 at once?",
+      "max_connections and connection slots available to ordinary users",
+      "superuser_reserved_connections reserved connection slots",
+      "reserved_connections and pg_use_reserved_connections role privilege"
+    ],
+    "ms": 4334.605500000005,
+    "inputTokens": 626,
+    "outputTokens": 120
+  },
+  "gpt-5.6-sol::There is a setting that tells the planner how much disk cache it can assume. Does the server actually reserve that much memory?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "There is a setting that tells the planner how much disk cache it can assume. Does the server actually reserve that much memory?",
+      "effective_cache_size planner cost estimate available disk cache",
+      "effective_cache_size does not allocate or reserve memory",
+      "query planning assumptions about operating system and PostgreSQL shared buffer cache"
+    ],
+    "ms": 2076.2096,
+    "inputTokens": 633,
+    "outputTokens": 38
+  },
+  "gpt-5.6-sol::Two sessions are blocked on each other. How long does the server wait before it even starts checking for a deadlock, and what is that wait by default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Two sessions are blocked on each other. How long does the server wait before it even starts checking for a deadlock, and what is that wait by default?",
+      "deadlock_timeout delay before checking for deadlock",
+      "deadlock detection configuration parameter deadlock_timeout",
+      "lock waits and deadlock detection"
+    ],
+    "ms": 3914.0035999999964,
+    "inputTokens": 640,
+    "outputTokens": 33
+  },
+  "gpt-5.6-sol::Two settings tell the storage layer how many reads it may have in flight — one for ordinary queries, one for maintenance work. What are their defaults?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Two settings tell the storage layer how many reads it may have in flight — one for ordinary queries, one for maintenance work. What are their defaults?",
+      "effective_io_concurrency default parameter",
+      "maintenance_io_concurrency default parameter",
+      "concurrent disk I/O operations for ordinary queries and maintenance work"
+    ],
+    "ms": 2624.23550000001,
+    "inputTokens": 638,
+    "outputTokens": 79
+  },
+  "gpt-5.6-sol::What are the allowed values of synchronous_commit?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What are the allowed values of synchronous_commit?",
+      "synchronous_commit parameter allowed values",
+      "SET synchronous_commit configuration setting",
+      "synchronous replication commit durability levels"
+    ],
+    "ms": 2993.4702999999936,
+    "inputTokens": 617,
+    "outputTokens": 27
+  },
+  "gpt-5.6-sol::What are the allowed values of wal_level?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What are the allowed values of wal_level?",
+      "wal_level parameter allowed values",
+      "Write Ahead Log settings wal_level",
+      "wal_level minimal replica logical"
+    ],
+    "ms": 3556.252099999998,
+    "inputTokens": 617,
+    "outputTokens": 26
+  },
+  "gpt-5.6-sol::What are the defaults of effective_io_concurrency and maintenance_io_concurrency?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What are the defaults of effective_io_concurrency and maintenance_io_concurrency?",
+      "effective_io_concurrency default parameter value",
+      "maintenance_io_concurrency default parameter value",
+      "asynchronous disk I/O concurrency configuration parameters"
+    ],
+    "ms": 5409.267399999997,
+    "inputTokens": 623,
+    "outputTokens": 30
+  },
+  "gpt-5.6-sol::What are the defaults of from_collapse_limit and join_collapse_limit?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What are the defaults of from_collapse_limit and join_collapse_limit?",
+      "from_collapse_limit parameter default",
+      "join_collapse_limit parameter default",
+      "planner query collapsing limits"
+    ],
+    "ms": 2044.1665999999823,
+    "inputTokens": 623,
+    "outputTokens": 26
+  },
+  "gpt-5.6-sol::What are the restrictions on CREATE INDEX CONCURRENTLY?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What are the restrictions on CREATE INDEX CONCURRENTLY?",
+      "CREATE INDEX CONCURRENTLY restrictions limitations",
+      "building indexes concurrently transaction block restrictions",
+      "CREATE INDEX CONCURRENTLY partitioned tables unique indexes invalid indexes"
+    ],
+    "ms": 3622.7103999999963,
+    "inputTokens": 619,
+    "outputTokens": 35
+  },
+  "gpt-5.6-sol::What choices are there for how much confirmation a transaction waits for before commit returns?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What choices are there for how much confirmation a transaction waits for before commit returns?",
+      "synchronous_commit parameter settings and transaction commit wait behavior",
+      "synchronous replication levels of transaction durability and visibility",
+      "commit returns after local or remote WAL confirmation"
+    ],
+    "ms": 5793.939700000003,
+    "inputTokens": 624,
+    "outputTokens": 104
+  },
+  "gpt-5.6-sol::What cost does the planner assume for fetching a page out of order, compared to a sequential one?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What cost does the planner assume for fetching a page out of order, compared to a sequential one?",
+      "random_page_cost compared with seq_page_cost",
+      "planner cost constants for nonsequential disk page fetches",
+      "query planning cost parameters for random and sequential page access"
+    ],
+    "ms": 2490.9332999999897,
+    "inputTokens": 628,
+    "outputTokens": 74
+  },
+  "gpt-5.6-sol::What does a NULL client_addr in pg_stat_activity indicate?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What does a NULL client_addr in pg_stat_activity indicate?",
+      "pg_stat_activity client_addr NULL",
+      "pg_stat_activity client_addr column local connections Unix-domain socket",
+      "pg_stat_activity client address background processes"
+    ],
+    "ms": 3600.8456999999908,
+    "inputTokens": 620,
+    "outputTokens": 32
+  },
+  "gpt-5.6-sol::What does it mean when autovacuum_work_mem is set to -1?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What does it mean when autovacuum_work_mem is set to -1?",
+      "autovacuum_work_mem parameter value -1",
+      "autovacuum worker memory uses maintenance_work_mem",
+      "resource consumption autovacuum_work_mem"
+    ],
+    "ms": 2641.5036,
+    "inputTokens": 624,
+    "outputTokens": 33
+  },
+  "gpt-5.6-sol::What does pg_dumpall back up that pg_dump does not?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What does pg_dumpall back up that pg_dump does not?",
+      "pg_dumpall cluster-wide backup global objects roles tablespaces",
+      "pg_dump single database versus pg_dumpall entire PostgreSQL cluster",
+      "pg_dumpall global objects database definitions and contents"
+    ],
+    "ms": 3089.231100000001,
+    "inputTokens": 621,
+    "outputTokens": 40
+  },
+  "gpt-5.6-sol::What fraction of a table has to change before automatic cleanup decides to process it, by default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What fraction of a table has to change before automatic cleanup decides to process it, by default?",
+      "autovacuum_vacuum_scale_factor table fraction",
+      "autovacuum_vacuum_threshold and autovacuum_vacuum_scale_factor vacuum trigger",
+      "automatic vacuum threshold dead tuples table size"
+    ],
+    "ms": 3024.7955,
+    "inputTokens": 627,
+    "outputTokens": 122
+  },
+  "gpt-5.6-sol::What happens to a failed CREATE INDEX CONCURRENTLY?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What happens to a failed CREATE INDEX CONCURRENTLY?",
+      "CREATE INDEX CONCURRENTLY failure invalid index",
+      "invalid indexes left behind by failed concurrent index build",
+      "DROP INDEX and retry CREATE INDEX CONCURRENTLY"
+    ],
+    "ms": 1614.2909,
+    "inputTokens": 619,
+    "outputTokens": 34
+  },
+  "gpt-5.6-sol::What is temp_buffers used for, and what is its default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is temp_buffers used for, and what is its default?",
+      "temp_buffers configuration parameter",
+      "temporary buffers used by each database session for temporary tables",
+      "resource consumption memory temp_buffers default setting"
+    ],
+    "ms": 3484.8968999999997,
+    "inputTokens": 621,
+    "outputTokens": 71
+  },
+  "gpt-5.6-sol::What is the default output format of pg_dump?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default output format of pg_dump?",
+      "pg_dump default output format",
+      "pg_dump format option -F --format",
+      "pg_dump plain-text SQL script output"
+    ],
+    "ms": 1708.791600000004,
+    "inputTokens": 618,
+    "outputTokens": 28
+  },
+  "gpt-5.6-sol::What is the default value of autovacuum_freeze_max_age?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of autovacuum_freeze_max_age?",
+      "autovacuum_freeze_max_age configuration parameter default",
+      "autovacuum_freeze_max_age automatic vacuuming configuration",
+      "routine vacuuming transaction ID wraparound autovacuum_freeze_max_age"
+    ],
+    "ms": 6345.080800000011,
+    "inputTokens": 622,
+    "outputTokens": 43
+  },
+  "gpt-5.6-sol::What is the default value of autovacuum_vacuum_scale_factor?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of autovacuum_vacuum_scale_factor?",
+      "autovacuum_vacuum_scale_factor configuration parameter default",
+      "automatic vacuuming autovacuum_vacuum_scale_factor",
+      "runtime configuration automatic vacuum parameters"
+    ],
+    "ms": 2345.7340000000004,
+    "inputTokens": 623,
+    "outputTokens": 35
+  },
+  "gpt-5.6-sol::What is the default value of bytea_output?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of bytea_output?",
+      "bytea_output configuration parameter default value",
+      "client connection defaults bytea_output",
+      "bytea output format configuration"
+    ],
+    "ms": 3297.4331999999995,
+    "inputTokens": 618,
+    "outputTokens": 28
+  },
+  "gpt-5.6-sol::What is the default value of checkpoint_completion_target?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of checkpoint_completion_target?",
+      "checkpoint_completion_target configuration parameter default value",
+      "write-ahead log checkpoint completion target",
+      "runtime configuration WAL checkpoints"
+    ],
+    "ms": 2524.3466999999946,
+    "inputTokens": 618,
+    "outputTokens": 28
+  },
+  "gpt-5.6-sol::What is the default value of checkpoint_timeout?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of checkpoint_timeout?",
+      "checkpoint_timeout configuration parameter default value",
+      "Write Ahead Log checkpoints checkpoint_timeout",
+      "runtime configuration WAL checkpoint_timeout"
+    ],
+    "ms": 2340.9532000000036,
+    "inputTokens": 617,
+    "outputTokens": 27
+  },
+  "gpt-5.6-sol::What is the default value of deadlock_timeout, and what happens when it elapses?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of deadlock_timeout, and what happens when it elapses?",
+      "deadlock_timeout configuration parameter default value",
+      "deadlock_timeout delay before checking for a deadlock",
+      "lock waits deadlock detection and log_lock_waits"
+    ],
+    "ms": 5601.5095,
+    "inputTokens": 626,
+    "outputTokens": 35
+  },
+  "gpt-5.6-sol::What is the default value of default_statistics_target?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of default_statistics_target?",
+      "default_statistics_target configuration parameter default value",
+      "runtime query planning statistics default_statistics_target",
+      "ANALYZE statistics target configuration"
+    ],
+    "ms": 2220.310099999995,
+    "inputTokens": 618,
+    "outputTokens": 31
+  },
+  "gpt-5.6-sol::What is the default value of default_toast_compression, and what other value is accepted?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of default_toast_compression, and what other value is accepted?",
+      "default_toast_compression configuration parameter default value",
+      "default_toast_compression accepted values",
+      "TOAST compression methods pglz lz4"
+    ],
+    "ms": 2720.3285999999935,
+    "inputTokens": 627,
+    "outputTokens": 36
+  },
+  "gpt-5.6-sol::What is the default value of idle_in_transaction_session_timeout?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of idle_in_transaction_session_timeout?",
+      "idle_in_transaction_session_timeout default value",
+      "client connection defaults idle_in_transaction_session_timeout",
+      "runtime configuration idle transaction session timeout"
+    ],
+    "ms": 1750.135000000002,
+    "inputTokens": 620,
+    "outputTokens": 31
+  },
+  "gpt-5.6-sol::What is the default value of listen_addresses?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of listen_addresses?",
+      "listen_addresses default value",
+      "listen_addresses connection settings",
+      "listen_addresses server configuration parameter"
+    ],
+    "ms": 1908.494599999991,
+    "inputTokens": 617,
+    "outputTokens": 23
+  },
+  "gpt-5.6-sol::What is the default value of log_min_duration_statement?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of log_min_duration_statement?",
+      "log_min_duration_statement default value",
+      "log_min_duration_statement configuration parameter",
+      "error reporting and logging statement duration"
+    ],
+    "ms": 2696.430500000002,
+    "inputTokens": 619,
+    "outputTokens": 26
+  },
+  "gpt-5.6-sol::What is the default value of maintenance_work_mem, and which operations use it?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of maintenance_work_mem, and which operations use it?",
+      "maintenance_work_mem configuration parameter default and resource consumption",
+      "maintenance_work_mem used by VACUUM, CREATE INDEX, and ALTER TABLE ADD FOREIGN KEY",
+      "maintenance operations memory configuration"
+    ],
+    "ms": 2902.4355000000005,
+    "inputTokens": 624,
+    "outputTokens": 39
+  },
+  "gpt-5.6-sol::What is the default value of max_connections?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of max_connections?",
+      "max_connections configuration parameter default value",
+      "max_connections server connection limit",
+      "runtime-config-connection max_connections"
+    ],
+    "ms": 1933.462099999997,
+    "inputTokens": 617,
+    "outputTokens": 27
+  },
+  "gpt-5.6-sol::What is the default value of max_parallel_maintenance_workers?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of max_parallel_maintenance_workers?",
+      "max_parallel_maintenance_workers configuration parameter default",
+      "parallel maintenance workers resource consumption",
+      "runtime configuration resource consumption max_parallel_maintenance_workers"
+    ],
+    "ms": 3226.872900000002,
+    "inputTokens": 620,
+    "outputTokens": 30
+  },
+  "gpt-5.6-sol::What is the default value of max_parallel_workers_per_gather?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of max_parallel_workers_per_gather?",
+      "max_parallel_workers_per_gather parameter default value",
+      "parallel query resource limits configuration",
+      "runtime configuration query planning parallel workers per Gather node"
+    ],
+    "ms": 5553.069099999993,
+    "inputTokens": 621,
+    "outputTokens": 31
+  },
+  "gpt-5.6-sol::What is the default value of max_wal_size, and is it a hard limit?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of max_wal_size, and is it a hard limit?",
+      "max_wal_size default value",
+      "max_wal_size soft limit checkpoint WAL disk usage",
+      "WAL configuration max_wal_size exceeded under heavy load"
+    ],
+    "ms": 2202.2858000000124,
+    "inputTokens": 626,
+    "outputTokens": 37
+  },
+  "gpt-5.6-sol::What is the default value of password_encryption?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of password_encryption?",
+      "password_encryption configuration parameter default",
+      "password_encryption enum values",
+      "client authentication password encryption setting"
+    ],
+    "ms": 1416.5702999999921,
+    "inputTokens": 618,
+    "outputTokens": 24
+  },
+  "gpt-5.6-sol::What is the default value of random_page_cost?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of random_page_cost?",
+      "random_page_cost configuration parameter default",
+      "query planner cost constants random_page_cost"
+    ],
+    "ms": 1697.8412000000026,
+    "inputTokens": 618,
+    "outputTokens": 21
+  },
+  "gpt-5.6-sol::What is the default value of shared_buffers?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of shared_buffers?",
+      "shared_buffers configuration parameter default value",
+      "resource consumption memory shared_buffers",
+      "runtime configuration shared memory buffers"
+    ],
+    "ms": 2981.773500000003,
+    "inputTokens": 617,
+    "outputTokens": 26
+  },
+  "gpt-5.6-sol::What is the default value of superuser_reserved_connections, and how does it interact with max_connections?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of superuser_reserved_connections, and how does it interact with max_connections?",
+      "superuser_reserved_connections default value",
+      "superuser_reserved_connections interaction with max_connections",
+      "reserved connection slots for PostgreSQL superusers"
+    ],
+    "ms": 2302.7425999999978,
+    "inputTokens": 628,
+    "outputTokens": 32
+  },
+  "gpt-5.6-sol::What is the default value of wal_keep_size?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of wal_keep_size?",
+      "wal_keep_size configuration parameter default",
+      "write-ahead log replication sender wal_keep_size",
+      "runtime configuration replication WAL retention"
+    ],
+    "ms": 6454.003100000002,
+    "inputTokens": 618,
+    "outputTokens": 28
+  },
+  "gpt-5.6-sol::What is the default value of work_mem?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the default value of work_mem?",
+      "work_mem configuration parameter default value",
+      "resource consumption work_mem sort operations hash tables"
+    ],
+    "ms": 4503.0174,
+    "inputTokens": 617,
+    "outputTokens": 22
+  },
+  "gpt-5.6-sol::What is the difference between statement_timeout and lock_timeout?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What is the difference between statement_timeout and lock_timeout?",
+      "statement_timeout aborts statements that exceed the allowed execution time",
+      "lock_timeout aborts statements that wait too long to acquire a lock",
+      "statement_timeout and lock_timeout client connection defaults"
+    ],
+    "ms": 2204.4031999999934,
+    "inputTokens": 619,
+    "outputTokens": 40
+  },
+  "gpt-5.6-sol::What lock does CLUSTER take on the table?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What lock does CLUSTER take on the table?",
+      "CLUSTER table lock level ACCESS EXCLUSIVE",
+      "CLUSTER command locking behavior",
+      "explicit locking lock modes CLUSTER"
+    ],
+    "ms": 2514.7837,
+    "inputTokens": 618,
+    "outputTokens": 27
+  },
+  "gpt-5.6-sol::What lock does VACUUM FULL require that plain VACUUM does not?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What lock does VACUUM FULL require that plain VACUUM does not?",
+      "VACUUM FULL ACCESS EXCLUSIVE lock",
+      "plain VACUUM SHARE UPDATE EXCLUSIVE lock",
+      "VACUUM FULL table-level lock requirements"
+    ],
+    "ms": 1522.2468999999983,
+    "inputTokens": 624,
+    "outputTokens": 33
+  },
+  "gpt-5.6-sol::What lock level does TRUNCATE take?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "What lock level does TRUNCATE take?",
+      "TRUNCATE ACCESS EXCLUSIVE lock",
+      "TRUNCATE command table-level lock mode",
+      "explicit locking lock modes TRUNCATE"
+    ],
+    "ms": 2773.8227999999945,
+    "inputTokens": 617,
+    "outputTokens": 30
+  },
+  "gpt-5.6-sol::When a user sets a password, how does a freshly installed server store it?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "When a user sets a password, how does a freshly installed server store it?",
+      "password_encryption parameter password storage format",
+      "CREATE ROLE PASSWORD encrypted password",
+      "default password encryption method for new PostgreSQL installation"
+    ],
+    "ms": 4334.426399999997,
+    "inputTokens": 624,
+    "outputTokens": 113
+  },
+  "gpt-5.6-sol::Which column of pg_stat_activity shows what the backend is waiting on?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Which column of pg_stat_activity shows what the backend is waiting on?",
+      "pg_stat_activity wait_event_type wait_event columns",
+      "backend wait event information in pg_stat_activity"
+    ],
+    "ms": 2900.416499999992,
+    "inputTokens": 622,
+    "outputTokens": 24
+  },
+  "gpt-5.6-sol::Which dump file formats can the restore utility read back, and which one cannot be used with it?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Which dump file formats can the restore utility read back, and which one cannot be used with it?",
+      "pg_restore archive file formats custom directory tar",
+      "pg_dump non-plain-text output formats readable by pg_restore",
+      "plain-text SQL script cannot be restored with pg_restore"
+    ],
+    "ms": 3602.8490999999995,
+    "inputTokens": 628,
+    "outputTokens": 96
+  },
+  "gpt-5.6-sol::Which memory setting applies only to temporary tables inside a session, and how much is it by default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Which memory setting applies only to temporary tables inside a session, and how much is it by default?",
+      "temp_buffers temporary tables session-local buffers",
+      "Resource Consumption Memory temp_buffers parameter",
+      "temporary table buffers per database session"
+    ],
+    "ms": 2235.0681999999997,
+    "inputTokens": 628,
+    "outputTokens": 58
+  },
+  "gpt-5.6-sol::Which pg_dump output formats can pg_restore read?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Which pg_dump output formats can pg_restore read?",
+      "pg_restore archive file formats created by pg_dump",
+      "pg_dump output format compatibility with pg_restore",
+      "pg_dump --format archives readable by pg_restore"
+    ],
+    "ms": 5894.435500000003,
+    "inputTokens": 618,
+    "outputTokens": 146
+  },
+  "gpt-5.6-sol::Which pg_dump output formats support the parallel --jobs option?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Which pg_dump output formats support the parallel --jobs option?",
+      "pg_dump --jobs parallel dump output format",
+      "pg_dump -j njobs archive format restrictions",
+      "pg_dump parallel backup format requirements"
+    ],
+    "ms": 10338.593499999988,
+    "inputTokens": 620,
+    "outputTokens": 193
+  },
+  "gpt-5.6-sol::Which values can I choose from to control how much detail goes into the write-ahead log?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Which values can I choose from to control how much detail goes into the write-ahead log?",
+      "wal_level parameter settings",
+      "write-ahead log detail level",
+      "runtime configuration WAL wal_level"
+    ],
+    "ms": 3366.4105000000127,
+    "inputTokens": 627,
+    "outputTokens": 62
+  },
+  "gpt-5.6-sol::Why does building an index without blocking writes fail when I put it inside a transaction?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "Why does building an index without blocking writes fail when I put it inside a transaction?",
+      "CREATE INDEX CONCURRENTLY cannot run inside a transaction block",
+      "building indexes concurrently transaction limitations",
+      "CREATE INDEX CONCURRENTLY multiple transactions"
+    ],
+    "ms": 2519.7839999999997,
+    "inputTokens": 625,
+    "outputTokens": 79
+  },
+  "gpt-5.6-sol::With no replication slot in place, how much write-ahead log does a primary hold on to for standbys by default?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "With no replication slot in place, how much write-ahead log does a primary hold on to for standbys by default?",
+      "wal_keep_size minimum WAL retained in pg_wal for standby servers",
+      "WAL retention for streaming replication without replication slots",
+      "wal_keep_size default setting and checkpoint WAL segment removal"
+    ],
+    "ms": 4640.246199999994,
+    "inputTokens": 633,
+    "outputTokens": 106
+  },
+  "gpt-5.6-sol::which setting caps memory for one sort before it spills to disk?": {
+    "model": "gpt-5.6-sol",
+    "queries": [
+      "which setting caps memory for one sort before it spills to disk?",
+      "work_mem sort operations temporary disk files",
+      "resource consumption memory for query operations",
+      "temporary files created by sorts"
+    ],
+    "ms": 7788.411700000001,
+    "inputTokens": 621,
+    "outputTokens": 28
+  }
+}

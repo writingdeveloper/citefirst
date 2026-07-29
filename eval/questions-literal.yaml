@@ -1,0 +1,486 @@
+# 평가 질문 세트 — PostgreSQL 17 문서
+#
+# ## 정답의 출처
+#
+# 아래 expected_answer 는 **전부 실행으로 확인했다.** 코퍼스를 읽어서 채우지 않았다 —
+# 그건 자기참조라 라벨이 되지 못한다. 확인 환경:
+#
+#   PostgreSQL 17.10 (Ubuntu 17.10-1.pgdg24.04+1), pgvector 0.8.5, WSL2 Ubuntu 24.04
+#   2026-07-28 확인
+#
+# verified_by 에는 **실제로 친 명령**이 들어 있다. "문서에서 봤다"는 검증이 아니다.
+# eval/run.ts 는 verified: false 가 하나라도 있으면 실행을 거부한다.
+#
+# ## 기본값 표기 주의
+#
+# `SHOW` 는 현재 세션에 적용된 값을, `boot_val` 은 **컴파일 시점 기본값**을 준다.
+# 문서가 말하는 "default value" 는 boot_val 쪽이다. 패키지가 postgresql.conf 를
+# 건드렸을 수 있으므로 둘을 구분해서 확인했다.
+#
+# ## trap
+#
+# 26개 중 11개가 함정 질문이다(1/3 이상 유지). 리랭킹 before/after 차이는 이 그룹에서 나온다.
+
+questions:
+  # ── 메모리 파라미터: 이름이 비슷해서 벡터 검색이 가장 자주 틀리는 지점 ──
+  - id: q001
+    question: What is the default value of work_mem?
+    expected_answer: "4MB (boot_val 4096, unit kB)"
+    verified_by: "SELECT boot_val, unit FROM pg_settings WHERE name='work_mem' → 4096 kB"
+    verified: true
+    trap: "maintenance_work_mem / autovacuum_work_mem / temp_buffers 와 문장 구조가 거의 같다"
+    gold:
+      source_path_contains: runtime-config-resource
+      must_contain: ["work_mem", "sort"]
+
+  - id: q002
+    question: What is the default value of maintenance_work_mem, and which operations use it?
+    expected_answer: "64MB (boot_val 65536, unit kB). Used by maintenance operations such as VACUUM, CREATE INDEX, and ALTER TABLE ADD FOREIGN KEY."
+    verified_by: "SELECT boot_val, unit FROM pg_settings WHERE name='maintenance_work_mem' → 65536 kB"
+    verified: true
+    trap: "q001 과 거의 동일한 문장 — 검색이 둘을 구분해야 한다"
+    gold:
+      source_path_contains: runtime-config-resource
+      must_contain: ["maintenance_work_mem", "VACUUM"]
+
+  - id: q003
+    question: What does it mean when autovacuum_work_mem is set to -1?
+    expected_answer: "-1 means the value of maintenance_work_mem is used instead. -1 is also the default."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='autovacuum_work_mem' → -1"
+    verified: true
+    trap: "-1 의 의미가 파라미터마다 다르다. q002 로 흘러가기 쉽다"
+    gold:
+      source_path_contains: runtime-config-resource
+      must_contain: ["autovacuum_work_mem", "maintenance_work_mem"]
+
+  - id: q004
+    question: What is temp_buffers used for, and what is its default?
+    expected_answer: "8MB (boot_val 1024, unit 8kB). Session-local buffers used only for access to temporary tables."
+    verified_by: "SELECT boot_val, unit FROM pg_settings WHERE name='temp_buffers' → 1024 × 8kB = 8MB"
+    verified: true
+    trap: "이름이 shared_buffers 와 비슷하고 설명 문단 구조가 work_mem 계열과 같다"
+    gold:
+      source_path_contains: runtime-config-resource
+      must_contain: ["temp_buffers", "temporary"]
+
+  - id: q005
+    question: Does effective_cache_size allocate memory?
+    expected_answer: "No. It does not allocate anything — it is only a planner estimate of how much memory is available for disk caching, used when costing index scans. Default 4GB."
+    verified_by: "effective_cache_size=4GB 인데 SELECT sum(size) FROM pg_shmem_allocations → 142.9MB. 설정값이 4GB여도 공유메모리는 그만큼 잡히지 않는다."
+    verified: true
+    trap: "이름 때문에 할당하는 것처럼 읽힌다. 실제로는 플래너 추정치일 뿐"
+    gold:
+      source_path_contains: runtime-config-query
+      must_contain: ["effective_cache_size", "planner"]
+
+  - id: q006
+    question: What is the default value of shared_buffers?
+    expected_answer: "128MB (boot_val 16384, unit 8kB)"
+    verified_by: "SELECT boot_val, unit FROM pg_settings WHERE name='shared_buffers' → 16384 × 8kB = 128MB"
+    verified: true
+    gold:
+      source_path_contains: runtime-config-resource
+      # 이름만으로는 9개가 걸린다 — vacuum_buffer_usage_limit, subtransaction_buffers 등
+      # 다른 파라미터 설명이 shared_buffers 를 참조하기 때문이다. 기본값 문구로 좁힌다.
+      must_contain: ["shared_buffers", "128 megabytes"]
+
+  # ── VACUUM 계열: 락 수준과 동작이 변종마다 다르다 ──
+  - id: q007
+    question: What lock does VACUUM FULL require that plain VACUUM does not?
+    expected_answer: "ACCESS EXCLUSIVE lock on the table, which blocks all other access including reads. Plain VACUUM does not take it and can run alongside normal operations."
+    verified_by: "3백만 행 테이블에 VACUUM FULL 실행 중 다른 세션에서 pg_locks 조회 → AccessExclusiveLock. (작은 테이블에서는 너무 빨리 끝나 관찰되지 않는다.)"
+    verified: true
+    trap: "VACUUM / VACUUM FULL / autovacuum 이 같은 페이지에 붙어 있다"
+    gold:
+      source_path_contains: sql-vacuum
+      must_contain: ["FULL", "ACCESS EXCLUSIVE"]
+
+  - id: q008
+    question: Can VACUUM run inside a transaction block?
+    expected_answer: "No. It fails with: VACUUM cannot run inside a transaction block."
+    verified_by: "BEGIN; VACUUM locktest; → ERROR: VACUUM cannot run inside a transaction block"
+    verified: true
+    gold:
+      source_path_contains: sql-vacuum
+      must_contain: ["VACUUM", "transaction block"]
+
+  - id: q009
+    question: What is the default value of autovacuum_vacuum_scale_factor?
+    expected_answer: "0.2 (20% of the table size)"
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='autovacuum_vacuum_scale_factor' → 0.2"
+    verified: true
+    trap: "autovacuum_analyze_scale_factor 와 값도 문장도 비슷하다"
+    gold:
+      source_path_contains: runtime-config-autovacuum
+      must_contain: ["autovacuum_vacuum_scale_factor"]
+
+  # ── 백업 도구 3형제: 무엇이 어느 도구에만 있는가 ──
+  - id: q010
+    question: What does pg_dumpall back up that pg_dump does not?
+    expected_answer: "Cluster-wide global objects: roles and tablespaces. pg_dumpall has -g/--globals-only, -r/--roles-only and -t/--tablespaces-only; pg_dump dumps a single database and has none of these."
+    verified_by: "pg_dumpall --help 와 pg_dump --help 비교 → pg_dumpall 에만 --globals-only / --roles-only / --tablespaces-only 존재"
+    verified: true
+    trap: "세 도구의 설명 문단이 서로를 참조해서 벡터 검색이 엉뚱한 쪽을 집는다"
+    gold:
+      source_path_contains: app-pg-dumpall
+      must_contain: ["pg_dumpall", "roles"]
+
+  - id: q011
+    question: Which pg_dump output formats can pg_restore read?
+    expected_answer: "custom (c), directory (d) and tar (t). It cannot read the plain-text format — that one is replayed with psql."
+    verified_by: "pg_restore --help → -F, --format=c|d|t (plain 없음). pg_dump --help → -F, --format=c|d|t|p"
+    verified: true
+    trap: "plain 포맷은 pg_restore 로 못 읽는다 — 문서를 안 보면 틀리기 쉽다"
+    gold:
+      source_path_contains: app-pgrestore
+      must_contain: ["pg_restore", "plain"]
+
+  - id: q012
+    question: What is the default output format of pg_dump?
+    expected_answer: "plain (plain-text SQL script)"
+    verified_by: "pg_dump --help → -F, --format=c|d|t|p ... plain text (default)"
+    verified: true
+    gold:
+      source_path_contains: app-pgdump
+      must_contain: ["--format", "plain"]
+
+  # ── 동시성 옵션: CONCURRENTLY 가 붙으면 제약이 달라진다 ──
+  - id: q013
+    question: What are the restrictions on CREATE INDEX CONCURRENTLY?
+    expected_answer: "It cannot run inside a transaction block. (It also takes longer and does more total work than a standard index build.)"
+    verified_by: "BEGIN; CREATE INDEX CONCURRENTLY ix ON t(i); → ERROR: CREATE INDEX CONCURRENTLY cannot run inside a transaction block"
+    verified: true
+    trap: "REINDEX CONCURRENTLY 와 제약이 겹치면서도 다르다"
+    gold:
+      source_path_contains: sql-createindex
+      must_contain: ["CONCURRENTLY", "transaction"]
+
+  - id: q014
+    question: What happens to a failed CREATE INDEX CONCURRENTLY?
+    expected_answer: "The invalid index is left behind in the table and must be dropped manually. It is marked indisvalid = false and is not used for queries."
+    verified_by: "중복 값이 있는 컬럼에 CREATE UNIQUE INDEX CONCURRENTLY 실행 → 실패. 이후 pg_index 조회 → ix_dup indisvalid=false indisready=false (인덱스가 남아 있음)"
+    verified: true
+    trap: "실패한 인덱스가 남는다는 사실이 별도 문단에 있다"
+    gold:
+      source_path_contains: sql-createindex
+      must_contain: ["invalid", "CONCURRENTLY"]
+
+  # ── 락: 명령마다 다른 락 수준 ──
+  - id: q015
+    question: What lock level does TRUNCATE take?
+    expected_answer: "ACCESS EXCLUSIVE on the table (and on its indexes)."
+    verified_by: "BEGIN; TRUNCATE locktest; SELECT mode FROM pg_locks JOIN pg_class ... → AccessExclusiveLock on locktest and on ix_locktest"
+    verified: true
+    trap: "DELETE 와 비교 문단이 붙어 있어 섞이기 쉽다"
+    gold:
+      source_path_contains: sql-truncate
+      must_contain: ["TRUNCATE", "ACCESS EXCLUSIVE"]
+
+  - id: q016
+    question: What lock does CLUSTER take on the table?
+    expected_answer: "ACCESS EXCLUSIVE, which blocks all other database operations on the table including reads."
+    verified_by: "BEGIN; CLUSTER locktest USING ix_locktest; SELECT mode FROM pg_locks ... → AccessExclusiveLock (CLUSTER 는 VACUUM FULL 과 달리 트랜잭션 블록 안에서 실행된다)"
+    verified: true
+    gold:
+      source_path_contains: sql-cluster
+      must_contain: ["CLUSTER", "ACCESS EXCLUSIVE"]
+
+  # ── 타임아웃 계열: 이름이 비슷하고 단위가 같다 ──
+  - id: q017
+    question: What is the difference between statement_timeout and lock_timeout?
+    expected_answer: "statement_timeout limits how long any statement may run in total. lock_timeout limits only how long a statement waits to acquire a lock — a long-running statement that is not waiting on a lock is unaffected. Both default to 0 (disabled)."
+    verified_by: "SET statement_timeout=200; SELECT pg_sleep(2) → 'canceling statement due to statement timeout'. SET lock_timeout=200; SELECT pg_sleep(1) → 발동하지 않음. 다른 세션이 ACCESS EXCLUSIVE 를 잡은 상태에서 SET lock_timeout=300; SELECT * FROM totest → 'canceling statement due to lock timeout'"
+    verified: true
+    trap: "같은 페이지의 인접 문단이고 문장 구조가 동일하다"
+    gold:
+      source_path_contains: runtime-config-client
+      must_contain: ["lock_timeout"]
+
+  - id: q018
+    question: What is the default value of idle_in_transaction_session_timeout?
+    expected_answer: "0, which disables the timeout."
+    verified_by: "SELECT boot_val, unit FROM pg_settings WHERE name='idle_in_transaction_session_timeout' → 0 ms"
+    verified: true
+    gold:
+      source_path_contains: runtime-config-client
+      must_contain: ["idle_in_transaction_session_timeout"]
+
+  # ── WAL / 복제 ──
+  - id: q019
+    question: What are the allowed values of wal_level?
+    expected_answer: "minimal, replica, logical"
+    verified_by: "SELECT enumvals FROM pg_settings WHERE name='wal_level' → {minimal,replica,logical}"
+    verified: true
+    gold:
+      source_path_contains: runtime-config-wal
+      must_contain: ["wal_level", "logical"]
+
+  - id: q020
+    question: What are the allowed values of synchronous_commit?
+    expected_answer: "local, remote_write, remote_apply, on, off"
+    verified_by: "SELECT enumvals FROM pg_settings WHERE name='synchronous_commit' → {local,remote_write,remote_apply,on,off}"
+    verified: true
+    trap: "on/off 만 있는 줄 알기 쉽다 — 실제로는 local, remote_write, remote_apply 도 있다"
+    gold:
+      source_path_contains: runtime-config-wal
+      must_contain: ["synchronous_commit", "remote_apply"]
+
+  - id: q021
+    question: What is the default value of checkpoint_timeout?
+    expected_answer: "5 minutes (boot_val 300, unit s)"
+    verified_by: "SELECT boot_val, unit FROM pg_settings WHERE name='checkpoint_timeout' → 300 s"
+    verified: true
+    gold:
+      source_path_contains: runtime-config-wal
+      must_contain: ["checkpoint_timeout"]
+
+  # ── 연결 / 플래너 ──
+  - id: q022
+    question: What is the default value of max_connections?
+    expected_answer: "100"
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='max_connections' → 100"
+    verified: true
+    gold:
+      source_path_contains: runtime-config-connection
+      must_contain: ["max_connections"]
+
+  - id: q023
+    question: What is the default value of random_page_cost?
+    expected_answer: "4.0"
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='random_page_cost' → 4"
+    verified: true
+    trap: "seq_page_cost 와 인접 문단이고 값 형식이 같다"
+    gold:
+      source_path_contains: runtime-config-query
+      must_contain: ["random_page_cost"]
+
+  - id: q024
+    question: What is the default value of default_statistics_target?
+    expected_answer: "100"
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='default_statistics_target' → 100"
+    verified: true
+    gold:
+      source_path_contains: runtime-config-query
+      must_contain: ["default_statistics_target"]
+
+  # ── 모니터링 ──
+  - id: q025
+    question: Which column of pg_stat_activity shows what the backend is waiting on?
+    expected_answer: "Two columns: wait_event_type (the kind of event) and wait_event (the specific event name). Both are NULL when the backend is not waiting."
+    verified_by: "pg_attribute 로 pg_stat_activity 컬럼 목록 조회 → ..., wait_event_type, wait_event, state, ..."
+    verified: true
+    trap: "wait_event 와 wait_event_type 두 개로 나뉘어 있다"
+    gold:
+      source_path_contains: monitoring-stats
+      must_contain: ["wait_event_type"]
+
+  - id: q026
+    question: What does a NULL client_addr in pg_stat_activity indicate?
+    expected_answer: "The client is connected via a Unix-domain socket on the server machine (or it is an internal background process rather than a client backend)."
+    verified_by: "유닉스 소켓으로 붙은 세션에서 SELECT host(client_addr) FROM pg_stat_activity WHERE pid=pg_backend_pid() → NULL (backend_type=client backend)"
+    verified: true
+    gold:
+      source_path_contains: monitoring-stats
+      must_contain: ["client_addr"]
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # 2026-07-29 추가 (q027~q046). 같은 사실을 식별자로 묻는 판본이다.
+  # expected_answer / verified_by / gold 는 questions.yaml 과 동일하다.
+
+  - id: q027
+    question: What is the default value of max_parallel_workers_per_gather?
+    expected_answer: "max_parallel_workers_per_gather, default 2."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='max_parallel_workers_per_gather' → 2"
+    verified: true
+    trap: "max_parallel_workers / max_worker_processes 와 이름이 겹친다"
+    gold:
+      source_path_contains: runtime-config-resource
+      must_contain: ["max_parallel_workers_per_gather"]
+
+  - id: q028
+    question: What is the default value of max_parallel_maintenance_workers?
+    expected_answer: "max_parallel_maintenance_workers, default 2."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='max_parallel_maintenance_workers' → 2"
+    verified: true
+    trap: "q027 과 값이 같아 이름을 구분해야만 한다"
+    gold:
+      source_path_contains: runtime-config-resource
+      must_contain: ["max_parallel_maintenance_workers"]
+
+  - id: q029
+    question: What is the default value of max_wal_size, and is it a hard limit?
+    expected_answer: "max_wal_size, default 1GB. It is a soft limit — WAL can exceed it under heavy load, a failing archive_command/archive_library, or a high wal_keep_size."
+    verified_by: "SELECT boot_val, unit FROM pg_settings WHERE name='max_wal_size' → 1024 MB"
+    verified: true
+    trap: "min_wal_size / wal_keep_size 와 같은 절에 있다"
+    gold:
+      source_path_contains: runtime-config-wal
+      must_contain: ["max_wal_size"]
+
+  - id: q030
+    question: What is the default value of wal_keep_size?
+    expected_answer: "wal_keep_size defaults to 0 — no extra WAL is retained beyond what normal checkpointing keeps."
+    verified_by: "SELECT boot_val, unit FROM pg_settings WHERE name='wal_keep_size' → 0 MB"
+    verified: true
+    trap: "max_wal_size/min_wal_size 와 단위가 같다"
+    gold:
+      source_path_contains: runtime-config-replication
+      must_contain: ["wal_keep_size"]
+
+  - id: q031
+    question: What is the default value of deadlock_timeout, and what happens when it elapses?
+    expected_answer: "deadlock_timeout, default 1s (1000ms). Deadlock detection is not run until a lock wait has lasted this long."
+    verified_by: "SELECT boot_val, unit FROM pg_settings WHERE name='deadlock_timeout' → 1000 ms"
+    verified: true
+    trap: "lock_timeout / statement_timeout 과 같은 계열이다"
+    gold:
+      source_path_contains: runtime-config-locks
+      must_contain: ["deadlock_timeout"]
+
+  - id: q032
+    question: Is max_locks_per_transaction a hard limit on the number of locks one transaction may take, and what is its default?
+    expected_answer: "max_locks_per_transaction, default 64. It is not a hard per-transaction limit — it only sizes the shared lock table (max_locks_per_transaction × (max_connections + max_prepared_transactions)); one transaction may take more locks as long as the table has room."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='max_locks_per_transaction' → 64"
+    verified: true
+    trap: "max_pred_locks_per_transaction 도 기본값 64 다"
+    gold:
+      source_path_contains: runtime-config-locks
+      must_contain: ["max_locks_per_transaction"]
+
+  - id: q033
+    question: What is the default value of autovacuum_freeze_max_age?
+    expected_answer: "autovacuum_freeze_max_age, default 200 million transactions."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='autovacuum_freeze_max_age' → 200000000"
+    verified: true
+    trap: "vacuum_freeze_min_age / vacuum_freeze_table_age 와 같은 계열이다"
+    gold:
+      source_path_contains: runtime-config-autovacuum
+      must_contain: ["autovacuum_freeze_max_age"]
+
+  - id: q034
+    question: What are the defaults of effective_io_concurrency and maintenance_io_concurrency?
+    expected_answer: "effective_io_concurrency 1, maintenance_io_concurrency 10."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name IN ('effective_io_concurrency','maintenance_io_concurrency') → 1 / 10"
+    verified: true
+    trap: "이름이 한 낱말만 다르다"
+    gold:
+      source_path_contains: runtime-config-resource
+      must_contain: ["maintenance_io_concurrency", "effective_io_concurrency"]
+
+  - id: q035
+    question: What is the default value of password_encryption?
+    expected_answer: "scram-sha-256 (the default of password_encryption)."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='password_encryption' → scram-sha-256"
+    verified: true
+    trap: "md5 가 오랫동안 기본값이었다"
+    gold:
+      source_path_contains: runtime-config-connection
+      must_contain: ["password_encryption"]
+
+  - id: q036
+    question: What is the default value of superuser_reserved_connections, and how does it interact with max_connections?
+    expected_answer: "No. superuser_reserved_connections defaults to 3, held back for superusers, so ordinary users get at most 97."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name IN ('superuser_reserved_connections','reserved_connections') → 3 / 0"
+    verified: true
+    trap: "reserved_connections 와 이름이 거의 같다"
+    gold:
+      source_path_contains: runtime-config-connection
+      must_contain: ["superuser_reserved_connections"]
+
+  - id: q037
+    question: What is the default value of listen_addresses?
+    expected_answer: "listen_addresses, default localhost — the server only accepts TCP connections on loopback."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='listen_addresses' → localhost"
+    verified: true
+    gold:
+      source_path_contains: runtime-config-connection
+      must_contain: ["listen_addresses"]
+
+  - id: q038
+    question: What is the default value of default_toast_compression, and what other value is accepted?
+    expected_answer: "pglz by default; lz4 is the alternative (available only if the build was compiled with LZ4 support)."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='default_toast_compression' → pglz"
+    verified: true
+    trap: "lz4 를 기본값으로 짐작하기 쉽다"
+    gold:
+      source_path_contains: runtime-config-client
+      must_contain: ["default_toast_compression"]
+
+  - id: q039
+    question: What is the default value of bytea_output?
+    expected_answer: "bytea_output, default hex. The alternative is escape."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='bytea_output' → hex"
+    verified: true
+    gold:
+      source_path_contains: runtime-config-client
+      must_contain: ["bytea_output"]
+
+  - id: q040
+    question: What is the default value of log_min_duration_statement?
+    expected_answer: "log_min_duration_statement, default -1, which disables duration logging entirely."
+    verified_by: "SELECT boot_val, unit FROM pg_settings WHERE name='log_min_duration_statement' → -1 ms"
+    verified: true
+    trap: "log_statement / log_min_duration_sample 과 이름이 비슷하다"
+    gold:
+      source_path_contains: runtime-config-logging
+      must_contain: ["log_min_duration_statement"]
+
+  - id: q041
+    question: What are the defaults of from_collapse_limit and join_collapse_limit?
+    expected_answer: "from_collapse_limit and join_collapse_limit, both default 8."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name IN ('from_collapse_limit','join_collapse_limit') → 8 / 8"
+    verified: true
+    trap: "geqo_threshold 도 테이블 개수 임계값이다"
+    gold:
+      source_path_contains: runtime-config-query
+      must_contain: ["join_collapse_limit", "from_collapse_limit"]
+
+  - id: q042
+    question: What is the default value of checkpoint_completion_target?
+    expected_answer: "checkpoint_completion_target, default 0.9."
+    verified_by: "SELECT boot_val FROM pg_settings WHERE name='checkpoint_completion_target' → 0.9"
+    verified: true
+    trap: "checkpoint_timeout / checkpoint_warning 과 같은 절에 있다"
+    gold:
+      source_path_contains: runtime-config-wal
+      must_contain: ["checkpoint_completion_target"]
+
+  - id: q043
+    question: Is TRUNCATE transaction-safe — can it be rolled back?
+    expected_answer: "Yes. TRUNCATE is transaction-safe with respect to table data — rolling back the surrounding transaction restores the rows. (A RESTART IDENTITY sequence restart is rolled back too, except for the effects of other sequence operations done in between.)"
+    verified_by: "CREATE TEMP TABLE t_trunc(i int); INSERT 5행; BEGIN; TRUNCATE t_trunc; ROLLBACK; SELECT count(*) → 5"
+    verified: true
+    trap: "다른 DB 에서는 암묵 커밋이라 반대로 기억하기 쉽다"
+    gold:
+      source_path_contains: sql-truncate
+      must_contain: ["rolled back"]
+
+  - id: q044
+    question: Can CREATE DATABASE be executed inside a transaction block?
+    expected_answer: "No. CREATE DATABASE cannot be executed inside a transaction block."
+    verified_by: "BEGIN; CREATE DATABASE probe_db; → ERROR: CREATE DATABASE cannot run inside a transaction block"
+    verified: true
+    trap: "VACUUM 도 같은 제약이라 두 문서가 섞인다"
+    gold:
+      source_path_contains: sql-createdatabase
+      must_contain: ["transaction block"]
+
+  - id: q045
+    question: Can REINDEX CONCURRENTLY be executed inside a transaction block?
+    expected_answer: "No. REINDEX CONCURRENTLY cannot be run inside a transaction block."
+    verified_by: "BEGIN; REINDEX INDEX CONCURRENTLY t_rx_i; → ERROR: REINDEX CONCURRENTLY cannot run inside a transaction block"
+    verified: true
+    trap: "CREATE INDEX CONCURRENTLY 와 사실상 같은 제약이다"
+    gold:
+      source_path_contains: sql-reindex
+      must_contain: ["CONCURRENTLY", "transaction block"]
+
+  - id: q046
+    question: Which pg_dump output formats support the parallel --jobs option?
+    expected_answer: "No. Parallel dump (-j / --jobs) can only be used with the directory format."
+    verified_by: "pg_dump -Fc -j2 → error: parallel backup only supported by the directory format / pg_dump -Fd -j2 → 성공"
+    verified: true
+    trap: "custom 포맷도 아카이브라 병렬이 될 것처럼 읽힌다"
+    gold:
+      source_path_contains: app-pgdump
+      must_contain: ["jobs", "directory"]

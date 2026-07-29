@@ -1,0 +1,41 @@
+# secrets — never commit
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# deps / build
+node_modules/
+.next/
+out/
+dist/
+build/
+*.tsbuildinfo
+
+# corpus — fetched locally, license-checked before any commit (see corpus/SOURCES.md)
+corpus/**
+!corpus/SOURCES.md
+!corpus/.gitkeep
+
+# db
+pgdata/
+*.sqlite
+*.db
+
+# eval — results ARE committed (portfolio evidence); scratch is not
+eval/results/scratch/
+
+# os / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# logs
+*.log
+npm-debug.log*
+
+# 로컬 모델 가중치 — 커밋하지 않는다 (수백 MB)
+.models/

@@ -1,0 +1,1912 @@
+{
+  "ranAt": "2026-07-29T00:47:39.450Z",
+  "mode": "retrieval-only",
+  "questionSet": "questions.yaml",
+  "config": {
+    "embeddingModel": "Xenova/bge-base-en-v1.5",
+    "embeddingDim": 768,
+    "rerankModel": "Xenova/bge-reranker-base",
+    "chunkTokens": 512,
+    "chunkOverlap": 64,
+    "retrieveTopK": 20,
+    "rerankTopN": 5,
+    "hybridEnabled": false,
+    "rewriteEnabled": true,
+    "rewriteModel": "gpt-5.6-sol",
+    "rewriteMaxQueries": 3,
+    "answerModel": "gpt-5.6-sol",
+    "answerEffort": "low",
+    "judgeModel": "gpt-5.6-sol",
+    "evalTopN": 10,
+    "recallK": 5,
+    "mrrK": 10
+  },
+  "summary": {
+    "rerankOff": {
+      "rerankEnabled": false,
+      "questions": 26,
+      "recallAt5": 0.9615384615384616,
+      "mrrAt10": 0.7929487179487178,
+      "trapRecallAt5": 1,
+      "citationValidity": null,
+      "grounded": null,
+      "correct": null
+    },
+    "rerankOn": {
+      "rerankEnabled": true,
+      "questions": 26,
+      "recallAt5": 0.8461538461538461,
+      "mrrAt10": 0.6086996336996336,
+      "trapRecallAt5": 0.9473684210526315,
+      "citationValidity": null,
+      "grounded": null,
+      "correct": null
+    }
+  },
+  "results": {
+    "rerankOff": [
+      {
+        "id": "q001",
+        "question": "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+        "trap": "메모리 한도를 정하는 설정이 여럿이고 설명 문장이 거의 같다",
+        "goldChunkIds": [
+          7144
+        ],
+        "retrievedIds": [
+          7144,
+          5863,
+          7019,
+          7145,
+          6662,
+          7969,
+          7161,
+          7146,
+          7149,
+          7147
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 3855.6839000000004,
+        "queries": [
+          "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+          "work_mem memory for each sort or hash operation before writing temporary files",
+          "work_mem resource consumption parameter default",
+          "temporary files created by sort operations and hash tables"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 1980.8051,
+        "rewriteTokens": {
+          "input": 640,
+          "output": 38
+        }
+      },
+      {
+        "id": "q002",
+        "question": "Does routine table cleanup get the same memory budget as an ordinary query, or its own? What is that budget by default?",
+        "trap": "q001 과 거의 동일한 문장 구조 — 검색이 둘을 구분해야 한다",
+        "goldChunkIds": [
+          7146,
+          7147,
+          7184
+        ],
+        "retrievedIds": [
+          7146,
+          7147,
+          7144,
+          5863,
+          6769,
+          6767,
+          6771,
+          6768,
+          10012,
+          6812
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 5581.678199999999,
+        "queries": [
+          "Does routine table cleanup get the same memory budget as an ordinary query, or its own? What is that budget by default?",
+          "maintenance_work_mem memory limit for VACUUM and maintenance operations default setting",
+          "work_mem versus maintenance_work_mem for ordinary queries and routine table cleanup",
+          "autovacuum_work_mem memory available to autovacuum worker default setting"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 5479.5289999999995,
+        "rewriteTokens": {
+          "input": 633,
+          "output": 139
+        }
+      },
+      {
+        "id": "q003",
+        "question": "Each automatic cleanup worker has its own memory limit. What does the default value of that limit actually mean?",
+        "trap": "-1 의 의미가 파라미터마다 다르고, q002 로 흘러가기 쉽다",
+        "goldChunkIds": [
+          7146,
+          7147
+        ],
+        "retrievedIds": [
+          7147,
+          7146,
+          6801,
+          6796,
+          6812,
+          7144,
+          6793,
+          6998,
+          7149,
+          6797
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 4036.5219000000016,
+        "queries": [
+          "Each automatic cleanup worker has its own memory limit. What does the default value of that limit actually mean?",
+          "autovacuum_work_mem default setting meaning",
+          "autovacuum worker memory limit maintenance_work_mem",
+          "resource consumption autovacuum_work_mem parameter"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 3939.0728000000017,
+        "rewriteTokens": {
+          "input": 629,
+          "output": 117
+        }
+      },
+      {
+        "id": "q004",
+        "question": "Which memory setting applies only to temporary tables inside a session, and how much is it by default?",
+        "trap": "이름이 shared_buffers 와 비슷하고 설명 구조가 work_mem 계열과 같다",
+        "goldChunkIds": [
+          7142
+        ],
+        "retrievedIds": [
+          7142,
+          6821,
+          8616,
+          7161,
+          7139,
+          6495,
+          7144,
+          6662,
+          8534,
+          8975
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 3772.7118999999984,
+        "queries": [
+          "Which memory setting applies only to temporary tables inside a session, and how much is it by default?",
+          "temp_buffers temporary tables per database session default",
+          "temp_buffers temporary buffer memory setting",
+          "resource consumption temporary buffers session-local tables"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 3668.6144999999997,
+        "rewriteTokens": {
+          "input": 628,
+          "output": 128
+        }
+      },
+      {
+        "id": "q005",
+        "question": "There is a setting that tells the planner how much disk cache it can assume. Does the server actually reserve that much memory?",
+        "trap": "이름 때문에 할당하는 것처럼 읽힌다. 실제로는 플래너 추정치일 뿐",
+        "goldChunkIds": [
+          7083
+        ],
+        "retrievedIds": [
+          7083,
+          7139,
+          7074,
+          7144,
+          7101,
+          7153,
+          7154,
+          7059,
+          7163,
+          6544
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 4995.3469000000005,
+        "queries": [
+          "There is a setting that tells the planner how much disk cache it can assume. Does the server actually reserve that much memory?",
+          "effective_cache_size planner estimate available disk cache",
+          "effective_cache_size does not allocate or reserve shared memory",
+          "query planning cost estimates operating system and PostgreSQL buffer cache"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 4892.260900000001,
+        "rewriteTokens": {
+          "input": 633,
+          "output": 39
+        }
+      },
+      {
+        "id": "q006",
+        "question": "How much memory does the server reserve for its shared buffer pool out of the box?",
+        "trap": "다른 여러 파라미터 설명이 shared_buffers 를 참조한다",
+        "goldChunkIds": [
+          7139
+        ],
+        "retrievedIds": [
+          7139,
+          7154,
+          7156,
+          7158,
+          7151,
+          7153,
+          7152,
+          7148,
+          7150,
+          7155
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1725.0936000000002,
+        "queries": [
+          "How much memory does the server reserve for its shared buffer pool out of the box?",
+          "shared_buffers default setting",
+          "shared memory buffer pool configuration",
+          "resource consumption shared_buffers"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 1635.5602,
+        "rewriteTokens": {
+          "input": 625,
+          "output": 23
+        }
+      },
+      {
+        "id": "q007",
+        "question": "Rewriting a table to reclaim disk space blocks even readers, while ordinary cleanup does not. Which lock causes that?",
+        "trap": "VACUUM / VACUUM FULL / autovacuum 이 같은 페이지에 붙어 있다",
+        "goldChunkIds": [
+          9991,
+          10001
+        ],
+        "retrievedIds": [
+          9991,
+          6771,
+          9992,
+          6768,
+          6767,
+          9570,
+          10012,
+          9564,
+          9675,
+          9997
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 5147.923299999999,
+        "queries": [
+          "Rewriting a table to reclaim disk space blocks even readers, while ordinary cleanup does not. Which lock causes that?",
+          "VACUUM FULL ACCESS EXCLUSIVE lock table rewrite",
+          "VACUUM FULL reclaims disk space blocks SELECT",
+          "explicit locking ACCESS EXCLUSIVE conflicts with ACCESS SHARE"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 5058.652099999999,
+        "rewriteTokens": {
+          "input": 631,
+          "output": 134
+        }
+      },
+      {
+        "id": "q008",
+        "question": "Can the routine table cleanup command be wrapped in BEGIN and COMMIT?",
+        "goldChunkIds": [
+          10012
+        ],
+        "retrievedIds": [
+          6767,
+          6789,
+          6790,
+          6780,
+          6786,
+          6787,
+          7165,
+          6768,
+          6771,
+          6087
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0,
+        "retrieveMs": 3640.8407000000007,
+        "queries": [
+          "Can the routine table cleanup command be wrapped in BEGIN and COMMIT?",
+          "VACUUM transaction block BEGIN COMMIT",
+          "SQL VACUUM command transaction block restriction",
+          "routine vacuuming explicit transactions"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 3548.177899999995,
+        "rewriteTokens": {
+          "input": 622,
+          "output": 142
+        }
+      },
+      {
+        "id": "q009",
+        "question": "What fraction of a table has to change before automatic cleanup decides to process it, by default?",
+        "trap": "analyze 쪽 대응 설정과 값도 문장도 비슷하다",
+        "goldChunkIds": [
+          6806
+        ],
+        "retrievedIds": [
+          6803,
+          6805,
+          6795,
+          6806,
+          6807,
+          6808,
+          6794,
+          6804,
+          6768,
+          8683
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.25,
+        "retrieveMs": 5222.996100000004,
+        "queries": [
+          "What fraction of a table has to change before automatic cleanup decides to process it, by default?",
+          "autovacuum_vacuum_scale_factor default fraction of table updates or deletes",
+          "autovacuum VACUUM threshold calculation autovacuum_vacuum_threshold",
+          "routine vacuuming automatic vacuum based on number of updated or deleted tuples"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 5128.392899999999,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 111
+        }
+      },
+      {
+        "id": "q010",
+        "question": "I need to move users and tablespaces to a new cluster, not just the tables in one database. Which dump tool covers that?",
+        "trap": "세 도구의 설명 문단이 서로를 참조해서 벡터 검색이 엉뚱한 쪽을 집는다",
+        "goldChunkIds": [
+          5272
+        ],
+        "retrievedIds": [
+          6355,
+          5285,
+          5270,
+          5276,
+          5272,
+          6763,
+          5280,
+          5391,
+          5327,
+          5282
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.2,
+        "retrieveMs": 3993.6687999999995,
+        "queries": [
+          "I need to move users and tablespaces to a new cluster, not just the tables in one database. Which dump tool covers that?",
+          "pg_dumpall cluster-wide backup of all databases and global objects",
+          "pg_dumpall roles and tablespaces",
+          "migrating cluster-wide objects to a new PostgreSQL cluster"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 3877.470499999996,
+        "rewriteTokens": {
+          "input": 635,
+          "output": 39
+        }
+      },
+      {
+        "id": "q011",
+        "question": "Which dump file formats can the restore utility read back, and which one cannot be used with it?",
+        "trap": "plain 포맷은 pg_restore 로 못 읽는다 — 문서를 안 보면 틀리기 쉽다",
+        "goldChunkIds": [
+          5730,
+          5731
+        ],
+        "retrievedIds": [
+          5730,
+          5543,
+          5558,
+          5559,
+          5728,
+          5742,
+          5560,
+          6353,
+          5741,
+          6351
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 6469.873100000004,
+        "queries": [
+          "Which dump file formats can the restore utility read back, and which one cannot be used with it?",
+          "pg_restore supported input archive formats",
+          "pg_dump output formats compatible with pg_restore",
+          "restoring plain-text SQL dumps with psql rather than pg_restore"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 6380.5172999999995,
+        "rewriteTokens": {
+          "input": 628,
+          "output": 188
+        }
+      },
+      {
+        "id": "q012",
+        "question": "If I dump a database without passing any format option, what kind of file do I get?",
+        "goldChunkIds": [
+          5557,
+          5608
+        ],
+        "retrievedIds": [
+          5557,
+          5556,
+          5398,
+          5550,
+          5559,
+          5399,
+          5741,
+          5558,
+          5572,
+          5630
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 4336.504500000003,
+        "queries": [
+          "If I dump a database without passing any format option, what kind of file do I get?",
+          "pg_dump default output format when --format is omitted",
+          "pg_dump output file formats and --format option"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 4250.492300000005,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 132
+        }
+      },
+      {
+        "id": "q013",
+        "question": "Why does building an index without blocking writes fail when I put it inside a transaction?",
+        "trap": "REINDEX 쪽 대응 기능과 제약이 겹치면서도 다르다",
+        "goldChunkIds": [
+          8340,
+          8341,
+          8342,
+          8349
+        ],
+        "retrievedIds": [
+          8340,
+          8342,
+          8341,
+          8307,
+          8343,
+          9538,
+          9678,
+          9679,
+          9681,
+          9680
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 4542.392599999999,
+        "queries": [
+          "Why does building an index without blocking writes fail when I put it inside a transaction?",
+          "CREATE INDEX CONCURRENTLY transaction block restriction",
+          "concurrent index build multiple transactions",
+          "CREATE INDEX CONCURRENTLY limitations and caveats"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 4431.521700000005,
+        "rewriteTokens": {
+          "input": 625,
+          "output": 113
+        }
+      },
+      {
+        "id": "q014",
+        "question": "A non-blocking index build failed partway through. Is anything left behind on the table?",
+        "trap": "실패한 인덱스가 남는다는 사실이 별도 문단에 있다",
+        "goldChunkIds": [
+          8340,
+          8341,
+          8342
+        ],
+        "retrievedIds": [
+          8341,
+          9680,
+          8342,
+          9681,
+          8340,
+          9682,
+          8307,
+          8349,
+          9679,
+          9678
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2449.5468000000037,
+        "queries": [
+          "A non-blocking index build failed partway through. Is anything left behind on the table?",
+          "CREATE INDEX CONCURRENTLY failure invalid index left behind",
+          "failed concurrent index build leaves INVALID index on table",
+          "DROP INDEX and retry failed CREATE INDEX CONCURRENTLY"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 2359.868300000002,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 73
+        }
+      },
+      {
+        "id": "q015",
+        "question": "Emptying a table completely in one statement — does that block other sessions from reading it?",
+        "trap": "행을 지우는 다른 방법과 비교 문단이 붙어 있어 섞이기 쉽다",
+        "goldChunkIds": [
+          9952
+        ],
+        "retrievedIds": [
+          9952,
+          9944,
+          9956,
+          9945,
+          6490,
+          9946,
+          9812,
+          9951,
+          9948,
+          9869
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 3078.601600000002,
+        "queries": [
+          "Emptying a table completely in one statement — does that block other sessions from reading it?",
+          "TRUNCATE command locking behavior",
+          "TRUNCATE acquires ACCESS EXCLUSIVE lock",
+          "TRUNCATE concurrency with SELECT and table readers"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 2985.6561,
+        "rewriteTokens": {
+          "input": 626,
+          "output": 62
+        }
+      },
+      {
+        "id": "q016",
+        "question": "Physically reordering a table to match an index — what lock does that take while it runs?",
+        "trap": "q007 과 같은 락이라 두 문서가 서로 헷갈린다",
+        "goldChunkIds": [
+          7963
+        ],
+        "retrievedIds": [
+          9564,
+          7737,
+          7963,
+          9570,
+          9562,
+          9664,
+          7738,
+          9987,
+          5037,
+          6966
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "retrieveMs": 4241.068300000006,
+        "queries": [
+          "Physically reordering a table to match an index — what lock does that take while it runs?",
+          "CLUSTER command table lock requirements ACCESS EXCLUSIVE",
+          "CLUSTER physically reorder a table based on an index",
+          "explicit locking lock modes acquired by CLUSTER"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 4143.313300000002,
+        "rewriteTokens": {
+          "input": 628,
+          "output": 35
+        }
+      },
+      {
+        "id": "q017",
+        "question": "One setting kills a query that runs too long overall; another only caps how long it waits for a lock. How do they differ, and what are their defaults?",
+        "trap": "같은 페이지의 인접 문단이고 문장 구조가 동일하다",
+        "goldChunkIds": [
+          6833
+        ],
+        "retrievedIds": [
+          6833,
+          6830,
+          6831,
+          5596,
+          5298,
+          6834,
+          6965,
+          7012,
+          6894,
+          6835
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 3405.792499999996,
+        "queries": [
+          "One setting kills a query that runs too long overall; another only caps how long it waits for a lock. How do they differ, and what are their defaults?",
+          "statement_timeout maximum allowed duration of any statement default setting",
+          "lock_timeout maximum wait while attempting to acquire a lock default setting",
+          "client connection defaults statement_timeout and lock_timeout"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 3280.7002000000066,
+        "rewriteTokens": {
+          "input": 641,
+          "output": 38
+        }
+      },
+      {
+        "id": "q018",
+        "question": "How long may a session sit idle with an open transaction before the server terminates it, by default?",
+        "trap": "비슷한 이름의 타임아웃 설정이 같은 절에 여러 개 있다",
+        "goldChunkIds": [
+          6831,
+          6834,
+          6835
+        ],
+        "retrievedIds": [
+          6834,
+          6835,
+          6831,
+          6889,
+          6832,
+          6833,
+          6825,
+          7143,
+          6826,
+          6830
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 3105.319199999998,
+        "queries": [
+          "How long may a session sit idle with an open transaction before the server terminates it, by default?",
+          "idle_in_transaction_session_timeout default setting",
+          "client connection defaults idle in transaction session timeout",
+          "terminating sessions idle within an open transaction"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 3011.803,
+        "rewriteTokens": {
+          "input": 629,
+          "output": 66
+        }
+      },
+      {
+        "id": "q019",
+        "question": "Which values can I choose from to control how much detail goes into the write-ahead log?",
+        "goldChunkIds": [
+          7202
+        ],
+        "retrievedIds": [
+          7213,
+          7202,
+          7216,
+          7246,
+          10048,
+          7211,
+          7047,
+          10044,
+          7209,
+          7208
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 3251.587799999994,
+        "queries": [
+          "Which values can I choose from to control how much detail goes into the write-ahead log?",
+          "wal_level parameter settings for write-ahead log detail",
+          "wal_level allowed values",
+          "write-ahead log level runtime configuration"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 3164.422099999996,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 96
+        }
+      },
+      {
+        "id": "q020",
+        "question": "What choices are there for how much confirmation a transaction waits for before commit returns?",
+        "trap": "on/off 만 있는 줄 알기 쉽다 — 실제로는 local, remote_write, remote_apply 도 있다",
+        "goldChunkIds": [
+          7204,
+          7205,
+          7206
+        ],
+        "retrievedIds": [
+          7204,
+          7205,
+          10032,
+          10028,
+          7217,
+          7218,
+          10030,
+          7132,
+          10029,
+          6648
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 3140.057400000005,
+        "queries": [
+          "What choices are there for how much confirmation a transaction waits for before commit returns?",
+          "synchronous_commit parameter transaction commit synchronization level",
+          "commit waits for local WAL flush, remote WAL flush, or remote apply",
+          "synchronous replication commit confirmation settings"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 3050.6572000000015,
+        "rewriteTokens": {
+          "input": 624,
+          "output": 78
+        }
+      },
+      {
+        "id": "q021",
+        "question": "How often does the server force a checkpoint if nothing else triggers one?",
+        "goldChunkIds": [
+          7219,
+          7222
+        ],
+        "retrievedIds": [
+          10034,
+          7219,
+          10035,
+          10038,
+          7222,
+          10033,
+          6999,
+          7949,
+          7220,
+          6668
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 2478.055199999988,
+        "queries": [
+          "How often does the server force a checkpoint if nothing else triggers one?",
+          "checkpoint_timeout automatic checkpoints",
+          "maximum time between automatic WAL checkpoints",
+          "server configuration checkpoint frequency"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 2390.8457999999955,
+        "rewriteTokens": {
+          "input": 622,
+          "output": 54
+        }
+      },
+      {
+        "id": "q022",
+        "question": "How many client connections will a freshly installed server accept at once?",
+        "goldChunkIds": [
+          6881,
+          6882,
+          6883
+        ],
+        "retrievedIds": [
+          5860,
+          6881,
+          6883,
+          5093,
+          8188,
+          7105,
+          6882,
+          8492,
+          6845,
+          8182
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 3148.4657000000007,
+        "queries": [
+          "How many client connections will a freshly installed server accept at once?",
+          "max_connections default setting",
+          "maximum number of concurrent connections to the database server",
+          "connection slots reserved for superusers"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 3063.366200000004,
+        "rewriteTokens": {
+          "input": 621,
+          "output": 73
+        }
+      },
+      {
+        "id": "q023",
+        "question": "What cost does the planner assume for fetching a page out of order, compared to a sequential one?",
+        "trap": "순차 읽기 비용 설정과 인접 문단이고 값 형식이 같다",
+        "goldChunkIds": [
+          7074,
+          7075
+        ],
+        "retrievedIds": [
+          7071,
+          7073,
+          7074,
+          7075,
+          7801,
+          7048,
+          7072,
+          8754,
+          6554,
+          7169
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "retrieveMs": 3156.3349000000017,
+        "queries": [
+          "What cost does the planner assume for fetching a page out of order, compared to a sequential one?",
+          "random_page_cost compared with seq_page_cost",
+          "planner cost constants for nonsequential disk page fetches",
+          "query planning configuration page access cost parameters"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 3066.0771000000095,
+        "rewriteTokens": {
+          "input": 628,
+          "output": 81
+        }
+      },
+      {
+        "id": "q024",
+        "question": "How detailed are the column statistics the planner collects by default?",
+        "goldChunkIds": [
+          7048,
+          7095
+        ],
+        "retrievedIds": [
+          7095,
+          7723,
+          7928,
+          7401,
+          7476,
+          8576,
+          7676,
+          7929,
+          8573,
+          6772
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 3211.7681999999913,
+        "queries": [
+          "How detailed are the column statistics the planner collects by default?",
+          "default_statistics_target planner statistics detail",
+          "ANALYZE column statistics target",
+          "ALTER TABLE SET STATISTICS per-column statistics target"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 3126.3234999999986,
+        "rewriteTokens": {
+          "input": 620,
+          "output": 80
+        }
+      },
+      {
+        "id": "q025",
+        "question": "A backend seems stuck. Which columns of the activity view tell me what it is waiting on?",
+        "trap": "두 개로 나뉘어 있어 하나만 답하기 쉽다",
+        "goldChunkIds": [
+          6632,
+          6635,
+          6644,
+          6645,
+          6690,
+          6691,
+          6692
+        ],
+        "retrievedIds": [
+          6692,
+          6635,
+          6691,
+          5253,
+          6645,
+          6138,
+          6631,
+          6633,
+          6619,
+          6648
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1827.984300000011,
+        "queries": [
+          "A backend seems stuck. Which columns of the activity view tell me what it is waiting on?",
+          "pg_stat_activity wait_event_type and wait_event columns",
+          "monitoring backend wait events in pg_stat_activity",
+          "backend state and current wait event"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 1719.8557,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 33
+        }
+      },
+      {
+        "id": "q026",
+        "question": "Some rows in the activity view have no client address at all. What does that tell me about those connections?",
+        "goldChunkIds": [
+          6631,
+          6646,
+          6690
+        ],
+        "retrievedIds": [
+          6631,
+          6633,
+          6692,
+          7009,
+          6659,
+          6658,
+          6645,
+          7198,
+          6138,
+          7189
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 4028.0820000000094,
+        "queries": [
+          "Some rows in the activity view have no client address at all. What does that tell me about those connections?",
+          "pg_stat_activity client_addr NULL",
+          "pg_stat_activity client address Unix-domain socket connections",
+          "pg_stat_activity backend_type internal processes"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 3932.267200000002,
+        "rewriteTokens": {
+          "input": 630,
+          "output": 99
+        }
+      }
+    ],
+    "rerankOn": [
+      {
+        "id": "q001",
+        "question": "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+        "trap": "메모리 한도를 정하는 설정이 여럿이고 설명 문장이 거의 같다",
+        "goldChunkIds": [
+          7144
+        ],
+        "retrievedIds": [
+          7144,
+          7161,
+          7019,
+          7145,
+          5863,
+          7969,
+          7968,
+          6160,
+          10055,
+          7149
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 4426.229300000006,
+        "queries": [
+          "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+          "work_mem memory for each sort or hash operation before writing temporary files",
+          "work_mem resource consumption parameter default",
+          "temporary files created by sort operations and hash tables"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.006500000003143214,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q002",
+        "question": "Does routine table cleanup get the same memory budget as an ordinary query, or its own? What is that budget by default?",
+        "trap": "q001 과 거의 동일한 문장 구조 — 검색이 둘을 구분해야 한다",
+        "goldChunkIds": [
+          7146,
+          7147,
+          7184
+        ],
+        "retrievedIds": [
+          7145,
+          7144,
+          6775,
+          7146,
+          6812,
+          6768,
+          5863,
+          9998,
+          10012,
+          6767
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.25,
+        "retrieveMs": 3377.471900000004,
+        "queries": [
+          "Does routine table cleanup get the same memory budget as an ordinary query, or its own? What is that budget by default?",
+          "maintenance_work_mem memory limit for VACUUM and maintenance operations default setting",
+          "work_mem versus maintenance_work_mem for ordinary queries and routine table cleanup",
+          "autovacuum_work_mem memory available to autovacuum worker default setting"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.004000000000814907,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q003",
+        "question": "Each automatic cleanup worker has its own memory limit. What does the default value of that limit actually mean?",
+        "trap": "-1 의 의미가 파라미터마다 다르고, q002 로 흘러가기 쉽다",
+        "goldChunkIds": [
+          7146,
+          7147
+        ],
+        "retrievedIds": [
+          7147,
+          7144,
+          7145,
+          7184,
+          7146,
+          7148,
+          7149,
+          6812,
+          6998,
+          6802
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2243.4349999999977,
+        "queries": [
+          "Each automatic cleanup worker has its own memory limit. What does the default value of that limit actually mean?",
+          "autovacuum_work_mem default setting meaning",
+          "autovacuum worker memory limit maintenance_work_mem",
+          "resource consumption autovacuum_work_mem parameter"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.0031999999919207767,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q004",
+        "question": "Which memory setting applies only to temporary tables inside a session, and how much is it by default?",
+        "trap": "이름이 shared_buffers 와 비슷하고 설명 구조가 work_mem 계열과 같다",
+        "goldChunkIds": [
+          7142
+        ],
+        "retrievedIds": [
+          7142,
+          7144,
+          8708,
+          7161,
+          8616,
+          8975,
+          6821,
+          6662,
+          6495,
+          7139
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2069.7697000000044,
+        "queries": [
+          "Which memory setting applies only to temporary tables inside a session, and how much is it by default?",
+          "temp_buffers temporary tables per database session default",
+          "temp_buffers temporary buffer memory setting",
+          "resource consumption temporary buffers session-local tables"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.0031000000017229468,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q005",
+        "question": "There is a setting that tells the planner how much disk cache it can assume. Does the server actually reserve that much memory?",
+        "trap": "이름 때문에 할당하는 것처럼 읽힌다. 실제로는 플래너 추정치일 뿐",
+        "goldChunkIds": [
+          7083
+        ],
+        "retrievedIds": [
+          7083,
+          7074,
+          7153,
+          7078,
+          7154,
+          7139,
+          7073,
+          9406,
+          7163,
+          7101
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2408.0005999999994,
+        "queries": [
+          "There is a setting that tells the planner how much disk cache it can assume. Does the server actually reserve that much memory?",
+          "effective_cache_size planner estimate available disk cache",
+          "effective_cache_size does not allocate or reserve shared memory",
+          "query planning cost estimates operating system and PostgreSQL buffer cache"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.003899999996065162,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q006",
+        "question": "How much memory does the server reserve for its shared buffer pool out of the box?",
+        "trap": "다른 여러 파라미터 설명이 shared_buffers 를 참조한다",
+        "goldChunkIds": [
+          7139
+        ],
+        "retrievedIds": [
+          7139,
+          7155,
+          7150,
+          7156,
+          7148,
+          7151,
+          7152,
+          7154,
+          7213,
+          7153
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1656.5406000000075,
+        "queries": [
+          "How much memory does the server reserve for its shared buffer pool out of the box?",
+          "shared_buffers default setting",
+          "shared memory buffer pool configuration",
+          "resource consumption shared_buffers"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.004199999995762482,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q007",
+        "question": "Rewriting a table to reclaim disk space blocks even readers, while ordinary cleanup does not. Which lock causes that?",
+        "trap": "VACUUM / VACUUM FULL / autovacuum 이 같은 페이지에 붙어 있다",
+        "goldChunkIds": [
+          9991,
+          10001
+        ],
+        "retrievedIds": [
+          6771,
+          9992,
+          9991,
+          9562,
+          6767,
+          6768,
+          9675,
+          8684,
+          10001,
+          9997
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "retrieveMs": 2856.163499999995,
+        "queries": [
+          "Rewriting a table to reclaim disk space blocks even readers, while ordinary cleanup does not. Which lock causes that?",
+          "VACUUM FULL ACCESS EXCLUSIVE lock table rewrite",
+          "VACUUM FULL reclaims disk space blocks SELECT",
+          "explicit locking ACCESS EXCLUSIVE conflicts with ACCESS SHARE"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.004700000004959293,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q008",
+        "question": "Can the routine table cleanup command be wrapped in BEGIN and COMMIT?",
+        "goldChunkIds": [
+          10012
+        ],
+        "retrievedIds": [
+          7935,
+          9912,
+          6087,
+          6786,
+          9998,
+          6767,
+          7933,
+          6790,
+          6782,
+          10012
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0.1,
+        "retrieveMs": 3419.541200000007,
+        "queries": [
+          "Can the routine table cleanup command be wrapped in BEGIN and COMMIT?",
+          "VACUUM transaction block BEGIN COMMIT",
+          "SQL VACUUM command transaction block restriction",
+          "routine vacuuming explicit transactions"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.003500000006170012,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q009",
+        "question": "What fraction of a table has to change before automatic cleanup decides to process it, by default?",
+        "trap": "analyze 쪽 대응 설정과 값도 문장도 비슷하다",
+        "goldChunkIds": [
+          6806
+        ],
+        "retrievedIds": [
+          6808,
+          6807,
+          6806,
+          9998,
+          8683,
+          6805,
+          6804,
+          6795,
+          6803,
+          6772
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "retrieveMs": 3372.2572999999975,
+        "queries": [
+          "What fraction of a table has to change before automatic cleanup decides to process it, by default?",
+          "autovacuum_vacuum_scale_factor default fraction of table updates or deletes",
+          "autovacuum VACUUM threshold calculation autovacuum_vacuum_threshold",
+          "routine vacuuming automatic vacuum based on number of updated or deleted tuples"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.003499999991618097,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q010",
+        "question": "I need to move users and tablespaces to a new cluster, not just the tables in one database. Which dump tool covers that?",
+        "trap": "세 도구의 설명 문단이 서로를 참조해서 벡터 검색이 엉뚱한 쪽을 집는다",
+        "goldChunkIds": [
+          5272
+        ],
+        "retrievedIds": [
+          6355,
+          5276,
+          5272,
+          8749,
+          5327,
+          6763,
+          5282,
+          5285,
+          5280,
+          5193
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "retrieveMs": 2266.02380000001,
+        "queries": [
+          "I need to move users and tablespaces to a new cluster, not just the tables in one database. Which dump tool covers that?",
+          "pg_dumpall cluster-wide backup of all databases and global objects",
+          "pg_dumpall roles and tablespaces",
+          "migrating cluster-wide objects to a new PostgreSQL cluster"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.003700000001117587,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q011",
+        "question": "Which dump file formats can the restore utility read back, and which one cannot be used with it?",
+        "trap": "plain 포맷은 pg_restore 로 못 읽는다 — 문서를 안 보면 틀리기 쉽다",
+        "goldChunkIds": [
+          5730,
+          5731
+        ],
+        "retrievedIds": [
+          5543,
+          6351,
+          5730,
+          5559,
+          6357,
+          5544,
+          5731,
+          6358,
+          5296,
+          5550
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "retrieveMs": 2368.8747000000003,
+        "queries": [
+          "Which dump file formats can the restore utility read back, and which one cannot be used with it?",
+          "pg_restore supported input archive formats",
+          "pg_dump output formats compatible with pg_restore",
+          "restoring plain-text SQL dumps with psql rather than pg_restore"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.0031000000017229468,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q012",
+        "question": "If I dump a database without passing any format option, what kind of file do I get?",
+        "goldChunkIds": [
+          5557,
+          5608
+        ],
+        "retrievedIds": [
+          5550,
+          5543,
+          5630,
+          5551,
+          5555,
+          5742,
+          5559,
+          5547,
+          5553,
+          5565
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0,
+        "retrieveMs": 1909.4922000000079,
+        "queries": [
+          "If I dump a database without passing any format option, what kind of file do I get?",
+          "pg_dump default output format when --format is omitted",
+          "pg_dump output file formats and --format option"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.003500000006170012,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q013",
+        "question": "Why does building an index without blocking writes fail when I put it inside a transaction?",
+        "trap": "REINDEX 쪽 대응 기능과 제약이 겹치면서도 다르다",
+        "goldChunkIds": [
+          8340,
+          8341,
+          8342,
+          8349
+        ],
+        "retrievedIds": [
+          8340,
+          8342,
+          9678,
+          9680,
+          9663,
+          8307,
+          8341,
+          9679,
+          7729,
+          9115
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2976.195900000006,
+        "queries": [
+          "Why does building an index without blocking writes fail when I put it inside a transaction?",
+          "CREATE INDEX CONCURRENTLY transaction block restriction",
+          "concurrent index build multiple transactions",
+          "CREATE INDEX CONCURRENTLY limitations and caveats"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.0029000000067753717,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q014",
+        "question": "A non-blocking index build failed partway through. Is anything left behind on the table?",
+        "trap": "실패한 인덱스가 남는다는 사실이 별도 문단에 있다",
+        "goldChunkIds": [
+          8340,
+          8341,
+          8342
+        ],
+        "retrievedIds": [
+          9679,
+          8341,
+          9680,
+          8342,
+          8340,
+          9662,
+          9678,
+          9683,
+          8307,
+          9538
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 2960.1226000000024,
+        "queries": [
+          "A non-blocking index build failed partway through. Is anything left behind on the table?",
+          "CREATE INDEX CONCURRENTLY failure invalid index left behind",
+          "failed concurrent index build leaves INVALID index on table",
+          "DROP INDEX and retry failed CREATE INDEX CONCURRENTLY"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.0039000000106170774,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q015",
+        "question": "Emptying a table completely in one statement — does that block other sessions from reading it?",
+        "trap": "행을 지우는 다른 방법과 비교 문단이 붙어 있어 섞이기 쉽다",
+        "goldChunkIds": [
+          9952
+        ],
+        "retrievedIds": [
+          7760,
+          9115,
+          9944,
+          9565,
+          9812,
+          9952,
+          9869,
+          9945,
+          6490,
+          10001
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0.16666666666666666,
+        "retrieveMs": 2283.9799000000057,
+        "queries": [
+          "Emptying a table completely in one statement — does that block other sessions from reading it?",
+          "TRUNCATE command locking behavior",
+          "TRUNCATE acquires ACCESS EXCLUSIVE lock",
+          "TRUNCATE concurrency with SELECT and table readers"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.004199999995762482,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q016",
+        "question": "Physically reordering a table to match an index — what lock does that take while it runs?",
+        "trap": "q007 과 같은 락이라 두 문서가 서로 헷갈린다",
+        "goldChunkIds": [
+          7963
+        ],
+        "retrievedIds": [
+          7963,
+          9562,
+          7738,
+          7737,
+          9677,
+          6578,
+          9564,
+          9664,
+          9570,
+          9676
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2576.188699999999,
+        "queries": [
+          "Physically reordering a table to match an index — what lock does that take while it runs?",
+          "CLUSTER command table lock requirements ACCESS EXCLUSIVE",
+          "CLUSTER physically reorder a table based on an index",
+          "explicit locking lock modes acquired by CLUSTER"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.0033999999868683517,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q017",
+        "question": "One setting kills a query that runs too long overall; another only caps how long it waits for a lock. How do they differ, and what are their defaults?",
+        "trap": "같은 페이지의 인접 문단이고 문장 구조가 동일하다",
+        "goldChunkIds": [
+          6833
+        ],
+        "retrievedIds": [
+          7012,
+          6965,
+          6834,
+          6833,
+          7003,
+          5261,
+          5337,
+          6835,
+          6987,
+          5596
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.25,
+        "retrieveMs": 1727.9058999999834,
+        "queries": [
+          "One setting kills a query that runs too long overall; another only caps how long it waits for a lock. How do they differ, and what are their defaults?",
+          "statement_timeout maximum allowed duration of any statement default setting",
+          "lock_timeout maximum wait while attempting to acquire a lock default setting",
+          "client connection defaults statement_timeout and lock_timeout"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.004799999995157123,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q018",
+        "question": "How long may a session sit idle with an open transaction before the server terminates it, by default?",
+        "trap": "비슷한 이름의 타임아웃 설정이 같은 절에 여러 개 있다",
+        "goldChunkIds": [
+          6831,
+          6834,
+          6835
+        ],
+        "retrievedIds": [
+          6834,
+          6835,
+          6831,
+          5261,
+          6894,
+          6889,
+          6825,
+          6830,
+          9872,
+          7143
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1423.9426000000094,
+        "queries": [
+          "How long may a session sit idle with an open transaction before the server terminates it, by default?",
+          "idle_in_transaction_session_timeout default setting",
+          "client connection defaults idle in transaction session timeout",
+          "terminating sessions idle within an open transaction"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.004199999995762482,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q019",
+        "question": "Which values can I choose from to control how much detail goes into the write-ahead log?",
+        "goldChunkIds": [
+          7202
+        ],
+        "retrievedIds": [
+          7047,
+          7213,
+          7222,
+          7202,
+          7221,
+          7216,
+          7207,
+          7246,
+          10044,
+          7214
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.25,
+        "retrieveMs": 2203.116799999989,
+        "queries": [
+          "Which values can I choose from to control how much detail goes into the write-ahead log?",
+          "wal_level parameter settings for write-ahead log detail",
+          "wal_level allowed values",
+          "write-ahead log level runtime configuration"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.0029999999969732016,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q020",
+        "question": "What choices are there for how much confirmation a transaction waits for before commit returns?",
+        "trap": "on/off 만 있는 줄 알기 쉽다 — 실제로는 local, remote_write, remote_apply 도 있다",
+        "goldChunkIds": [
+          7204,
+          7205,
+          7206
+        ],
+        "retrievedIds": [
+          7204,
+          10028,
+          7218,
+          7116,
+          7217,
+          8010,
+          8593,
+          7205,
+          10040,
+          10032
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2700.9087,
+        "queries": [
+          "What choices are there for how much confirmation a transaction waits for before commit returns?",
+          "synchronous_commit parameter transaction commit synchronization level",
+          "commit waits for local WAL flush, remote WAL flush, or remote apply",
+          "synchronous replication commit confirmation settings"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.003999999986262992,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q021",
+        "question": "How often does the server force a checkpoint if nothing else triggers one?",
+        "goldChunkIds": [
+          7219,
+          7222
+        ],
+        "retrievedIds": [
+          10034,
+          7951,
+          7228,
+          7949,
+          10033,
+          10037,
+          7219,
+          7221,
+          7222,
+          10035
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0.14285714285714285,
+        "retrieveMs": 2697.580099999992,
+        "queries": [
+          "How often does the server force a checkpoint if nothing else triggers one?",
+          "checkpoint_timeout automatic checkpoints",
+          "maximum time between automatic WAL checkpoints",
+          "server configuration checkpoint frequency"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.005499999999301508,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q022",
+        "question": "How many client connections will a freshly installed server accept at once?",
+        "goldChunkIds": [
+          6881,
+          6882,
+          6883
+        ],
+        "retrievedIds": [
+          5860,
+          6883,
+          6881,
+          6882,
+          7105,
+          5383,
+          8188,
+          8492,
+          6866,
+          8182
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 878.2025999999896,
+        "queries": [
+          "How many client connections will a freshly installed server accept at once?",
+          "max_connections default setting",
+          "maximum number of concurrent connections to the database server",
+          "connection slots reserved for superusers"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.004199999995762482,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q023",
+        "question": "What cost does the planner assume for fetching a page out of order, compared to a sequential one?",
+        "trap": "순차 읽기 비용 설정과 인접 문단이고 값 형식이 같다",
+        "goldChunkIds": [
+          7074,
+          7075
+        ],
+        "retrievedIds": [
+          7071,
+          7073,
+          7074,
+          6554,
+          9394,
+          7801,
+          8754,
+          7075,
+          7078,
+          7079
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "retrieveMs": 2111.433699999994,
+        "queries": [
+          "What cost does the planner assume for fetching a page out of order, compared to a sequential one?",
+          "random_page_cost compared with seq_page_cost",
+          "planner cost constants for nonsequential disk page fetches",
+          "query planning configuration page access cost parameters"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.003499999991618097,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q024",
+        "question": "How detailed are the column statistics the planner collects by default?",
+        "goldChunkIds": [
+          7048,
+          7095
+        ],
+        "retrievedIds": [
+          7095,
+          7928,
+          7723,
+          8576,
+          7048,
+          7918,
+          7476,
+          9405,
+          6775,
+          7929
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2677.282500000001,
+        "queries": [
+          "How detailed are the column statistics the planner collects by default?",
+          "default_statistics_target planner statistics detail",
+          "ANALYZE column statistics target",
+          "ALTER TABLE SET STATISTICS per-column statistics target"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.0040000000153668225,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q025",
+        "question": "A backend seems stuck. Which columns of the activity view tell me what it is waiting on?",
+        "trap": "두 개로 나뉘어 있어 하나만 답하기 쉽다",
+        "goldChunkIds": [
+          6632,
+          6635,
+          6644,
+          6645,
+          6690,
+          6691,
+          6692
+        ],
+        "retrievedIds": [
+          6635,
+          6631,
+          6692,
+          6691,
+          6619,
+          6634,
+          6633,
+          6138,
+          6637,
+          5252
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2380.8511,
+        "queries": [
+          "A backend seems stuck. Which columns of the activity view tell me what it is waiting on?",
+          "pg_stat_activity wait_event_type and wait_event columns",
+          "monitoring backend wait events in pg_stat_activity",
+          "backend state and current wait event"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.0035000000207219273,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      },
+      {
+        "id": "q026",
+        "question": "Some rows in the activity view have no client address at all. What does that tell me about those connections?",
+        "goldChunkIds": [
+          6631,
+          6646,
+          6690
+        ],
+        "retrievedIds": [
+          6631,
+          6658,
+          7198,
+          6817,
+          6818,
+          6689,
+          6659,
+          6884,
+          5858,
+          6634
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2263.9144999999844,
+        "queries": [
+          "Some rows in the activity view have no client address at all. What does that tell me about those connections?",
+          "pg_stat_activity client_addr NULL",
+          "pg_stat_activity client address Unix-domain socket connections",
+          "pg_stat_activity backend_type internal processes"
+        ],
+        "rewriteFailed": false,
+        "rewriteMs": 0.0033999999868683517,
+        "rewriteTokens": {
+          "input": 0,
+          "output": 0
+        }
+      }
+    ]
+  }
+}

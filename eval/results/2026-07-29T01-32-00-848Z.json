@@ -1,0 +1,2217 @@
+{
+  "ranAt": "2026-07-29T01:32:00.849Z",
+  "mode": "retrieval-only",
+  "questionSet": "questions-literal.yaml",
+  "config": {
+    "embeddingModel": "Xenova/bge-base-en-v1.5",
+    "embeddingDim": 768,
+    "rerankModel": "Xenova/bge-reranker-base",
+    "chunkTokens": 512,
+    "chunkOverlap": 64,
+    "retrieveTopK": 20,
+    "rerankTopN": 5,
+    "hybridEnabled": false,
+    "rewriteEnabled": false,
+    "rewriteModel": null,
+    "rewriteMaxQueries": null,
+    "rerankQuery": null,
+    "answerModel": "gpt-5.6-sol",
+    "answerEffort": "low",
+    "judgeModel": "gpt-5.6-sol",
+    "evalTopN": 10,
+    "recallK": 5,
+    "mrrK": 10
+  },
+  "summary": {
+    "rerankOff": {
+      "rerankEnabled": false,
+      "questions": 46,
+      "recallAt5": 0.9782608695652174,
+      "mrrAt10": 0.8226708074534161,
+      "trapRecallAt5": 0.9705882352941176,
+      "citationValidity": null,
+      "grounded": null,
+      "correct": null
+    },
+    "rerankOn": {
+      "rerankEnabled": true,
+      "questions": 46,
+      "recallAt5": 0.9565217391304348,
+      "mrrAt10": 0.8568840579710146,
+      "trapRecallAt5": 0.9705882352941176,
+      "citationValidity": null,
+      "grounded": null,
+      "correct": null
+    }
+  },
+  "results": {
+    "rerankOff": [
+      {
+        "id": "q001",
+        "question": "What is the default value of work_mem?",
+        "trap": "maintenance_work_mem / autovacuum_work_mem / temp_buffers 와 문장 구조가 거의 같다",
+        "goldChunkIds": [
+          12189
+        ],
+        "retrievedIds": [
+          12189,
+          10901,
+          12191,
+          12192,
+          12190,
+          12194,
+          12148,
+          12230,
+          10928,
+          12204
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 491.1337000000001
+      },
+      {
+        "id": "q002",
+        "question": "What is the default value of maintenance_work_mem, and which operations use it?",
+        "trap": "q001 과 거의 동일한 문장 — 검색이 둘을 구분해야 한다",
+        "goldChunkIds": [
+          12191,
+          12192,
+          12229
+        ],
+        "retrievedIds": [
+          12191,
+          12192,
+          12189,
+          10901,
+          12190,
+          12225,
+          12229,
+          12194,
+          13370,
+          12230
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 70.41669999999999
+      },
+      {
+        "id": "q003",
+        "question": "What does it mean when autovacuum_work_mem is set to -1?",
+        "trap": "-1 의 의미가 파라미터마다 다르다. q002 로 흘러가기 쉽다",
+        "goldChunkIds": [
+          12191,
+          12192
+        ],
+        "retrievedIds": [
+          12192,
+          12191,
+          11842,
+          11858,
+          11853,
+          11852,
+          12044,
+          11857,
+          11850,
+          11854
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 70.90419999999995
+      },
+      {
+        "id": "q004",
+        "question": "What is temp_buffers used for, and what is its default?",
+        "trap": "이름이 shared_buffers 와 비슷하고 설명 문단 구조가 work_mem 계열과 같다",
+        "goldChunkIds": [
+          12187
+        ],
+        "retrievedIds": [
+          12187,
+          11867,
+          14419,
+          10887,
+          11198,
+          11996,
+          12206,
+          13636,
+          12065,
+          12195
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 71.27049999999986
+      },
+      {
+        "id": "q005",
+        "question": "Does effective_cache_size allocate memory?",
+        "trap": "이름 때문에 할당하는 것처럼 읽힌다. 실제로는 플래너 추정치일 뿐",
+        "goldChunkIds": [
+          12129
+        ],
+        "retrievedIds": [
+          12129,
+          12189,
+          12184,
+          12197,
+          12090,
+          12205,
+          14424,
+          12194,
+          12196,
+          12224
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 70.83659999999986
+      },
+      {
+        "id": "q006",
+        "question": "What is the default value of shared_buffers?",
+        "goldChunkIds": [
+          12184
+        ],
+        "retrievedIds": [
+          10887,
+          12184,
+          12196,
+          12199,
+          12201,
+          12197,
+          12203,
+          12258,
+          12200,
+          12195
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 71.8777
+      },
+      {
+        "id": "q007",
+        "question": "What lock does VACUUM FULL require that plain VACUUM does not?",
+        "trap": "VACUUM / VACUUM FULL / autovacuum 이 같은 페이지에 붙어 있다",
+        "goldChunkIds": [
+          15015,
+          15025
+        ],
+        "retrievedIds": [
+          15016,
+          15021,
+          11844,
+          11247,
+          11813,
+          11817,
+          15015,
+          11815,
+          11834,
+          11814
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0.14285714285714285,
+        "retrieveMs": 69.44430000000011
+      },
+      {
+        "id": "q008",
+        "question": "Can VACUUM run inside a transaction block?",
+        "goldChunkIds": [
+          15036
+        ],
+        "retrievedIds": [
+          15036,
+          15021,
+          12210,
+          11826,
+          11832,
+          15038,
+          11813,
+          12216,
+          11823,
+          11828
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.29010000000017
+      },
+      {
+        "id": "q009",
+        "question": "What is the default value of autovacuum_vacuum_scale_factor?",
+        "trap": "autovacuum_analyze_scale_factor 와 값도 문장도 비슷하다",
+        "goldChunkIds": [
+          11852
+        ],
+        "retrievedIds": [
+          11852,
+          11853,
+          11854,
+          13706,
+          13708,
+          11857,
+          11858,
+          12192,
+          13710,
+          11849
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.55849999999987
+      },
+      {
+        "id": "q010",
+        "question": "What does pg_dumpall back up that pg_dump does not?",
+        "trap": "세 도구의 설명 문단이 서로를 참조해서 벡터 검색이 엉뚱한 쪽을 집는다",
+        "goldChunkIds": [
+          10312
+        ],
+        "retrievedIds": [
+          10344,
+          11390,
+          10312,
+          10336,
+          10583,
+          10369,
+          10641,
+          10612,
+          10367,
+          10354
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "retrieveMs": 67.05619999999999
+      },
+      {
+        "id": "q011",
+        "question": "Which pg_dump output formats can pg_restore read?",
+        "trap": "plain 포맷은 pg_restore 로 못 읽는다 — 문서를 안 보면 틀리기 쉽다",
+        "goldChunkIds": [
+          10770,
+          10771
+        ],
+        "retrievedIds": [
+          10598,
+          10599,
+          10770,
+          10600,
+          10583,
+          10782,
+          10768,
+          11388,
+          10781,
+          11386
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "retrieveMs": 66.4212
+      },
+      {
+        "id": "q012",
+        "question": "What is the default output format of pg_dump?",
+        "goldChunkIds": [
+          10597,
+          10648
+        ],
+        "retrievedIds": [
+          10597,
+          10598,
+          10599,
+          10596,
+          10439,
+          10583,
+          10782,
+          11383,
+          10643,
+          10591
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 67.58500000000004
+      },
+      {
+        "id": "q013",
+        "question": "What are the restrictions on CREATE INDEX CONCURRENTLY?",
+        "trap": "REINDEX CONCURRENTLY 와 제약이 겹치면서도 다르다",
+        "goldChunkIds": [
+          13364,
+          13365,
+          13366,
+          13373
+        ],
+        "retrievedIds": [
+          13366,
+          13364,
+          13331,
+          13365,
+          14551,
+          11601,
+          14133,
+          14709,
+          13373,
+          13367
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.71149999999989
+      },
+      {
+        "id": "q014",
+        "question": "What happens to a failed CREATE INDEX CONCURRENTLY?",
+        "trap": "실패한 인덱스가 남는다는 사실이 별도 문단에 있다",
+        "goldChunkIds": [
+          13364,
+          13365,
+          13366
+        ],
+        "retrievedIds": [
+          14551,
+          13365,
+          13366,
+          13364,
+          14709,
+          14710,
+          13331,
+          11601,
+          14698,
+          14711
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 67.03539999999998
+      },
+      {
+        "id": "q015",
+        "question": "What lock level does TRUNCATE take?",
+        "trap": "DELETE 와 비교 문단이 붙어 있어 섞이기 쉽다",
+        "goldChunkIds": [
+          14976
+        ],
+        "retrievedIds": [
+          14976,
+          14970,
+          14977,
+          11525,
+          15025,
+          14978,
+          14975,
+          14980,
+          14968,
+          13704
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.7012000000002
+      },
+      {
+        "id": "q016",
+        "question": "What lock does CLUSTER take on the table?",
+        "goldChunkIds": [
+          12993
+        ],
+        "retrievedIds": [
+          12767,
+          14593,
+          13000,
+          12993,
+          12768,
+          14595,
+          14596,
+          10077,
+          14836,
+          15011
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.25,
+        "retrieveMs": 67.5159000000001
+      },
+      {
+        "id": "q017",
+        "question": "What is the difference between statement_timeout and lock_timeout?",
+        "trap": "같은 페이지의 인접 문단이고 문장 구조가 동일하다",
+        "goldChunkIds": [
+          11879
+        ],
+        "retrievedIds": [
+          11879,
+          10636,
+          10338,
+          11876,
+          12011,
+          12058,
+          11877,
+          11984,
+          14595,
+          11880
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 67.00950000000012
+      },
+      {
+        "id": "q018",
+        "question": "What is the default value of idle_in_transaction_session_timeout?",
+        "goldChunkIds": [
+          11877,
+          11880,
+          11881
+        ],
+        "retrievedIds": [
+          11880,
+          11881,
+          11877,
+          11878,
+          11879,
+          11876,
+          11935,
+          11938,
+          11872,
+          12172
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.42300000000023
+      },
+      {
+        "id": "q019",
+        "question": "What are the allowed values of wal_level?",
+        "goldChunkIds": [
+          12247
+        ],
+        "retrievedIds": [
+          12247,
+          12268,
+          12269,
+          12258,
+          11986,
+          14421,
+          12157,
+          10257,
+          10762,
+          15069
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 67.36020000000008
+      },
+      {
+        "id": "q020",
+        "question": "What are the allowed values of synchronous_commit?",
+        "trap": "on/off 만 있는 줄 알기 쉽다 — 실제로는 local, remote_write, remote_apply 도 있다",
+        "goldChunkIds": [
+          12249,
+          12250,
+          12251
+        ],
+        "retrievedIds": [
+          13617,
+          12251,
+          12249,
+          12250,
+          15053,
+          12177,
+          15056,
+          12161,
+          15055,
+          15054
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 66.68939999999975
+      },
+      {
+        "id": "q021",
+        "question": "What is the default value of checkpoint_timeout?",
+        "goldChunkIds": [
+          12264,
+          12267
+        ],
+        "retrievedIds": [
+          12264,
+          15058,
+          12267,
+          12155,
+          10301,
+          11879,
+          11938,
+          12265,
+          11876,
+          15059
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.83330000000024
+      },
+      {
+        "id": "q022",
+        "question": "What is the default value of max_connections?",
+        "goldChunkIds": [
+          11927,
+          11928,
+          11929
+        ],
+        "retrievedIds": [
+          10898,
+          11927,
+          10133,
+          12151,
+          11891,
+          11915,
+          11962,
+          13516,
+          11929,
+          11928
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 67.34999999999991
+      },
+      {
+        "id": "q023",
+        "question": "What is the default value of random_page_cost?",
+        "trap": "seq_page_cost 와 인접 문단이고 값 형식이 같다",
+        "goldChunkIds": [
+          12120,
+          12121
+        ],
+        "retrievedIds": [
+          12120,
+          12121,
+          12186,
+          12119,
+          12117,
+          12185,
+          12831,
+          13774,
+          12214,
+          12212
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.49890000000005
+      },
+      {
+        "id": "q024",
+        "question": "What is the default value of default_statistics_target?",
+        "goldChunkIds": [
+          12094,
+          12141
+        ],
+        "retrievedIds": [
+          12141,
+          12706,
+          12753,
+          12512,
+          13058,
+          11456,
+          13278,
+          11730,
+          13898,
+          12958
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 67.29300000000012
+      },
+      {
+        "id": "q025",
+        "question": "Which column of pg_stat_activity shows what the backend is waiting on?",
+        "trap": "wait_event 와 wait_event_type 두 개로 나뉘어 있다",
+        "goldChunkIds": [
+          11665,
+          11668,
+          11685,
+          11732,
+          11733
+        ],
+        "retrievedIds": [
+          11664,
+          11665,
+          11733,
+          11666,
+          11652,
+          11735,
+          11176,
+          11734,
+          11700,
+          11660
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 66.43129999999974
+      },
+      {
+        "id": "q026",
+        "question": "What does a NULL client_addr in pg_stat_activity indicate?",
+        "goldChunkIds": [
+          11664,
+          11687,
+          11732
+        ],
+        "retrievedIds": [
+          11664,
+          11665,
+          11699,
+          12243,
+          12055,
+          11652,
+          11691,
+          11032,
+          11733,
+          11731
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 67.48070000000007
+      },
+      {
+        "id": "q027",
+        "question": "What is the default value of max_parallel_workers_per_gather?",
+        "trap": "max_parallel_workers / max_worker_processes 와 이름이 겹친다",
+        "goldChunkIds": [
+          12227,
+          12228,
+          12230
+        ],
+        "retrievedIds": [
+          12230,
+          12228,
+          12227,
+          12229,
+          12183,
+          12182,
+          12181,
+          12151,
+          13701,
+          12231
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 67.19060000000036
+      },
+      {
+        "id": "q028",
+        "question": "What is the default value of max_parallel_maintenance_workers?",
+        "trap": "q027 과 값이 같아 이름을 구분해야만 한다",
+        "goldChunkIds": [
+          12227,
+          12229,
+          12230
+        ],
+        "retrievedIds": [
+          12230,
+          12229,
+          12227,
+          12228,
+          12183,
+          12182,
+          12191,
+          12181,
+          12225,
+          12151
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 70.3734999999997
+      },
+      {
+        "id": "q029",
+        "question": "What is the default value of max_wal_size, and is it a hard limit?",
+        "trap": "min_wal_size / wal_keep_size 와 같은 절에 있다",
+        "goldChunkIds": [
+          12267,
+          12268
+        ],
+        "retrievedIds": [
+          12268,
+          10257,
+          12269,
+          12092,
+          10761,
+          12258,
+          12154,
+          12093,
+          15058,
+          12276
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.9735999999998
+      },
+      {
+        "id": "q030",
+        "question": "What is the default value of wal_keep_size?",
+        "trap": "max_wal_size/min_wal_size 와 단위가 같다",
+        "goldChunkIds": [
+          12153,
+          12154
+        ],
+        "retrievedIds": [
+          12092,
+          10257,
+          12269,
+          12153,
+          12093,
+          12268,
+          12258,
+          10761,
+          12154,
+          10448
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.25,
+        "retrieveMs": 66.78999999999996
+      },
+      {
+        "id": "q031",
+        "question": "What is the default value of deadlock_timeout, and what happens when it elapses?",
+        "trap": "lock_timeout / statement_timeout 과 같은 계열이다",
+        "goldChunkIds": [
+          12011
+        ],
+        "retrievedIds": [
+          12011,
+          11879,
+          11880,
+          11876,
+          12155,
+          12058,
+          11881,
+          11984,
+          10636,
+          12172
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 67.04810000000043
+      },
+      {
+        "id": "q032",
+        "question": "Is max_locks_per_transaction a hard limit on the number of locks one transaction may take, and what is its default?",
+        "trap": "max_pred_locks_per_transaction 도 기본값 64 다",
+        "goldChunkIds": [
+          12012
+        ],
+        "retrievedIds": [
+          12012,
+          12013,
+          12014,
+          12015,
+          12188,
+          10816,
+          14596,
+          11877,
+          11879,
+          15010
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 70.66550000000007
+      },
+      {
+        "id": "q033",
+        "question": "What is the default value of autovacuum_freeze_max_age?",
+        "trap": "vacuum_freeze_min_age / vacuum_freeze_table_age 와 같은 계열이다",
+        "goldChunkIds": [
+          11855
+        ],
+        "retrievedIds": [
+          11883,
+          11886,
+          11855,
+          13714,
+          13717,
+          13713,
+          11856,
+          11828,
+          11884,
+          13716
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "retrieveMs": 66.78510000000006
+      },
+      {
+        "id": "q034",
+        "question": "What are the defaults of effective_io_concurrency and maintenance_io_concurrency?",
+        "trap": "이름이 한 낱말만 다르다",
+        "goldChunkIds": [
+          12225
+        ],
+        "retrievedIds": [
+          12225,
+          12224,
+          15067,
+          11871,
+          12223,
+          11972,
+          12221,
+          11686,
+          11874,
+          12229
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 67.04449999999997
+      },
+      {
+        "id": "q035",
+        "question": "What is the default value of password_encryption?",
+        "trap": "md5 가 오랫동안 기본값이었다",
+        "goldChunkIds": [
+          11941
+        ],
+        "retrievedIds": [
+          11941,
+          13518,
+          11942,
+          13517,
+          11953,
+          11959,
+          11964,
+          13525,
+          11323,
+          11863
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 67.30740000000014
+      },
+      {
+        "id": "q036",
+        "question": "What is the default value of superuser_reserved_connections, and how does it interact with max_connections?",
+        "trap": "reserved_connections 와 이름이 거의 같다",
+        "goldChunkIds": [
+          11928,
+          11929
+        ],
+        "retrievedIds": [
+          11929,
+          11928,
+          11927,
+          10898,
+          10133,
+          11900,
+          11938,
+          11915,
+          11910,
+          12151
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.61380000000008
+      },
+      {
+        "id": "q037",
+        "question": "What is the default value of listen_addresses?",
+        "goldChunkIds": [
+          11925
+        ],
+        "retrievedIds": [
+          11925,
+          10894,
+          10895,
+          11333,
+          14583,
+          11340,
+          14585,
+          11171,
+          14584,
+          10923
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 67.11609999999973
+      },
+      {
+        "id": "q038",
+        "question": "What is the default value of default_toast_compression, and what other value is accepted?",
+        "trap": "lz4 를 기본값으로 짐작하기 쉽다",
+        "goldChunkIds": [
+          11866
+        ],
+        "retrievedIds": [
+          11866,
+          10644,
+          10347,
+          13700,
+          11136,
+          12756,
+          13645,
+          13644,
+          15024,
+          10401
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.8393000000001
+      },
+      {
+        "id": "q039",
+        "question": "What is the default value of bytea_output?",
+        "goldChunkIds": [
+          11888
+        ],
+        "retrievedIds": [
+          11888,
+          11889,
+          13058,
+          12258,
+          11992,
+          12276,
+          11086,
+          13073,
+          11077,
+          10966
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.86869999999999
+      },
+      {
+        "id": "q040",
+        "question": "What is the default value of log_min_duration_statement?",
+        "trap": "log_statement / log_min_duration_sample 과 이름이 비슷하다",
+        "goldChunkIds": [
+          12033,
+          12035,
+          12050
+        ],
+        "retrievedIds": [
+          12050,
+          12033,
+          12035,
+          12036,
+          11876,
+          12044,
+          12049,
+          12034,
+          12023,
+          12032
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 67.35719999999992
+      },
+      {
+        "id": "q041",
+        "question": "What are the defaults of from_collapse_limit and join_collapse_limit?",
+        "trap": "geqo_threshold 도 테이블 개수 임계값이다",
+        "goldChunkIds": [
+          12146
+        ],
+        "retrievedIds": [
+          12146,
+          12144,
+          14806,
+          13650,
+          15005,
+          12226,
+          14616,
+          14625,
+          12202,
+          11866
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 70.7817
+      },
+      {
+        "id": "q042",
+        "question": "What is the default value of checkpoint_completion_target?",
+        "trap": "checkpoint_timeout / checkpoint_warning 과 같은 절에 있다",
+        "goldChunkIds": [
+          12265
+        ],
+        "retrievedIds": [
+          12265,
+          15060,
+          12288,
+          12267,
+          12282,
+          12290,
+          12979,
+          12281,
+          12981,
+          12266
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.91510000000017
+      },
+      {
+        "id": "q043",
+        "question": "Is TRUNCATE transaction-safe — can it be rolled back?",
+        "trap": "다른 DB 에서는 암묵 커밋이라 반대로 기억하기 쉽다",
+        "goldChunkIds": [
+          14977
+        ],
+        "retrievedIds": [
+          14977,
+          14978,
+          14399,
+          14976,
+          14660,
+          14752,
+          14750,
+          10967,
+          11825,
+          14755
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 66.50019999999995
+      },
+      {
+        "id": "q044",
+        "question": "Can CREATE DATABASE be executed inside a transaction block?",
+        "trap": "VACUUM 도 같은 제약이라 두 문서가 섞인다",
+        "goldChunkIds": [
+          13212
+        ],
+        "retrievedIds": [
+          14067,
+          13212,
+          13775,
+          13625,
+          12965,
+          13757,
+          12976,
+          14659,
+          13189,
+          14002
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 67.80009999999993
+      },
+      {
+        "id": "q045",
+        "question": "Can REINDEX CONCURRENTLY be executed inside a transaction block?",
+        "trap": "CREATE INDEX CONCURRENTLY 와 사실상 같은 제약이다",
+        "goldChunkIds": [
+          14709
+        ],
+        "retrievedIds": [
+          14698,
+          11213,
+          14692,
+          14693,
+          14709,
+          14710,
+          14551,
+          14690,
+          14695,
+          14707
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.2,
+        "retrieveMs": 67.19530000000032
+      },
+      {
+        "id": "q046",
+        "question": "Which pg_dump output formats support the parallel --jobs option?",
+        "trap": "custom 포맷도 아카이브라 병렬이 될 것처럼 읽힌다",
+        "goldChunkIds": [
+          10601,
+          10673
+        ],
+        "retrievedIds": [
+          10601,
+          11392,
+          10602,
+          10583,
+          10598,
+          11771,
+          10599,
+          10786,
+          10597,
+          10596
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 70.2804000000001
+      }
+    ],
+    "rerankOn": [
+      {
+        "id": "q001",
+        "question": "What is the default value of work_mem?",
+        "trap": "maintenance_work_mem / autovacuum_work_mem / temp_buffers 와 문장 구조가 거의 같다",
+        "goldChunkIds": [
+          12189
+        ],
+        "retrievedIds": [
+          12189,
+          12190,
+          12191,
+          12192,
+          12194,
+          10928,
+          13370,
+          12196,
+          10901,
+          12195
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 3272.51
+      },
+      {
+        "id": "q002",
+        "question": "What is the default value of maintenance_work_mem, and which operations use it?",
+        "trap": "q001 과 거의 동일한 문장 — 검색이 둘을 구분해야 한다",
+        "goldChunkIds": [
+          12191,
+          12192,
+          12229
+        ],
+        "retrievedIds": [
+          12191,
+          12192,
+          12229,
+          12189,
+          12190,
+          12999,
+          12194,
+          13370,
+          13372,
+          13371
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1893.2437999999993
+      },
+      {
+        "id": "q003",
+        "question": "What does it mean when autovacuum_work_mem is set to -1?",
+        "trap": "-1 의 의미가 파라미터마다 다르다. q002 로 흘러가기 쉽다",
+        "goldChunkIds": [
+          12191,
+          12192
+        ],
+        "retrievedIds": [
+          12192,
+          12044,
+          11850,
+          11858,
+          11857,
+          13707,
+          12191,
+          11847,
+          11842,
+          11848
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1561.6180999999997
+      },
+      {
+        "id": "q004",
+        "question": "What is temp_buffers used for, and what is its default?",
+        "trap": "이름이 shared_buffers 와 비슷하고 설명 문단 구조가 work_mem 계열과 같다",
+        "goldChunkIds": [
+          12187
+        ],
+        "retrievedIds": [
+          12187,
+          12195,
+          13356,
+          10887,
+          14419,
+          12199,
+          12184,
+          12198,
+          11996,
+          12220
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2097.2919
+      },
+      {
+        "id": "q005",
+        "question": "Does effective_cache_size allocate memory?",
+        "trap": "이름 때문에 할당하는 것처럼 읽힌다. 실제로는 플래너 추정치일 뿐",
+        "goldChunkIds": [
+          12129
+        ],
+        "retrievedIds": [
+          12129,
+          12678,
+          13567,
+          12184,
+          12205,
+          12089,
+          14424,
+          12185,
+          12197,
+          12201
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1988.7579999999998
+      },
+      {
+        "id": "q006",
+        "question": "What is the default value of shared_buffers?",
+        "goldChunkIds": [
+          12184
+        ],
+        "retrievedIds": [
+          12201,
+          12184,
+          12200,
+          12193,
+          12195,
+          12199,
+          12197,
+          10887,
+          12196,
+          12198
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 1918.791799999999
+      },
+      {
+        "id": "q007",
+        "question": "What lock does VACUUM FULL require that plain VACUUM does not?",
+        "trap": "VACUUM / VACUUM FULL / autovacuum 이 같은 페이지에 붙어 있다",
+        "goldChunkIds": [
+          15015,
+          15025
+        ],
+        "retrievedIds": [
+          15015,
+          11817,
+          15036,
+          11813,
+          11814,
+          15016,
+          13704,
+          11833,
+          11815,
+          15021
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2504.965900000003
+      },
+      {
+        "id": "q008",
+        "question": "Can VACUUM run inside a transaction block?",
+        "goldChunkIds": [
+          15036
+        ],
+        "retrievedIds": [
+          15036,
+          11884,
+          15022,
+          11832,
+          15021,
+          11855,
+          11836,
+          11813,
+          11831,
+          11835
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2899.3189999999995
+      },
+      {
+        "id": "q009",
+        "question": "What is the default value of autovacuum_vacuum_scale_factor?",
+        "trap": "autovacuum_analyze_scale_factor 와 값도 문장도 비슷하다",
+        "goldChunkIds": [
+          11852
+        ],
+        "retrievedIds": [
+          11852,
+          11853,
+          11854,
+          12192,
+          11883,
+          11840,
+          12044,
+          11857,
+          11858,
+          11850
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1533.4496
+      },
+      {
+        "id": "q010",
+        "question": "What does pg_dumpall back up that pg_dump does not?",
+        "trap": "세 도구의 설명 문단이 서로를 참조해서 벡터 검색이 엉뚱한 쪽을 집는다",
+        "goldChunkIds": [
+          10312
+        ],
+        "retrievedIds": [
+          11390,
+          10583,
+          10312,
+          10344,
+          10605,
+          10641,
+          10367,
+          10612,
+          10593,
+          10350
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "retrieveMs": 2229.9383000000016
+      },
+      {
+        "id": "q011",
+        "question": "Which pg_dump output formats can pg_restore read?",
+        "trap": "plain 포맷은 pg_restore 로 못 읽는다 — 문서를 안 보면 틀리기 쉽다",
+        "goldChunkIds": [
+          10770,
+          10771
+        ],
+        "retrievedIds": [
+          10599,
+          10583,
+          10598,
+          10770,
+          10600,
+          11386,
+          10781,
+          10642,
+          10643,
+          10672
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.25,
+        "retrieveMs": 2198.8461000000025
+      },
+      {
+        "id": "q012",
+        "question": "What is the default output format of pg_dump?",
+        "goldChunkIds": [
+          10597,
+          10648
+        ],
+        "retrievedIds": [
+          10583,
+          10599,
+          10782,
+          11383,
+          10595,
+          10598,
+          11384,
+          10581,
+          10600,
+          10590
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0,
+        "retrieveMs": 1829.8588999999993
+      },
+      {
+        "id": "q013",
+        "question": "What are the restrictions on CREATE INDEX CONCURRENTLY?",
+        "trap": "REINDEX CONCURRENTLY 와 제약이 겹치면서도 다르다",
+        "goldChunkIds": [
+          13364,
+          13365,
+          13366,
+          13373
+        ],
+        "retrievedIds": [
+          13373,
+          14551,
+          13331,
+          13366,
+          13364,
+          13365,
+          12759,
+          11601,
+          13330,
+          14710
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2814.3243
+      },
+      {
+        "id": "q014",
+        "question": "What happens to a failed CREATE INDEX CONCURRENTLY?",
+        "trap": "실패한 인덱스가 남는다는 사실이 별도 문단에 있다",
+        "goldChunkIds": [
+          13364,
+          13365,
+          13366
+        ],
+        "retrievedIds": [
+          13366,
+          13365,
+          14551,
+          13364,
+          14710,
+          14691,
+          13373,
+          11601,
+          14709,
+          13331
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2934.8652
+      },
+      {
+        "id": "q015",
+        "question": "What lock level does TRUNCATE take?",
+        "trap": "DELETE 와 비교 문단이 붙어 있어 섞이기 쉽다",
+        "goldChunkIds": [
+          14976
+        ],
+        "retrievedIds": [
+          14601,
+          14976,
+          13704,
+          15025,
+          14977,
+          14970,
+          14836,
+          14968,
+          13694,
+          14595
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 2534.0513000000064
+      },
+      {
+        "id": "q016",
+        "question": "What lock does CLUSTER take on the table?",
+        "goldChunkIds": [
+          12993
+        ],
+        "retrievedIds": [
+          12993,
+          12768,
+          14593,
+          12767,
+          14601,
+          12998,
+          13000,
+          14598,
+          12790,
+          14836
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2505.0509999999995
+      },
+      {
+        "id": "q017",
+        "question": "What is the difference between statement_timeout and lock_timeout?",
+        "trap": "같은 페이지의 인접 문단이고 문장 구조가 동일하다",
+        "goldChunkIds": [
+          11879
+        ],
+        "retrievedIds": [
+          11879,
+          10636,
+          11876,
+          10338,
+          12011,
+          11877,
+          12058,
+          11880,
+          10377,
+          11940
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2086.130299999997
+      },
+      {
+        "id": "q018",
+        "question": "What is the default value of idle_in_transaction_session_timeout?",
+        "goldChunkIds": [
+          11877,
+          11880,
+          11881
+        ],
+        "retrievedIds": [
+          11880,
+          11881,
+          11877,
+          11938,
+          11876,
+          11879,
+          11940,
+          12172,
+          11935,
+          12155
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1300.9879
+      },
+      {
+        "id": "q019",
+        "question": "What are the allowed values of wal_level?",
+        "goldChunkIds": [
+          12247
+        ],
+        "retrievedIds": [
+          12247,
+          12157,
+          14421,
+          12261,
+          12258,
+          12269,
+          10761,
+          10257,
+          12173,
+          15059
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2445.1011999999973
+      },
+      {
+        "id": "q020",
+        "question": "What are the allowed values of synchronous_commit?",
+        "trap": "on/off 만 있는 줄 알기 쉽다 — 실제로는 local, remote_write, remote_apply 도 있다",
+        "goldChunkIds": [
+          12249,
+          12250,
+          12251
+        ],
+        "retrievedIds": [
+          13617,
+          12249,
+          15053,
+          12161,
+          12177,
+          11689,
+          15052,
+          15056,
+          12250,
+          12251
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 2869.781600000002
+      },
+      {
+        "id": "q021",
+        "question": "What is the default value of checkpoint_timeout?",
+        "goldChunkIds": [
+          12264,
+          12267
+        ],
+        "retrievedIds": [
+          12264,
+          11938,
+          12267,
+          15059,
+          11881,
+          11880,
+          11877,
+          11876,
+          11879,
+          15058
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2529.673999999999
+      },
+      {
+        "id": "q022",
+        "question": "What is the default value of max_connections?",
+        "goldChunkIds": [
+          11927,
+          11928,
+          11929
+        ],
+        "retrievedIds": [
+          11929,
+          11927,
+          10898,
+          11928,
+          10133,
+          12151,
+          13516,
+          11962,
+          13208,
+          11938
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1067.7494000000006
+      },
+      {
+        "id": "q023",
+        "question": "What is the default value of random_page_cost?",
+        "trap": "seq_page_cost 와 인접 문단이고 값 형식이 같다",
+        "goldChunkIds": [
+          12120,
+          12121
+        ],
+        "retrievedIds": [
+          12120,
+          12119,
+          12831,
+          13774,
+          12121,
+          12117,
+          12214,
+          12212,
+          12213,
+          12208
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1829.9815999999992
+      },
+      {
+        "id": "q024",
+        "question": "What is the default value of default_statistics_target?",
+        "goldChunkIds": [
+          12094,
+          12141
+        ],
+        "retrievedIds": [
+          12706,
+          12141,
+          12753,
+          12958,
+          12512,
+          13223,
+          11268,
+          13898,
+          13058,
+          13278
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 1981.953300000001
+      },
+      {
+        "id": "q025",
+        "question": "Which column of pg_stat_activity shows what the backend is waiting on?",
+        "trap": "wait_event 와 wait_event_type 두 개로 나뉘어 있다",
+        "goldChunkIds": [
+          11665,
+          11668,
+          11685,
+          11732,
+          11733
+        ],
+        "retrievedIds": [
+          11665,
+          11664,
+          11733,
+          11666,
+          11659,
+          11700,
+          11731,
+          11734,
+          11668,
+          11660
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2753.637799999997
+      },
+      {
+        "id": "q026",
+        "question": "What does a NULL client_addr in pg_stat_activity indicate?",
+        "goldChunkIds": [
+          11664,
+          11687,
+          11732
+        ],
+        "retrievedIds": [
+          11664,
+          11665,
+          11687,
+          11699,
+          11713,
+          11666,
+          11691,
+          11032,
+          11731,
+          12243
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2532.542300000001
+      },
+      {
+        "id": "q027",
+        "question": "What is the default value of max_parallel_workers_per_gather?",
+        "trap": "max_parallel_workers / max_worker_processes 와 이름이 겹친다",
+        "goldChunkIds": [
+          12227,
+          12228,
+          12230
+        ],
+        "retrievedIds": [
+          12230,
+          12228,
+          12227,
+          12183,
+          12229,
+          12182,
+          12181,
+          12125,
+          12231,
+          13701
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1710.0521999999983
+      },
+      {
+        "id": "q028",
+        "question": "What is the default value of max_parallel_maintenance_workers?",
+        "trap": "q027 과 값이 같아 이름을 구분해야만 한다",
+        "goldChunkIds": [
+          12227,
+          12229,
+          12230
+        ],
+        "retrievedIds": [
+          12230,
+          12229,
+          12227,
+          12228,
+          12183,
+          12182,
+          12181,
+          12191,
+          13370,
+          12192
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2027.4101999999912
+      },
+      {
+        "id": "q029",
+        "question": "What is the default value of max_wal_size, and is it a hard limit?",
+        "trap": "min_wal_size / wal_keep_size 와 같은 절에 있다",
+        "goldChunkIds": [
+          12267,
+          12268
+        ],
+        "retrievedIds": [
+          12268,
+          12269,
+          10257,
+          12276,
+          12092,
+          15062,
+          15059,
+          12093,
+          12154,
+          12151
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2250.141199999998
+      },
+      {
+        "id": "q030",
+        "question": "What is the default value of wal_keep_size?",
+        "trap": "max_wal_size/min_wal_size 와 단위가 같다",
+        "goldChunkIds": [
+          12153,
+          12154
+        ],
+        "retrievedIds": [
+          12154,
+          10257,
+          12268,
+          12269,
+          12153,
+          12092,
+          12276,
+          12093,
+          12258,
+          10761
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2313.3380000000034
+      },
+      {
+        "id": "q031",
+        "question": "What is the default value of deadlock_timeout, and what happens when it elapses?",
+        "trap": "lock_timeout / statement_timeout 과 같은 계열이다",
+        "goldChunkIds": [
+          12011
+        ],
+        "retrievedIds": [
+          12011,
+          11879,
+          11877,
+          11880,
+          12172,
+          11876,
+          11881,
+          12059,
+          11938,
+          12155
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1430.0522999999957
+      },
+      {
+        "id": "q032",
+        "question": "Is max_locks_per_transaction a hard limit on the number of locks one transaction may take, and what is its default?",
+        "trap": "max_pred_locks_per_transaction 도 기본값 64 다",
+        "goldChunkIds": [
+          12012
+        ],
+        "retrievedIds": [
+          12012,
+          12013,
+          12014,
+          10816,
+          12015,
+          13516,
+          14596,
+          11572,
+          11877,
+          12188
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1791.2423000000126
+      },
+      {
+        "id": "q033",
+        "question": "What is the default value of autovacuum_freeze_max_age?",
+        "trap": "vacuum_freeze_min_age / vacuum_freeze_table_age 와 같은 계열이다",
+        "goldChunkIds": [
+          11855
+        ],
+        "retrievedIds": [
+          11883,
+          11886,
+          11884,
+          11828,
+          11887,
+          11882,
+          11885,
+          11827,
+          11856,
+          13717
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0,
+        "retrieveMs": 2848.762600000002
+      },
+      {
+        "id": "q034",
+        "question": "What are the defaults of effective_io_concurrency and maintenance_io_concurrency?",
+        "trap": "이름이 한 낱말만 다르다",
+        "goldChunkIds": [
+          12225
+        ],
+        "retrievedIds": [
+          12225,
+          12224,
+          15067,
+          12229,
+          12226,
+          11972,
+          11874,
+          12223,
+          12221,
+          11707
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2124.062300000005
+      },
+      {
+        "id": "q035",
+        "question": "What is the default value of password_encryption?",
+        "trap": "md5 가 오랫동안 기본값이었다",
+        "goldChunkIds": [
+          11941
+        ],
+        "retrievedIds": [
+          11941,
+          11942,
+          11953,
+          11323,
+          13518,
+          11956,
+          11069,
+          11964,
+          10920,
+          13058
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1794.5467999999964
+      },
+      {
+        "id": "q036",
+        "question": "What is the default value of superuser_reserved_connections, and how does it interact with max_connections?",
+        "trap": "reserved_connections 와 이름이 거의 같다",
+        "goldChunkIds": [
+          11928,
+          11929
+        ],
+        "retrievedIds": [
+          11929,
+          11928,
+          11927,
+          10898,
+          11892,
+          10133,
+          12151,
+          11910,
+          11938,
+          10980
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1757.056700000001
+      },
+      {
+        "id": "q037",
+        "question": "What is the default value of listen_addresses?",
+        "goldChunkIds": [
+          11925
+        ],
+        "retrievedIds": [
+          11925,
+          10894,
+          11333,
+          11926,
+          10896,
+          10895,
+          10899,
+          11900,
+          14587,
+          11171
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1992.594299999997
+      },
+      {
+        "id": "q038",
+        "question": "What is the default value of default_toast_compression, and what other value is accepted?",
+        "trap": "lz4 를 기본값으로 짐작하기 쉽다",
+        "goldChunkIds": [
+          11866
+        ],
+        "retrievedIds": [
+          11866,
+          13700,
+          12756,
+          13645,
+          13644,
+          12755,
+          12897,
+          10451,
+          10617,
+          15024
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1858.383600000001
+      },
+      {
+        "id": "q039",
+        "question": "What is the default value of bytea_output?",
+        "goldChunkIds": [
+          11888
+        ],
+        "retrievedIds": [
+          11888,
+          11889,
+          13058,
+          12276,
+          12196,
+          12201,
+          11899,
+          13060,
+          12258,
+          13056
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1357.2878000000055
+      },
+      {
+        "id": "q040",
+        "question": "What is the default value of log_min_duration_statement?",
+        "trap": "log_statement / log_min_duration_sample 과 이름이 비슷하다",
+        "goldChunkIds": [
+          12033,
+          12035,
+          12050
+        ],
+        "retrievedIds": [
+          12036,
+          12033,
+          12035,
+          12044,
+          12032,
+          12060,
+          11876,
+          12050,
+          11879,
+          11859
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "retrieveMs": 1334.0355999999883
+      },
+      {
+        "id": "q041",
+        "question": "What are the defaults of from_collapse_limit and join_collapse_limit?",
+        "trap": "geqo_threshold 도 테이블 개수 임계값이다",
+        "goldChunkIds": [
+          12146
+        ],
+        "retrievedIds": [
+          12146,
+          12144,
+          12226,
+          11915,
+          14605,
+          14627,
+          14625,
+          14806,
+          12202,
+          11866
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2553.792200000011
+      },
+      {
+        "id": "q042",
+        "question": "What is the default value of checkpoint_completion_target?",
+        "trap": "checkpoint_timeout / checkpoint_warning 과 같은 절에 있다",
+        "goldChunkIds": [
+          12265
+        ],
+        "retrievedIds": [
+          12265,
+          15059,
+          15060,
+          12266,
+          12267,
+          12264,
+          12290,
+          12281,
+          10453,
+          12289
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2684.518499999991
+      },
+      {
+        "id": "q043",
+        "question": "Is TRUNCATE transaction-safe — can it be rolled back?",
+        "trap": "다른 DB 에서는 암묵 커밋이라 반대로 기억하기 쉽다",
+        "goldChunkIds": [
+          14977
+        ],
+        "retrievedIds": [
+          14977,
+          14976,
+          14660,
+          14750,
+          14752,
+          14978,
+          14757,
+          14745,
+          12297,
+          11148
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1418.3396000000066
+      },
+      {
+        "id": "q044",
+        "question": "Can CREATE DATABASE be executed inside a transaction block?",
+        "trap": "VACUUM 도 같은 제약이라 두 문서가 섞인다",
+        "goldChunkIds": [
+          13212
+        ],
+        "retrievedIds": [
+          13212,
+          14067,
+          14002,
+          14695,
+          13625,
+          13031,
+          13775,
+          14659,
+          13189,
+          12976
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 1401.3380999999936
+      },
+      {
+        "id": "q045",
+        "question": "Can REINDEX CONCURRENTLY be executed inside a transaction block?",
+        "trap": "CREATE INDEX CONCURRENTLY 와 사실상 같은 제약이다",
+        "goldChunkIds": [
+          14709
+        ],
+        "retrievedIds": [
+          14692,
+          14695,
+          14709,
+          14696,
+          14693,
+          14694,
+          14705,
+          14707,
+          11811,
+          14704
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "retrieveMs": 2601.9431999999942
+      },
+      {
+        "id": "q046",
+        "question": "Which pg_dump output formats support the parallel --jobs option?",
+        "trap": "custom 포맷도 아카이브라 병렬이 될 것처럼 읽힌다",
+        "goldChunkIds": [
+          10601,
+          10673
+        ],
+        "retrievedIds": [
+          10601,
+          10583,
+          10599,
+          10602,
+          11392,
+          11391,
+          10786,
+          10312,
+          10598,
+          10595
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "retrieveMs": 2443.3340999999928
+      }
+    ]
+  }
+}

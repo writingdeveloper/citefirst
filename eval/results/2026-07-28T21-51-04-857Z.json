@@ -1,0 +1,108 @@
+{
+  "ranAt": "2026-07-28T21:51:04.858Z",
+  "mode": "full",
+  "questionSet": "questions.yaml",
+  "config": {
+    "embeddingModel": "Xenova/bge-base-en-v1.5",
+    "embeddingDim": 768,
+    "rerankModel": "Xenova/bge-reranker-base",
+    "chunkTokens": 512,
+    "chunkOverlap": 64,
+    "retrieveTopK": 20,
+    "rerankTopN": 5,
+    "answerModel": "gpt-5.6-sol",
+    "answerEffort": "low",
+    "judgeModel": "gpt-5.6-sol",
+    "evalTopN": 10,
+    "recallK": 5,
+    "mrrK": 10
+  },
+  "summary": {
+    "rerankOff": {
+      "rerankEnabled": false,
+      "questions": 1,
+      "recallAt5": 1,
+      "mrrAt10": 1,
+      "trapRecallAt5": 1,
+      "citationValidity": 1,
+      "grounded": 1,
+      "correct": 1
+    },
+    "rerankOn": {
+      "rerankEnabled": true,
+      "questions": 1,
+      "recallAt5": 1,
+      "mrrAt10": 1,
+      "trapRecallAt5": 1,
+      "citationValidity": 1,
+      "grounded": 1,
+      "correct": 1
+    }
+  },
+  "results": {
+    "rerankOff": [
+      {
+        "id": "q001",
+        "question": "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+        "trap": "메모리 한도를 정하는 설정이 여럿이고 설명 문장이 거의 같다",
+        "goldChunkIds": [
+          7144
+        ],
+        "retrievedIds": [
+          7144,
+          7161,
+          7969,
+          7019,
+          7145,
+          5863,
+          7221,
+          6662,
+          7968,
+          7162
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer identifies work_mem and its 4MB default, which is fully supported by excerpt c7144 and matches the reference value of 4096 kB."
+        },
+        "answer": "The setting is `work_mem`. It limits the base maximum memory available to each sort or hash operation before writing to temporary disk files. Its default is four megabytes (`4MB`). [c7144]"
+      }
+    ],
+    "rerankOn": [
+      {
+        "id": "q001",
+        "question": "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+        "trap": "메모리 한도를 정하는 설정이 여럿이고 설명 문장이 거의 같다",
+        "goldChunkIds": [
+          7144
+        ],
+        "retrievedIds": [
+          7144,
+          7161,
+          7019,
+          7145,
+          5863,
+          7969,
+          7968,
+          7160,
+          7142,
+          7178
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer correctly identifies work_mem and its 4MB default, fully supported by excerpt c7144 and matching the reference value of 4096 kB."
+        },
+        "answer": "The setting is `work_mem`. It limits the base maximum memory available to each sort or hash operation before writing to temporary disk files. Its default is four megabytes (`4MB`) [c7144]."
+      }
+    ]
+  }
+}
