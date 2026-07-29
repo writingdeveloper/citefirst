@@ -5,9 +5,9 @@
 
 | 포맷 | 파일 | 크기 | 블록 | 청크 | 시간 | 결과 |
 |---|---|---|---|---|---|---|
-| html | `corpus\html\postgresql-17.10\doc\src\sgml\html\acronyms.html` | 21 KB | 1 | 3 | 6ms | ✅ |
-| txt | `corpus\raw\COPYRIGHT` | 1 KB | 6 | 1 | 0ms | ✅ |
-| md | `README.md` | 3 KB | 18 | 8 | 1ms | ✅ |
+| html | `corpus\html\postgresql-17.10\doc\src\sgml\html\acronyms.html` | 21 KB | 85 | 85 | 7ms | ✅ |
+| txt | `corpus\raw\COPYRIGHT` | 1 KB | 6 | 1 | 1ms | ✅ |
+| md | `README.md` | 28 KB | 114 | 17 | 1ms | ✅ |
 
 **미검증 포맷: pdf, docx** — 파서 코드는 있지만 실제 파일로 태워보지 않았다. 검증 전에는 증명된 것으로 취급하지 않는다.
 
@@ -23,4 +23,4 @@
 
 **md** — `README.md`
 
-> A RAG chatbot that answers from your own documents — with citations you can actually check. Retrieval that finds the ri…
+> # citefirst A RAG system that answers from your documents — with citations verified against the retrieved chunks befor…

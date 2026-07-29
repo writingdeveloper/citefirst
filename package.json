@@ -39,5 +39,13 @@
     "@types/react-dom": "^19.2.0",
     "tsx": "^4.23.1",
     "typescript": "^5.9.0"
+  },
+  "comments": {
+    "overrides": "All three are transitive. postcss <- next. sharp <- next and @huggingface/transformers. adm-zip <- onnxruntime-node <- @huggingface/transformers. Pinned up to clear 4 high + 1 moderate advisory. adm-zip is the one that matters: onnxruntime-node uses it to unpack native binaries, so `npm run embed:check` must pass after any change here."
+  },
+  "overrides": {
+    "postcss": "^8.5.18",
+    "sharp": "^0.35.0",
+    "adm-zip": "^0.6.0"
   }
 }
