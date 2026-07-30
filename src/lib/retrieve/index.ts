@@ -49,6 +49,29 @@ function fuseByRank(rankings: readonly (readonly number[])[]): number[] {
   return [...score.entries()].sort((a, b) => b[1] - a[1]).map(([id]) => id);
 }
 
+/**
+ * 리랭커에 넣을 문서 텍스트 — **문서 제목 + 헤딩 + 본문**.
+ *
+ * 헤딩을 붙이는 이유는 임베딩 때와 같다(chunk.ts 의 `embedText` 주석). 제목까지 붙이는 이유는
+ * 실측이다: q012("포맷 옵션을 안 주면 어떤 파일이 나오나")의 정답인
+ * `pg_dump > … > p plain`(13토큰)이 융합 후보 20개 중 **14위**로 밀려 top-5 에 못 들었는데,
+ * 그 위에 `pg_basebackup > … > p plain`(126토큰)이 있었다. **뜻이 같은 정의인데 문서가 다르다** —
+ * 제목이 없으면 리랭커는 그 둘을 구분할 정보를 아예 받지 못한다. 제목을 넣으면 정답이 5위로 올라온다.
+ *
+ * 즉 이 함수가 없던 동안 리랭킹 단계는 임베딩 단계보다 **적은 정보로** 채점하고 있었다.
+ * 벡터 검색은 같은 질문에서 정답을 1위로 찾아냈고, 밀어낸 것은 리랭커였다.
+ *
+ * `heading_path` 가 이미 제목으로 시작하는 청크가 5,012개 중 1,294개다(장·절 구조 문서).
+ * 그 경우 제목을 다시 붙이면 같은 문구가 두 번 들어가므로 건너뛴다.
+ * (`embedText` 는 이 중복을 그대로 갖고 있다 — 고치려면 전체 재수집이 필요해 별개로 둔다.)
+ */
+export function rerankDocText(c: RetrievedChunk): string {
+  const heading = c.headingPath ?? "";
+  const title = heading.startsWith(c.docTitle) ? "" : c.docTitle;
+  const path = [title, heading].filter(Boolean).join(" > ");
+  return path ? `${path}\n\n${c.content}` : c.content;
+}
+
 export interface RetrieveTrace {
   readonly query: string;
   readonly topK: number;
@@ -247,8 +270,7 @@ export async function retrieve(query: string, opts: RetrieveOptions = {}): Promi
     };
   }
 
-  // 리랭커에는 헤딩을 붙여 넣는다 — 임베딩 때와 같은 이유다(chunk.ts 의 embedText 주석 참조).
-  const docsForRerank = candidates.map((c) => (c.headingPath ? `${c.headingPath}\n\n${c.content}` : c.content));
+  const docsForRerank = candidates.map(rerankDocText);
   /*
    * 리랭커에 무엇을 질의로 줄 것인가 — `config.rerankQuery`.
    *

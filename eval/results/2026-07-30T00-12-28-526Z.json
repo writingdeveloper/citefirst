@@ -1,0 +1,4157 @@
+{
+  "ranAt": "2026-07-30T00:12:28.527Z",
+  "mode": "full",
+  "questionSet": "questions.yaml",
+  "config": {
+    "embeddingModel": "Xenova/bge-base-en-v1.5",
+    "embeddingDim": 768,
+    "rerankModel": "Xenova/bge-reranker-base",
+    "chunkTokens": 512,
+    "chunkOverlap": 64,
+    "retrieveTopK": 20,
+    "rerankTopN": 5,
+    "hybridEnabled": false,
+    "rewriteEnabled": true,
+    "rewriteModel": "gpt-5.6-sol",
+    "rewriteMaxQueries": 3,
+    "rerankQuery": "expanded",
+    "answerModel": "gpt-5.6-sol",
+    "answerEffort": "low",
+    "judgeModel": "gpt-5.6-sol",
+    "evalTopN": 10,
+    "recallK": 5,
+    "mrrK": 10
+  },
+  "summary": {
+    "rerankOff": {
+      "rerankEnabled": false,
+      "questions": 46,
+      "recallAt5": 0.9565217391304348,
+      "mrrAt10": 0.7781400966183576,
+      "trapRecallAt5": 0.9473684210526315,
+      "citationValidity": 1,
+      "grounded": 1,
+      "correct": 0.9782608695652174
+    },
+    "rerankOn": {
+      "rerankEnabled": true,
+      "questions": 46,
+      "recallAt5": 0.9782608695652174,
+      "mrrAt10": 0.8342650103519668,
+      "trapRecallAt5": 1,
+      "citationValidity": 1,
+      "grounded": 0.9782608695652174,
+      "correct": 0.9565217391304348
+    }
+  },
+  "results": {
+    "rerankOff": [
+      {
+        "id": "q001",
+        "question": "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+        "trap": "메모리 한도를 정하는 설정이 여럿이고 설명 문장이 거의 같다",
+        "goldChunkIds": [
+          12189
+        ],
+        "retrievedIds": [
+          12189,
+          10901,
+          12190,
+          12191,
+          12194,
+          12192,
+          12205,
+          12065,
+          12206,
+          11712
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is directly supported by excerpt c12189 and matches the reference default of 4MB (4096 kB) for work_mem."
+        },
+        "answer": "The setting is `work_mem`. It limits the base maximum memory available to each sort or hash operation before writing to temporary disk files. Its default is four megabytes (`4MB`). [c12189]",
+        "retrieveMs": 2209.1677,
+        "queries": [
+          "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+          "work_mem memory for sort operations and hash tables",
+          "temporary files caused by sorts exceeding work_mem",
+          "resource consumption work_mem default setting"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 1634.8029000000001,
+        "rewriteTokens": {
+          "input": 640,
+          "output": 33
+        }
+      },
+      {
+        "id": "q002",
+        "question": "Does routine table cleanup get the same memory budget as an ordinary query, or its own? What is that budget by default?",
+        "trap": "q001 과 거의 동일한 문장 구조 — 검색이 둘을 구분해야 한다",
+        "goldChunkIds": [
+          12191,
+          12192,
+          12229
+        ],
+        "retrievedIds": [
+          12191,
+          12192,
+          12189,
+          11813,
+          11815,
+          10901,
+          15036,
+          11831,
+          11814,
+          12190
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is fully supported by the excerpts and matches the reference: routine VACUUM uses maintenance_work_mem, which defaults to 64MB, with accurate additional context about work_mem and autovacuum_work_mem."
+        },
+        "answer": "Routine table cleanup uses its own memory budget, `maintenance_work_mem`, rather than the ordinary-query `work_mem` budget. `maintenance_work_mem` applies to maintenance operations such as `VACUUM` and defaults to 64 megabytes (`64MB`) [c12191].\n\nFor comparison, `work_mem` defaults to four megabytes (`4MB`) per query operation [c12189]. Each autovacuum worker uses `autovacuum_work_mem`, whose default is `-1`, meaning it inherits `maintenance_work_mem` [c12192].",
+        "retrieveMs": 3322.3124000000003,
+        "queries": [
+          "Does routine table cleanup get the same memory budget as an ordinary query, or its own? What is that budget by default?",
+          "maintenance_work_mem memory for VACUUM and other maintenance operations",
+          "maintenance_work_mem default setting",
+          "work_mem versus maintenance_work_mem for routine VACUUM"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3222.8621,
+        "rewriteTokens": {
+          "input": 633,
+          "output": 94
+        }
+      },
+      {
+        "id": "q003",
+        "question": "Each automatic cleanup worker has its own memory limit. What does the default value of that limit actually mean?",
+        "trap": "-1 의 의미가 파라미터마다 다르고, q002 로 흘러가기 쉽다",
+        "goldChunkIds": [
+          12191,
+          12192
+        ],
+        "retrievedIds": [
+          12192,
+          12191,
+          11847,
+          11842,
+          11858,
+          11839,
+          12189,
+          12044,
+          10901,
+          13702
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer correctly states that the default -1 makes autovacuum_work_mem inherit maintenance_work_mem, with all additional default-memory context supported by the excerpts."
+        },
+        "answer": "The `autovacuum_work_mem` default is `-1`, meaning each autovacuum worker uses the `maintenance_work_mem` value instead.[c12192] Since `maintenance_work_mem` defaults to `64MB`, each worker can use up to `64MB` by default.[c12191] With the default maximum of three workers, up to three times that memory may be allocated concurrently.[c11847][c12191]",
+        "retrieveMs": 3577.670400000001,
+        "queries": [
+          "Each automatic cleanup worker has its own memory limit. What does the default value of that limit actually mean?",
+          "autovacuum_work_mem default value meaning",
+          "autovacuum worker memory uses maintenance_work_mem",
+          "resource consumption autovacuum_work_mem parameter"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3483.6659,
+        "rewriteTokens": {
+          "input": 629,
+          "output": 89
+        }
+      },
+      {
+        "id": "q004",
+        "question": "Which memory setting applies only to temporary tables inside a session, and how much is it by default?",
+        "trap": "이름이 shared_buffers 와 비슷하고 설명 구조가 work_mem 계열과 같다",
+        "goldChunkIds": [
+          12187
+        ],
+        "retrievedIds": [
+          12187,
+          12206,
+          11867,
+          13636,
+          12184,
+          11530,
+          13993,
+          13728,
+          13558,
+          14419
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer identifies temp_buffers and its 8MB default, matching both the excerpt and the reference answer."
+        },
+        "answer": "The setting is `temp_buffers`. It controls the maximum memory used for session-local buffers that access temporary tables. The default is eight megabytes (`8MB`) [c12187].",
+        "retrieveMs": 2308.8507999999983,
+        "queries": [
+          "Which memory setting applies only to temporary tables inside a session, and how much is it by default?",
+          "temp_buffers temporary tables session-local buffers",
+          "Resource Consumption Memory temp_buffers parameter",
+          "temporary table buffers per database session"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2235.0681999999997,
+        "rewriteTokens": {
+          "input": 628,
+          "output": 58
+        }
+      },
+      {
+        "id": "q005",
+        "question": "There is a setting that tells the planner how much disk cache it can assume. Does the server actually reserve that much memory?",
+        "trap": "이름 때문에 할당하는 것처럼 읽힌다. 실제로는 플래너 추정치일 뿐",
+        "goldChunkIds": [
+          12129
+        ],
+        "retrievedIds": [
+          12129,
+          12121,
+          12184,
+          12147,
+          12105,
+          12189,
+          12198,
+          12224,
+          12185,
+          12199
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states, as supported by excerpt c12129 and the reference, that effective_cache_size is only a planner estimate and does not allocate shared memory or reserve kernel disk cache."
+        },
+        "answer": "No. `effective_cache_size` is used only for planner cost estimates; it neither allocates PostgreSQL shared memory nor reserves kernel disk cache. [c12129]",
+        "retrieveMs": 2169.395500000004,
+        "queries": [
+          "There is a setting that tells the planner how much disk cache it can assume. Does the server actually reserve that much memory?",
+          "effective_cache_size planner cost estimate available disk cache",
+          "effective_cache_size does not allocate or reserve memory",
+          "query planning assumptions about operating system and PostgreSQL shared buffer cache"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2076.2096,
+        "rewriteTokens": {
+          "input": 633,
+          "output": 38
+        }
+      },
+      {
+        "id": "q006",
+        "question": "How much memory does the server reserve for its shared buffer pool out of the box?",
+        "trap": "다른 여러 파라미터 설명이 shared_buffers 를 참조한다",
+        "goldChunkIds": [
+          12184
+        ],
+        "retrievedIds": [
+          12184,
+          12199,
+          12201,
+          12203,
+          12196,
+          12193,
+          12197,
+          10887,
+          12198,
+          12195
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer matches the documented typical default of 128MB and correctly includes the kernel-dependent initdb caveat."
+        },
+        "answer": "The server typically reserves **128 megabytes (128MB)** for its shared buffer pool by default. It may reserve less if kernel settings cannot support that amount, as determined during `initdb` [c12184].",
+        "retrieveMs": 1342.7194999999992,
+        "queries": [
+          "How much memory does the server reserve for its shared buffer pool out of the box?",
+          "shared_buffers default setting",
+          "shared memory buffer pool configuration",
+          "resource consumption shared_buffers parameter"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 1274.3911000000007,
+        "rewriteTokens": {
+          "input": 625,
+          "output": 22
+        }
+      },
+      {
+        "id": "q007",
+        "question": "Rewriting a table to reclaim disk space blocks even readers, while ordinary cleanup does not. Which lock causes that?",
+        "trap": "VACUUM / VACUUM FULL / autovacuum 이 같은 페이지에 붙어 있다",
+        "goldChunkIds": [
+          15015,
+          15025
+        ],
+        "retrievedIds": [
+          15015,
+          11813,
+          15016,
+          15021,
+          15036,
+          11836,
+          11814,
+          11826,
+          11817,
+          11844
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately identifies the ACCESS EXCLUSIVE lock required by VACUUM FULL and correctly contrasts it with plain VACUUM, as stated in the excerpts and reference."
+        },
+        "answer": "`VACUUM FULL` requires an **ACCESS EXCLUSIVE lock**, which prevents concurrent use of the table, including reads. Standard `VACUUM` does not obtain an exclusive lock and can run alongside normal reads and writes. [c15015]",
+        "retrieveMs": 9178.319,
+        "queries": [
+          "Rewriting a table to reclaim disk space blocks even readers, while ordinary cleanup does not. Which lock causes that?",
+          "VACUUM FULL table-level lock mode",
+          "VACUUM FULL AccessExclusiveLock blocks SELECT",
+          "routine VACUUM locking behavior ShareUpdateExclusiveLock"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 9089.392100000001,
+        "rewriteTokens": {
+          "input": 631,
+          "output": 141
+        }
+      },
+      {
+        "id": "q008",
+        "question": "Can the routine table cleanup command be wrapped in BEGIN and COMMIT?",
+        "goldChunkIds": [
+          15036
+        ],
+        "retrievedIds": [
+          11813,
+          11832,
+          15022,
+          12210,
+          15036,
+          15015,
+          15021,
+          11826,
+          11835,
+          11814
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.2,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is directly supported by excerpt c15036 and substantively matches the reference answer."
+        },
+        "answer": "No. `VACUUM` cannot be executed inside a transaction block, so it cannot be wrapped in `BEGIN` and `COMMIT`.[c15036]",
+        "retrieveMs": 7172.272300000004,
+        "queries": [
+          "Can the routine table cleanup command be wrapped in BEGIN and COMMIT?",
+          "VACUUM SQL command transaction block",
+          "VACUUM execution inside BEGIN and COMMIT",
+          "VACUUM transaction processing restrictions"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 7089.6414,
+        "rewriteTokens": {
+          "input": 622,
+          "output": 162
+        }
+      },
+      {
+        "id": "q009",
+        "question": "What fraction of a table has to change before automatic cleanup decides to process it, by default?",
+        "trap": "analyze 쪽 대응 설정과 값도 문장도 비슷하다",
+        "goldChunkIds": [
+          11852
+        ],
+        "retrievedIds": [
+          11852,
+          11853,
+          11854,
+          11849,
+          11851,
+          11850,
+          11840,
+          13707,
+          11841,
+          13705
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer correctly states the default fraction as 0.2 (20%) and its additional threshold details are supported by the excerpts."
+        },
+        "answer": "By default, automatic `VACUUM` uses **0.2 (20% of table size)** as the scale factor [c11852]. The trigger is:\n\n```text\n50 tuples + 20% of the table\n```\n\nThe base threshold defaults to **50 tuples** [c11849], and the table size is based on `pg_class.reltuples` [c11840].",
+        "retrieveMs": 3111.1691999999966,
+        "queries": [
+          "What fraction of a table has to change before automatic cleanup decides to process it, by default?",
+          "autovacuum_vacuum_scale_factor table fraction",
+          "autovacuum_vacuum_threshold and autovacuum_vacuum_scale_factor vacuum trigger",
+          "automatic vacuum threshold dead tuples table size"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3024.7955,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 122
+        }
+      },
+      {
+        "id": "q010",
+        "question": "I need to move users and tablespaces to a new cluster, not just the tables in one database. Which dump tool covers that?",
+        "trap": "세 도구의 설명 문단이 서로를 참조해서 벡터 검색이 엉뚱한 쪽을 집는다",
+        "goldChunkIds": [
+          10312
+        ],
+        "retrievedIds": [
+          11390,
+          10316,
+          10312,
+          10325,
+          10310,
+          10320,
+          10322,
+          10346,
+          10367,
+          10643
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer correctly identifies pg_dumpall and accurately explains that --globals-only dumps cluster-wide roles and tablespaces without databases, matching the reference."
+        },
+        "answer": "Use `pg_dumpall`. It dumps the cluster-wide objects that `pg_dump` omits, including roles (“users”) and tablespaces. [c11390]\n\nTo dump only those global objects, run:\n\n```bash\npg_dumpall --globals-only > globals.sql\n```\n\nThe `--globals-only` option includes roles and tablespaces but no databases. [c10320]",
+        "retrieveMs": 1561.8424999999988,
+        "queries": [
+          "I need to move users and tablespaces to a new cluster, not just the tables in one database. Which dump tool covers that?",
+          "pg_dumpall cluster-wide backup of global objects",
+          "pg_dumpall roles and tablespaces",
+          "dumping all databases and cluster-wide data"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 1473.3813999999984,
+        "rewriteTokens": {
+          "input": 635,
+          "output": 32
+        }
+      },
+      {
+        "id": "q011",
+        "question": "Which dump file formats can the restore utility read back, and which one cannot be used with it?",
+        "trap": "plain 포맷은 pg_restore 로 못 읽는다 — 문서를 안 보면 틀리기 쉽다",
+        "goldChunkIds": [
+          10770,
+          10771
+        ],
+        "retrievedIds": [
+          10770,
+          10583,
+          10598,
+          10599,
+          10600,
+          10782,
+          11386,
+          10768,
+          10672,
+          10784
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 4,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately lists custom, directory, and tar as pg_restore-readable formats and correctly states that plain-text dumps must instead be restored with psql, all directly supported by the excerpts."
+        },
+        "answer": "`pg_restore` can read these `pg_dump` archive formats:\n\n- **Custom** (`-Fc`) [c10598]\n- **Directory** (`-Fd`) [c10599]\n- **Tar** (`-Ft`) [c10600]\n\nIt cannot restore **plain-text/script dumps**; those must be restored with `psql` instead. [c11386]",
+        "retrieveMs": 3689.0257000000056,
+        "queries": [
+          "Which dump file formats can the restore utility read back, and which one cannot be used with it?",
+          "pg_restore archive file formats custom directory tar",
+          "pg_dump non-plain-text output formats readable by pg_restore",
+          "plain-text SQL script cannot be restored with pg_restore"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3602.8490999999995,
+        "rewriteTokens": {
+          "input": 628,
+          "output": 96
+        }
+      },
+      {
+        "id": "q012",
+        "question": "If I dump a database without passing any format option, what kind of file do I get?",
+        "goldChunkIds": [
+          10597,
+          10648
+        ],
+        "retrievedIds": [
+          10596,
+          10597,
+          10599,
+          10438,
+          10598,
+          10782,
+          10439,
+          10585,
+          10583,
+          10590
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The excerpt explicitly states that pg_dump defaults to the plain format, which outputs a plain-text SQL script file, matching the reference answer."
+        },
+        "answer": "You get a **plain-text SQL script file**, because `pg_dump` uses the `plain` format by default. [c10597]",
+        "retrieveMs": 3578.8861999999936,
+        "queries": [
+          "If I dump a database without passing any format option, what kind of file do I get?",
+          "pg_dump default output format",
+          "pg_dump -F --format option",
+          "pg_dump output file format selection"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3494.7114,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 129
+        }
+      },
+      {
+        "id": "q013",
+        "question": "Why does building an index without blocking writes fail when I put it inside a transaction?",
+        "trap": "REINDEX 쪽 대응 기능과 제약이 겹치면서도 다르다",
+        "goldChunkIds": [
+          13364,
+          13365,
+          13366,
+          13373
+        ],
+        "retrievedIds": [
+          13364,
+          13366,
+          13365,
+          13331,
+          11601,
+          14551,
+          14707,
+          14709,
+          14708,
+          14698
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states that CREATE INDEX CONCURRENTLY cannot run inside a transaction block and supports the explanation with excerpts describing its multi-transaction process."
+        },
+        "answer": "`CREATE INDEX CONCURRENTLY` cannot run inside a transaction block. [c13366]\n\nA concurrent build uses multiple transactions: PostgreSQL first enters the index as “invalid,” then performs two table scans in two more transactions, with waits for relevant existing transactions before and after the scans. [c13364] [c13365] Because you placed it inside an explicit transaction, PostgreSQL rejects the command; run it as a standalone statement instead. [c13366]",
+        "retrieveMs": 2609.0130999999965,
+        "queries": [
+          "Why does building an index without blocking writes fail when I put it inside a transaction?",
+          "CREATE INDEX CONCURRENTLY cannot run inside a transaction block",
+          "building indexes concurrently transaction limitations",
+          "CREATE INDEX CONCURRENTLY multiple transactions"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2519.7839999999997,
+        "rewriteTokens": {
+          "input": 625,
+          "output": 79
+        }
+      },
+      {
+        "id": "q014",
+        "question": "A non-blocking index build failed partway through. Is anything left behind on the table?",
+        "trap": "실패한 인덱스가 남는다는 사실이 별도 문단에 있다",
+        "goldChunkIds": [
+          13364,
+          13365,
+          13366
+        ],
+        "retrievedIds": [
+          13365,
+          13366,
+          14709,
+          14710,
+          13364,
+          14708,
+          14707,
+          14711,
+          14698,
+          13373
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is fully supported by the excerpts and matches the reference that a failed concurrent build leaves an invalid, query-ignored index that should be dropped manually."
+        },
+        "answer": "Yes. A failed `CREATE INDEX CONCURRENTLY` can leave an `INVALID` index behind on the table. It is ignored by queries because it might be incomplete, but it still adds update overhead; if it is unique, it may continue enforcing uniqueness. [c13365] [c13366]\n\nThe recommended recovery is to drop the invalid index and retry `CREATE INDEX CONCURRENTLY`, or rebuild it with `REINDEX INDEX CONCURRENTLY`. [c13365]",
+        "retrieveMs": 4621.027600000001,
+        "queries": [
+          "A non-blocking index build failed partway through. Is anything left behind on the table?",
+          "CREATE INDEX CONCURRENTLY failure invalid index left behind",
+          "failed concurrent index build invalid index entry in system catalogs",
+          "recovering from errors in concurrent index builds DROP INDEX and retry"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4536.506200000003,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 88
+        }
+      },
+      {
+        "id": "q015",
+        "question": "Emptying a table completely in one statement — does that block other sessions from reading it?",
+        "trap": "행을 지우는 다른 방법과 비교 문단이 붙어 있어 섞이기 쉽다",
+        "goldChunkIds": [
+          14976
+        ],
+        "retrievedIds": [
+          14976,
+          14596,
+          15011,
+          14969,
+          12790,
+          14133,
+          14601,
+          14595,
+          14836,
+          14975
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": false,
+          "reason": "The answer is supported by the excerpts, but it omits the reference answer's qualifier that ACCESS EXCLUSIVE locks are also taken on the table's indexes."
+        },
+        "answer": "Yes. `TRUNCATE` empties a table in one statement, but it acquires an `ACCESS EXCLUSIVE` lock on each affected table, blocking all other concurrent operations—including reads—until the transaction ends. [c14976] [c14595]\n\n```sql\nTRUNCATE TABLE name;\n```\n\n[c14969]\n\nIf concurrent access is required, use `DELETE` instead. [c14976]",
+        "retrieveMs": 6537.919499999996,
+        "queries": [
+          "Emptying a table completely in one statement — does that block other sessions from reading it?",
+          "TRUNCATE command locking behavior",
+          "TRUNCATE ACCESS EXCLUSIVE lock concurrent SELECT",
+          "table-level lock modes and conflicting locks"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 6449.507099999995,
+        "rewriteTokens": {
+          "input": 626,
+          "output": 96
+        }
+      },
+      {
+        "id": "q016",
+        "question": "Physically reordering a table to match an index — what lock does that take while it runs?",
+        "trap": "q007 과 같은 락이라 두 문서가 서로 헷갈린다",
+        "goldChunkIds": [
+          12993
+        ],
+        "retrievedIds": [
+          12993,
+          14596,
+          14595,
+          14836,
+          14707,
+          14693,
+          14698,
+          14133,
+          12999,
+          11683
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer directly matches the excerpt and reference: CLUSTER takes an ACCESS EXCLUSIVE lock that blocks both reads and writes until completion."
+        },
+        "answer": "`CLUSTER` acquires an `ACCESS EXCLUSIVE` lock on the table while physically reordering it. This blocks all other operations, including reads and writes, until clustering finishes. [c12993]",
+        "retrieveMs": 4595.614000000001,
+        "queries": [
+          "Physically reordering a table to match an index — what lock does that take while it runs?",
+          "CLUSTER command locking behavior ACCESS EXCLUSIVE lock",
+          "physically reorder table based on an index with CLUSTER",
+          "CLUSTER table rewrite concurrent access and locks"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4511.778099999996,
+        "rewriteTokens": {
+          "input": 628,
+          "output": 84
+        }
+      },
+      {
+        "id": "q017",
+        "question": "One setting kills a query that runs too long overall; another only caps how long it waits for a lock. How do they differ, and what are their defaults?",
+        "trap": "같은 페이지의 인접 문단이고 문장 구조가 동일하다",
+        "goldChunkIds": [
+          11879
+        ],
+        "retrievedIds": [
+          11879,
+          11876,
+          11877,
+          10636,
+          10338,
+          11880,
+          12011,
+          11940,
+          12058,
+          11881
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states the scope and default of both timeouts, and every claim is directly supported by the cited excerpts."
+        },
+        "answer": "- `statement_timeout` aborts any statement whose total execution time exceeds the configured limit. It is measured from when the command arrives at the server until completion. Its default is `0`, which disables the timeout; values without units are milliseconds. [c11876]\n- `lock_timeout` aborts a statement only when an individual attempt to acquire a lock exceeds the configured limit. The limit applies separately to each lock acquisition attempt. Its default is `0`, which disables the timeout; values without units are milliseconds. [c11879]\n\nIf both are nonzero, setting `lock_timeout` equal to or greater than `statement_timeout` is generally pointless because `statement_timeout` will trigger first. [c11879]",
+        "retrieveMs": 2275.2288000000044,
+        "queries": [
+          "One setting kills a query that runs too long overall; another only caps how long it waits for a lock. How do they differ, and what are their defaults?",
+          "statement_timeout maximum allowed duration of any statement defaults",
+          "lock_timeout maximum duration waiting to acquire a lock defaults",
+          "statement_timeout versus lock_timeout client connection defaults"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2185.357100000001,
+        "rewriteTokens": {
+          "input": 641,
+          "output": 35
+        }
+      },
+      {
+        "id": "q018",
+        "question": "How long may a session sit idle with an open transaction before the server terminates it, by default?",
+        "trap": "비슷한 이름의 타임아웃 설정이 같은 절에 여러 개 있다",
+        "goldChunkIds": [
+          11877,
+          11880,
+          11881
+        ],
+        "retrievedIds": [
+          11880,
+          11881,
+          11877,
+          11878,
+          11879,
+          11935,
+          11871,
+          11876,
+          11938,
+          11872
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states that the default is 0, which disables the idle-in-transaction session timeout, exactly as supported by excerpt c11880 and the reference answer."
+        },
+        "answer": "By default, there is **no timeout**. `idle_in_transaction_session_timeout` is `zero`, which disables termination of sessions idle within an open transaction. [c11880]",
+        "retrieveMs": 5388.941999999988,
+        "queries": [
+          "How long may a session sit idle with an open transaction before the server terminates it, by default?",
+          "idle_in_transaction_session_timeout default setting",
+          "client connection defaults for terminating idle sessions with open transactions",
+          "idle-in-transaction session timeout"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 5302.006000000001,
+        "rewriteTokens": {
+          "input": 629,
+          "output": 74
+        }
+      },
+      {
+        "id": "q019",
+        "question": "Which values can I choose from to control how much detail goes into the write-ahead log?",
+        "goldChunkIds": [
+          12247
+        ],
+        "retrievedIds": [
+          12247,
+          12256,
+          12259,
+          12258,
+          12291,
+          12246,
+          15057,
+          12287,
+          15072,
+          12252
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately lists minimal, replica, and logical as the wal_level choices, while correctly noting the documented legacy aliases."
+        },
+        "answer": "The `wal_level` parameter supports these values:\n\n- `minimal` — logs only what is required for crash or immediate-shutdown recovery.\n- `replica` — the default; supports WAL archiving, replication, and read-only queries on standby servers.\n- `logical` — includes everything from `replica`, plus information required for logical decoding.\n\nEach level includes all information logged at lower levels. Older values `archive` and `hot_standby` are still accepted but map to `replica`. [c12247]",
+        "retrieveMs": 3452.0617000000057,
+        "queries": [
+          "Which values can I choose from to control how much detail goes into the write-ahead log?",
+          "wal_level parameter settings",
+          "write-ahead log detail level",
+          "runtime configuration WAL wal_level"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3366.4105000000127,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 62
+        }
+      },
+      {
+        "id": "q020",
+        "question": "What choices are there for how much confirmation a transaction waits for before commit returns?",
+        "trap": "on/off 만 있는 줄 알기 쉽다 — 실제로는 local, remote_write, remote_apply 도 있다",
+        "goldChunkIds": [
+          12249,
+          12250,
+          12251
+        ],
+        "retrievedIds": [
+          12250,
+          12249,
+          15052,
+          15053,
+          12262,
+          12263,
+          15056,
+          15054,
+          15055,
+          15064
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer lists all five valid synchronous_commit choices from the excerpts—local, remote_write, remote_apply, on, and off—and accurately explains them."
+        },
+        "answer": "The `synchronous_commit` parameter offers these choices:\n\n- `remote_apply`: Wait until synchronous standbys have received and applied the commit record—making it visible to standby queries—and written it to durable storage. [c12249]\n- `on` **(the default)**: Wait until synchronous standbys have received the commit record and flushed it to durable storage. [c12249] [c12250]\n- `remote_write`: Wait until synchronous standbys have received the record and written it to their file systems, but not necessarily to durable storage. [c12250]\n- `local`: Wait for the WAL to be flushed locally, without waiting for replication. [c12250]\n- `off`: Do not wait for a WAL flush; commit returns success before the transaction is guaranteed safe against a server crash. [c12249]\n\nIf `synchronous_standby_names` is empty, only `on` and `off` are meaningfully different; `remote_apply`, `remote_write`, and `local` provide the same local synchronization level as `on`. [c12249]",
+        "retrieveMs": 5880.493600000002,
+        "queries": [
+          "What choices are there for how much confirmation a transaction waits for before commit returns?",
+          "synchronous_commit parameter settings and transaction commit wait behavior",
+          "synchronous replication levels of transaction durability and visibility",
+          "commit returns after local or remote WAL confirmation"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 5793.939700000003,
+        "rewriteTokens": {
+          "input": 624,
+          "output": 104
+        }
+      },
+      {
+        "id": "q021",
+        "question": "How often does the server force a checkpoint if nothing else triggers one?",
+        "goldChunkIds": [
+          12264,
+          12267
+        ],
+        "retrievedIds": [
+          12264,
+          15058,
+          15062,
+          15059,
+          12267,
+          15057,
+          12979,
+          12265,
+          11709,
+          12981
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states the default checkpoint timeout is 5 minutes and adds the excerpt-supported caveat that idle checkpoints may be skipped."
+        },
+        "answer": "The server schedules an automatic checkpoint every **5 minutes (`5min`)** by default, controlled by `checkpoint_timeout` [c12264]. However, if no WAL has been written since the previous checkpoint, the new checkpoint is skipped [c15058].",
+        "retrieveMs": 4603.438399999999,
+        "queries": [
+          "How often does the server force a checkpoint if nothing else triggers one?",
+          "checkpoint_timeout automatic checkpoint interval",
+          "time-driven checkpoints when no other checkpoint is triggered",
+          "WAL configuration automatic checkpoints timeout"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4537.9853999999905,
+        "rewriteTokens": {
+          "input": 622,
+          "output": 66
+        }
+      },
+      {
+        "id": "q022",
+        "question": "How many client connections will a freshly installed server accept at once?",
+        "goldChunkIds": [
+          11927,
+          11928,
+          11929
+        ],
+        "retrievedIds": [
+          10898,
+          11927,
+          12151,
+          10133,
+          11929,
+          13516,
+          11891,
+          13208,
+          11928,
+          12227
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer matches the reference value of 100 and accurately includes the excerpts' qualification that initdb may choose a lower value if kernel settings cannot support it."
+        },
+        "answer": "A freshly initialized server typically accepts **100 concurrent client connections**, but the value can be lower if the kernel settings cannot support 100; `initdb` chooses it automatically. [c11927] [c10898]",
+        "retrieveMs": 3934.033899999995,
+        "queries": [
+          "How many client connections will a freshly installed server accept at once?",
+          "max_connections default setting",
+          "connection settings maximum concurrent connections",
+          "fresh installation max_connections"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3849.7204000000056,
+        "rewriteTokens": {
+          "input": 621,
+          "output": 77
+        }
+      },
+      {
+        "id": "q023",
+        "question": "What cost does the planner assume for fetching a page out of order, compared to a sequential one?",
+        "trap": "순차 읽기 비용 설정과 인접 문단이고 값 형식이 같다",
+        "goldChunkIds": [
+          12120,
+          12121
+        ],
+        "retrievedIds": [
+          12120,
+          12117,
+          12121,
+          12119,
+          12831,
+          11588,
+          13774,
+          12094,
+          12118,
+          12212
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The excerpts state that random_page_cost defaults to 4.0 while seq_page_cost defaults to 1.0, so an out-of-order fetch is assumed to cost four times as much."
+        },
+        "answer": "The planner assumes an out-of-order (`random_page_cost`) fetch costs **4.0**, compared with **1.0** for a sequential (`seq_page_cost`) fetch—so random access is estimated at **four times** the sequential cost by default. [c12120] [c12119]",
+        "retrieveMs": 2576.5519999999815,
+        "queries": [
+          "What cost does the planner assume for fetching a page out of order, compared to a sequential one?",
+          "random_page_cost compared with seq_page_cost",
+          "planner cost constants for nonsequential disk page fetches",
+          "query planning cost parameters for random and sequential page access"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2490.9332999999897,
+        "rewriteTokens": {
+          "input": 628,
+          "output": 74
+        }
+      },
+      {
+        "id": "q024",
+        "question": "How detailed are the column statistics the planner collects by default?",
+        "goldChunkIds": [
+          12094,
+          12141
+        ],
+        "retrievedIds": [
+          12141,
+          12958,
+          12753,
+          12439,
+          12512,
+          12706,
+          13599,
+          13597,
+          11819,
+          11818
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer correctly states the default statistics target is 100, and its additional explanation is fully supported by the excerpts."
+        },
+        "answer": "By default, PostgreSQL uses a statistics target of **100** for columns without a column-specific setting.[c12141] This allows up to **100 entries** in the most-common-value list and up to **100 bins** in the histogram.[c12958]\n\nFor large tables, these statistics are approximate because `ANALYZE` uses a random sample rather than examining every row.[c12958]",
+        "retrieveMs": 2792.195800000016,
+        "queries": [
+          "How detailed are the column statistics the planner collects by default?",
+          "default_statistics_target planner statistics detail",
+          "ALTER TABLE SET STATISTICS per-column statistics target",
+          "ANALYZE column statistics target"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2704.6196000000054,
+        "rewriteTokens": {
+          "input": 620,
+          "output": 73
+        }
+      },
+      {
+        "id": "q025",
+        "question": "A backend seems stuck. Which columns of the activity view tell me what it is waiting on?",
+        "trap": "두 개로 나뉘어 있어 하나만 답하기 쉽다",
+        "goldChunkIds": [
+          11665,
+          11668,
+          11685,
+          11732,
+          11733
+        ],
+        "retrievedIds": [
+          11733,
+          11668,
+          11665,
+          11652,
+          11666,
+          11664,
+          11176,
+          11670,
+          10293,
+          12234
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer identifies wait_event_type and wait_event with the correct meanings and NULL behavior, while its additional context about state and lock waits is fully supported by the excerpts."
+        },
+        "answer": "Use these `pg_stat_activity` columns:\n\n- `wait_event_type`: the category of event the backend is waiting for, or `NULL` if it is not waiting. [c11665]\n- `wait_event`: the specific wait event name, or `NULL` if it is not waiting. [c11665]\n- `state`: the backend’s overall state. If `state` is `active` and `wait_event` is non-null, a query is executing but blocked somewhere in the system. [c11665] [c11668]\n\nFor lock waits, `wait_event_type` is `Lock`; determining which session is blocking may require examining `pg_locks`. [c11668] [c11652]",
+        "retrieveMs": 2504.019800000009,
+        "queries": [
+          "A backend seems stuck. Which columns of the activity view tell me what it is waiting on?",
+          "pg_stat_activity wait_event_type and wait_event columns",
+          "backend activity view wait event information",
+          "monitoring database activity backend wait events"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2417.397100000002,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 31
+        }
+      },
+      {
+        "id": "q026",
+        "question": "Some rows in the activity view have no client address at all. What does that tell me about those connections?",
+        "goldChunkIds": [
+          11664,
+          11687,
+          11732
+        ],
+        "retrievedIds": [
+          11652,
+          11664,
+          11665,
+          11733,
+          11666,
+          12055,
+          11700,
+          12243,
+          11731,
+          12234
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states both documented meanings of a NULL client_addr and adds a supported way to distinguish Unix-socket connections from internal processes using client_port."
+        },
+        "answer": "A `NULL` `client_addr` means either:\n\n- the client connected through a Unix socket on the server machine, or\n- the row represents an internal process, such as autovacuum. [c11664]\n\nTo distinguish them, check `client_port`: `-1` indicates a Unix socket, while `NULL` indicates an internal server process. [c11664]",
+        "retrieveMs": 2637.6354999999894,
+        "queries": [
+          "Some rows in the activity view have no client address at all. What does that tell me about those connections?",
+          "pg_stat_activity client_addr NULL",
+          "client_addr Unix-domain socket connections",
+          "pg_stat_activity backend_type internal processes"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2566.312699999995,
+        "rewriteTokens": {
+          "input": 630,
+          "output": 79
+        }
+      },
+      {
+        "id": "q027",
+        "question": "I raised the per-table parallel worker setting but queries still start only two workers. Which setting caps how many workers a single scan node may use, and what is its default?",
+        "trap": "max_parallel_workers / max_worker_processes / max_parallel_maintenance_workers 와 이름도 설명도 겹친다",
+        "goldChunkIds": [
+          12227,
+          12228,
+          12230
+        ],
+        "retrievedIds": [
+          12228,
+          12230,
+          12183,
+          12182,
+          13701,
+          12227,
+          12229,
+          12181,
+          11259,
+          11973
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer identifies max_parallel_workers_per_gather with a default of 2, exactly as supported by the excerpts and matching the reference answer."
+        },
+        "answer": "`max_parallel_workers_per_gather` caps the workers started by a single `Gather` or `Gather Merge` node. Its default value is `2`. [c12228]\n\nThe per-table `parallel_workers` value is advisory; the planner may choose fewer workers. [c13701]",
+        "retrieveMs": 4392.809099999984,
+        "queries": [
+          "I raised the per-table parallel worker setting but queries still start only two workers. Which setting caps how many workers a single scan node may use, and what is its default?",
+          "max_parallel_workers_per_gather maximum workers per Gather or Gather Merge node",
+          "parallel_workers table storage parameter limited by max_parallel_workers_per_gather",
+          "default setting for max_parallel_workers_per_gather"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4291.159899999999,
+        "rewriteTokens": {
+          "input": 643,
+          "output": 116
+        }
+      },
+      {
+        "id": "q028",
+        "question": "Building an index can be spread across several processes. Which setting limits how many, and what is its default?",
+        "trap": "q027 과 값도 2 로 같아서, 이름을 구분하지 못하면 둘 다 맞아 보인다",
+        "goldChunkIds": [
+          12227,
+          12229,
+          12230
+        ],
+        "retrievedIds": [
+          12229,
+          12230,
+          12228,
+          13370,
+          12227,
+          11259,
+          15026,
+          12225,
+          13364,
+          13366
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer matches the excerpt and reference: max_parallel_maintenance_workers limits parallel workers for a single CREATE INDEX command and defaults to 2."
+        },
+        "answer": "`max_parallel_maintenance_workers` limits the number of parallel workers that a single `CREATE INDEX` command can start. Its default value is `2`. [c12229]",
+        "retrieveMs": 3590.8368999999802,
+        "queries": [
+          "Building an index can be spread across several processes. Which setting limits how many, and what is its default?",
+          "max_parallel_maintenance_workers parameter default",
+          "parallel CREATE INDEX worker limit",
+          "parallel utility commands maintenance worker processes"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3499.0525000000052,
+        "rewriteTokens": {
+          "input": 630,
+          "output": 63
+        }
+      },
+      {
+        "id": "q029",
+        "question": "How large may the write-ahead log grow between automatic checkpoints before one is forced, and is that a hard ceiling?",
+        "trap": "min_wal_size(80MB) / wal_keep_size(0) 가 같은 절에 있고 셋 다 'WAL 을 얼마나'로 읽힌다",
+        "goldChunkIds": [
+          12267,
+          12268
+        ],
+        "retrievedIds": [
+          15059,
+          12268,
+          12267,
+          15058,
+          15062,
+          12264,
+          12258,
+          15060,
+          12269,
+          15061
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately gives the default max_wal_size of 1 GB, identifies it as a soft rather than hard limit, and supports the stated exceptions and recovery caveat with the excerpts."
+        },
+        "answer": "By default, the WAL may grow to **1 GB** during automatic checkpoints before a checkpoint is forced. [c12268] A checkpoint begins when `checkpoint_timeout` elapses or when `max_wal_size` is about to be exceeded, whichever occurs first. [c15058]\n\nThis is **not a hard ceiling**: `max_wal_size` is a soft limit and may be exceeded under heavy load, when `archive_command` or `archive_library` is failing, or when `wal_keep_size` is high. [c12268] During recovery, it may be exceeded by up to one checkpoint cycle’s worth of WAL because restartpoints can only occur at checkpoint records. [c15062]",
+        "retrieveMs": 3270.8208000000013,
+        "queries": [
+          "How large may the write-ahead log grow between automatic checkpoints before one is forced, and is that a hard ceiling?",
+          "max_wal_size automatic checkpoints soft limit",
+          "WAL growth between automatic checkpoints checkpoint forced",
+          "checkpoint scheduling WAL size limit"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3178.3712000000087,
+        "rewriteTokens": {
+          "input": 632,
+          "output": 68
+        }
+      },
+      {
+        "id": "q030",
+        "question": "With no replication slot in place, how much write-ahead log does a primary hold on to for standbys by default?",
+        "trap": "q029 의 max_wal_size/min_wal_size 와 단위도 설명 구조도 같다",
+        "goldChunkIds": [
+          12153,
+          12154
+        ],
+        "retrievedIds": [
+          12153,
+          12154,
+          12175,
+          12247,
+          10467,
+          12269,
+          10460,
+          12165,
+          15061,
+          10761
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately reflects the excerpt and reference: wal_keep_size defaults to 0, so no extra WAL is retained specifically for standbys beyond normal checkpointing and archival requirements."
+        },
+        "answer": "By default, `wal_keep_size` is `zero`, so the primary keeps **no extra WAL segments specifically for standbys**. The old WAL available depends on the previous checkpoint location and WAL archiving status [c12153].",
+        "retrieveMs": 4733.3597999999765,
+        "queries": [
+          "With no replication slot in place, how much write-ahead log does a primary hold on to for standbys by default?",
+          "wal_keep_size minimum WAL retained in pg_wal for standby servers",
+          "WAL retention for streaming replication without replication slots",
+          "wal_keep_size default setting and checkpoint WAL segment removal"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4640.246199999994,
+        "rewriteTokens": {
+          "input": 633,
+          "output": 106
+        }
+      },
+      {
+        "id": "q031",
+        "question": "Two sessions are blocked on each other. How long does the server wait before it even starts checking for a deadlock, and what is that wait by default?",
+        "trap": "lock_timeout / statement_timeout(q017) 과 헷갈린다 — 셋 다 기다리는 시간이다",
+        "goldChunkIds": [
+          12011
+        ],
+        "retrievedIds": [
+          12011,
+          12058,
+          11879,
+          11984,
+          12059,
+          10636,
+          10338,
+          10377,
+          11880,
+          12155
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately identifies deadlock_timeout as the pre-check wait and gives its default as 1 second, fully supported by the excerpt and matching the reference."
+        },
+        "answer": "The server waits for the duration configured by `deadlock_timeout` before checking for a deadlock. Its default is **one second (`1s`)**; values specified without units are interpreted as milliseconds. [c12011]",
+        "retrieveMs": 4007.334899999987,
+        "queries": [
+          "Two sessions are blocked on each other. How long does the server wait before it even starts checking for a deadlock, and what is that wait by default?",
+          "deadlock_timeout delay before checking for deadlock",
+          "deadlock detection configuration parameter deadlock_timeout",
+          "lock waits and deadlock detection"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3914.0035999999964,
+        "rewriteTokens": {
+          "input": 640,
+          "output": 33
+        }
+      },
+      {
+        "id": "q032",
+        "question": "I hit an out-of-shared-memory error with a hint pointing at a lock setting. Is that setting a hard per-transaction limit, and what is its default?",
+        "trap": "max_pred_locks_per_transaction 도 기본값 64 라 값만 보면 구분이 안 된다",
+        "goldChunkIds": [
+          12012
+        ],
+        "retrievedIds": [
+          12012,
+          12013,
+          12188,
+          12014,
+          12015,
+          12184,
+          12201,
+          12203,
+          12195,
+          10816
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is fully supported by excerpt c12012 and matches the reference: max_locks_per_transaction defaults to 64 and is an average allocation rather than a hard per-transaction cap."
+        },
+        "answer": "`max_locks_per_transaction` is **not** a hard per-transaction limit. It limits the average number of distinct object locks per transaction; an individual transaction can lock more objects as long as all transactions’ locks fit in the shared lock table. Its default is `64`. [c12012]\n\nIt applies to objects such as tables, not rows; the number of rows that can be locked is unlimited. [c12012]",
+        "retrieveMs": 5962.4864999999845,
+        "queries": [
+          "I hit an out-of-shared-memory error with a hint pointing at a lock setting. Is that setting a hard per-transaction limit, and what is its default?",
+          "max_locks_per_transaction out of shared memory",
+          "max_locks_per_transaction shared lock table sizing and default",
+          "maximum number of locks per transaction is not an individual hard limit"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 5866.5378000000055,
+        "rewriteTokens": {
+          "input": 642,
+          "output": 92
+        }
+      },
+      {
+        "id": "q033",
+        "question": "At what table age does the server force a cleanup pass even when automatic cleanup has been disabled for that table?",
+        "trap": "vacuum_freeze_min_age(5천만) / vacuum_freeze_table_age(1억5천만) 과 같은 계열이다",
+        "goldChunkIds": [
+          11855
+        ],
+        "retrievedIds": [
+          11855,
+          11856,
+          11884,
+          11887,
+          11882,
+          11841,
+          11827,
+          11828,
+          11831,
+          11883
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is directly supported by excerpt c11855 and matches the reference: the forced cleanup occurs at autovacuum_freeze_max_age, which defaults to 200 million transactions."
+        },
+        "answer": "The server forces an anti-wraparound `VACUUM` when the table’s `pg_class.relfrozenxid` reaches `autovacuum_freeze_max_age`, even if autovacuum is disabled. The default is **200 million transactions**. [c11855]",
+        "retrieveMs": 4748.884999999995,
+        "queries": [
+          "At what table age does the server force a cleanup pass even when automatic cleanup has been disabled for that table?",
+          "autovacuum_freeze_max_age forced VACUUM despite autovacuum disabled",
+          "transaction ID wraparound prevention relfrozenxid age",
+          "anti-wraparound autovacuum table storage parameter autovacuum_enabled"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4659.878299999997,
+        "rewriteTokens": {
+          "input": 630,
+          "output": 112
+        }
+      },
+      {
+        "id": "q034",
+        "question": "Two settings tell the storage layer how many reads it may have in flight — one for ordinary queries, one for maintenance work. What are their defaults?",
+        "trap": "이름이 한 낱말만 다르고 문단이 붙어 있다",
+        "goldChunkIds": [
+          12225
+        ],
+        "retrievedIds": [
+          12224,
+          12225,
+          12831,
+          12189,
+          11871,
+          11704,
+          11972,
+          11872,
+          11874,
+          11935
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately gives the excerpt-supported defaults of 1 for effective_io_concurrency and 10 for maintenance_io_concurrency, including the valid unsupported-system qualification."
+        },
+        "answer": "- `effective_io_concurrency` (ordinary queries): **1 on supported systems, otherwise 0**. [c12224]\n- `maintenance_io_concurrency` (maintenance work): **10 on supported systems, otherwise 0**. [c12225]",
+        "retrieveMs": 2721.5574000000197,
+        "queries": [
+          "Two settings tell the storage layer how many reads it may have in flight — one for ordinary queries, one for maintenance work. What are their defaults?",
+          "effective_io_concurrency default parameter",
+          "maintenance_io_concurrency default parameter",
+          "concurrent disk I/O operations for ordinary queries and maintenance work"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2624.23550000001,
+        "rewriteTokens": {
+          "input": 638,
+          "output": 79
+        }
+      },
+      {
+        "id": "q035",
+        "question": "When a user sets a password, how does a freshly installed server store it?",
+        "trap": "md5 가 오랫동안 기본값이었고 문서에 둘 다 나온다",
+        "goldChunkIds": [
+          11941
+        ],
+        "retrievedIds": [
+          13518,
+          11323,
+          13525,
+          13526,
+          13517,
+          11941,
+          11964,
+          11069,
+          11943,
+          10162
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0.16666666666666666,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The excerpts state that password_encryption defaults to scram-sha-256 and that passwords are stored in pg_authid, matching the reference answer."
+        },
+        "answer": "A freshly installed server stores newly set passwords encrypted with **SCRAM-SHA-256**, because `password_encryption` defaults to `scram-sha-256` [c11941]. Passwords are stored in the `pg_authid` system catalog [c11323].",
+        "retrieveMs": 4422.781900000002,
+        "queries": [
+          "When a user sets a password, how does a freshly installed server store it?",
+          "password_encryption parameter password storage format",
+          "CREATE ROLE PASSWORD encrypted password",
+          "default password encryption method for new PostgreSQL installation"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4334.426399999997,
+        "rewriteTokens": {
+          "input": 624,
+          "output": 113
+        }
+      },
+      {
+        "id": "q036",
+        "question": "The connection limit says 100. Can ordinary users really open all 100 at once?",
+        "trap": "PG16 에서 들어온 reserved_connections(기본 0)와 이름이 거의 같다",
+        "goldChunkIds": [
+          11928,
+          11929
+        ],
+        "retrievedIds": [
+          11929,
+          11928,
+          11927,
+          10133,
+          10898,
+          11233,
+          10826,
+          11189,
+          13516,
+          10980
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 4,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is fully supported by the excerpts and matches the reference: with max_connections at 100 and three superuser-reserved slots, ordinary users can collectively use at most 97 connections."
+        },
+        "answer": "No. If `max_connections` is 100, it is the server-wide maximum, not a per-user allowance [c11927]. By default, three slots are reserved for superusers and `reserved_connections` is zero, so ordinary users can collectively occupy at most 97 simultaneous connections [c11929] [c11928].\n\nAn individual role may have a lower `CONNECTION LIMIT`; its default is `-1`, meaning no role-specific limit [c13516].",
+        "retrieveMs": 4418.19709999999,
+        "queries": [
+          "The connection limit says 100. Can ordinary users really open all 100 at once?",
+          "max_connections and connection slots available to ordinary users",
+          "superuser_reserved_connections reserved connection slots",
+          "reserved_connections and pg_use_reserved_connections role privilege"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4334.605500000005,
+        "rewriteTokens": {
+          "input": 626,
+          "output": 120
+        }
+      },
+      {
+        "id": "q037",
+        "question": "A newly installed server refuses connections coming from other machines. Which setting causes that, and what is its default?",
+        "trap": "pg_hba.conf 인증 문제로 읽히기 쉬워 검색이 auth 문서로 샌다",
+        "goldChunkIds": [
+          11925
+        ],
+        "retrievedIds": [
+          11926,
+          11925,
+          10895,
+          10894,
+          11333,
+          11171,
+          12164,
+          11930,
+          10181,
+          10083
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately identifies `listen_addresses` and its default `localhost`, matching both the excerpts and the reference answer."
+        },
+        "answer": "The setting is `listen_addresses`. Its default is `localhost`, so the server accepts only local TCP/IP loopback connections and refuses remote connection attempts. [c11925]\n\nRemote connections require starting the server with an appropriate `listen_addresses` value; this parameter can only be set at server start. [c11333] [c11925]",
+        "retrieveMs": 4377.246599999984,
+        "queries": [
+          "A newly installed server refuses connections coming from other machines. Which setting causes that, and what is its default?",
+          "listen_addresses default setting",
+          "listen_addresses remote TCP/IP connections",
+          "server listening addresses connection parameter"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4290.310200000007,
+        "rewriteTokens": {
+          "input": 630,
+          "output": 122
+        }
+      },
+      {
+        "id": "q038",
+        "question": "Oversized column values are compressed before being stored out of line. Which method is used by default, and what is the alternative?",
+        "trap": "lz4 가 더 새롭고 빠르다는 이유로 기본값이라고 짐작하기 쉽다",
+        "goldChunkIds": [
+          11866
+        ],
+        "retrievedIds": [
+          13645,
+          12756,
+          11866,
+          13644,
+          12755,
+          10617,
+          13656,
+          10347,
+          10644,
+          13700
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The excerpts explicitly state that pglz is the default and lz4 is the alternative when PostgreSQL is built with --with-lz4 support."
+        },
+        "answer": "The default compression method is `pglz`. The alternative is `lz4`, available only if PostgreSQL was compiled with `--with-lz4` [c11866].",
+        "retrieveMs": 12736.863699999987,
+        "queries": [
+          "Oversized column values are compressed before being stored out of line. Which method is used by default, and what is the alternative?",
+          "TOAST compression methods pglz lz4",
+          "default_toast_compression parameter",
+          "ALTER TABLE column COMPRESSION storage option"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 12647.723999999987,
+        "rewriteTokens": {
+          "input": 634,
+          "output": 154
+        }
+      },
+      {
+        "id": "q039",
+        "question": "Binary column values come back as a string beginning with backslash-x. Which setting decides that, and what is its default?",
+        "goldChunkIds": [
+          11888
+        ],
+        "retrievedIds": [
+          11889,
+          11888,
+          13076,
+          13077,
+          13964,
+          13075,
+          13081,
+          11992,
+          14957,
+          12070
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer exactly matches the excerpt and reference: bytea_output controls bytea formatting, defaults to hex, and supports escape as the alternative."
+        },
+        "answer": "The `bytea_output` setting controls the output format for `bytea` values. Its default is `hex`; the other valid value is `escape` [c11888].",
+        "retrieveMs": 5723.571200000006,
+        "queries": [
+          "Binary column values come back as a string beginning with backslash-x. Which setting decides that, and what is its default?",
+          "bytea_output configuration parameter",
+          "bytea hex output format \\x",
+          "binary string output format for bytea values"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 5631.979800000001,
+        "rewriteTokens": {
+          "input": 633,
+          "output": 78
+        }
+      },
+      {
+        "id": "q040",
+        "question": "I want slow statements to show up in the log. Which setting does that by duration, and is it active out of the box?",
+        "trap": "log_statement(기본 none) 도 무엇을 기록하나라서 헷갈리고, log_min_duration_sample 은 이름까지 비슷하다",
+        "goldChunkIds": [
+          12033,
+          12035,
+          12050
+        ],
+        "retrievedIds": [
+          12033,
+          12035,
+          12036,
+          12050,
+          12049,
+          12245,
+          11876,
+          12034,
+          12039,
+          12044
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately identifies log_min_duration_statement and states that its default value is -1, which disables statement-duration logging, matching both the excerpts and reference answer."
+        },
+        "answer": "Use `log_min_duration_statement`. It logs each completed statement whose runtime is at least the configured threshold; values without units are interpreted as milliseconds. [c12033]\n\nIt is **not active by default**: the default is `-1`, which disables statement-duration logging. Set it to a duration such as `250ms`; setting it to `0` logs all statement durations. [c12033]",
+        "retrieveMs": 2759.1056999999855,
+        "queries": [
+          "I want slow statements to show up in the log. Which setting does that by duration, and is it active out of the box?",
+          "log_min_duration_statement parameter logging statements by execution duration",
+          "runtime statistics statement logging configuration default setting",
+          "When To Log client statement duration"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2666.7161999999953,
+        "rewriteTokens": {
+          "input": 635,
+          "output": 33
+        }
+      },
+      {
+        "id": "q041",
+        "question": "Past a certain number of tables the planner stops trying to reorder joins. Which two settings decide that, and what are their defaults?",
+        "trap": "geqo_threshold(12)도 테이블 개수 임계값이라 셋이 섞인다",
+        "goldChunkIds": [
+          12146
+        ],
+        "retrievedIds": [
+          12144,
+          12146,
+          12107,
+          12111,
+          12142,
+          12113,
+          12106,
+          12135,
+          12098,
+          12134
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer identifies from_collapse_limit and join_collapse_limit and correctly derives that both default to 8 from the excerpts."
+        },
+        "answer": "- `from_collapse_limit`: default is **eight**; it limits merging subqueries into upper `FROM` lists. [c12144]\n- `join_collapse_limit`: by default, it is set to the same value as `from_collapse_limit`, therefore **eight**; it limits rewriting and reordering explicit `JOIN` constructs. [c12146]",
+        "retrieveMs": 6525.21160000001,
+        "queries": [
+          "Past a certain number of tables the planner stops trying to reorder joins. Which two settings decide that, and what are their defaults?",
+          "join_collapse_limit join reordering FROM items",
+          "geqo_threshold genetic query optimizer table count",
+          "Controlling the Planner with Explicit JOIN Clauses join_collapse_limit geqo_threshold"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 6434.112300000008,
+        "rewriteTokens": {
+          "input": 634,
+          "output": 197
+        }
+      },
+      {
+        "id": "q042",
+        "question": "Checkpoint writes are spread out rather than done all at once. What fraction of the interval does the server aim to finish within, by default?",
+        "trap": "checkpoint_timeout(q021) / checkpoint_warning(30s) 과 같은 절에 붙어 있다",
+        "goldChunkIds": [
+          12265
+        ],
+        "retrievedIds": [
+          12265,
+          15059,
+          12267,
+          12264,
+          15058,
+          15062,
+          12979,
+          12266,
+          15060,
+          12981
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states the excerpt-supported default checkpoint_completion_target of 0.9, equivalent to 90% of the checkpoint interval."
+        },
+        "answer": "By default, the server aims to complete checkpoint writes within **0.9**, or **90%**, of the checkpoint interval. [c12265]",
+        "retrieveMs": 2145.6554999999935,
+        "queries": [
+          "Checkpoint writes are spread out rather than done all at once. What fraction of the interval does the server aim to finish within, by default?",
+          "checkpoint_completion_target default setting",
+          "checkpoint write activity spread across checkpoint interval",
+          "WAL checkpoint completion target configuration parameter"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2066.0056999999797,
+        "rewriteTokens": {
+          "input": 636,
+          "output": 66
+        }
+      },
+      {
+        "id": "q043",
+        "question": "If I empty a table and then change my mind before committing, do the rows come back?",
+        "trap": "다른 DB(MySQL/Oracle)에서는 TRUNCATE 가 암묵 커밋이라 반대로 기억하기 쉽다",
+        "goldChunkIds": [
+          14977
+        ],
+        "retrievedIds": [
+          13694,
+          13759,
+          12297,
+          14978,
+          14977,
+          14968,
+          14755,
+          13693,
+          14976,
+          14742
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.2,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is directly supported by the excerpts and correctly states that rolling back a transaction containing TRUNCATE restores the table rows."
+        },
+        "answer": "Yes—if you empty the table with `TRUNCATE` inside a transaction and then roll back before committing, the truncation is safely rolled back and the rows return. [c14977] `ROLLBACK` aborts the current transaction, discarding its updates. [c14755] [c12297]",
+        "retrieveMs": 7032.864499999967,
+        "queries": [
+          "If I empty a table and then change my mind before committing, do the rows come back?",
+          "TRUNCATE transaction rollback table data",
+          "TRUNCATE is transaction-safe with respect to table data",
+          "DELETE rows ROLLBACK before COMMIT"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 6943.927199999976,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 162
+        }
+      },
+      {
+        "id": "q044",
+        "question": "Can creating a new database be wrapped in BEGIN and COMMIT so I can undo it?",
+        "trap": "q008(VACUUM) 과 같은 형태의 질문이라 검색이 그쪽으로 샌다",
+        "goldChunkIds": [
+          13212
+        ],
+        "retrievedIds": [
+          13189,
+          12965,
+          12963,
+          10967,
+          13758,
+          11125,
+          13757,
+          14936,
+          13212,
+          10591
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0.1111111111111111,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states, as supported by excerpt c13212 and the reference, that CREATE DATABASE cannot run inside a transaction block; its DROP DATABASE guidance is also explicitly supported."
+        },
+        "answer": "No. `CREATE DATABASE` cannot be executed inside a transaction block, so it cannot be wrapped in `BEGIN` and `COMMIT` or undone with `ROLLBACK` [c13212]. To remove a created database, use `DROP DATABASE` [c13212].",
+        "retrieveMs": 4215.535600000032,
+        "queries": [
+          "Can creating a new database be wrapped in BEGIN and COMMIT so I can undo it?",
+          "CREATE DATABASE cannot run inside a transaction block",
+          "CREATE DATABASE with BEGIN and COMMIT transaction commands",
+          "CREATE DATABASE rollback and transactional behavior"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4131.905400000018,
+        "rewriteTokens": {
+          "input": 626,
+          "output": 89
+        }
+      },
+      {
+        "id": "q045",
+        "question": "Rebuilding an index without blocking writes — can that be run inside a transaction?",
+        "trap": "q013(CREATE INDEX CONCURRENTLY)과 사실상 같은 제약이라 두 문서가 서로 걸린다",
+        "goldChunkIds": [
+          14709
+        ],
+        "retrievedIds": [
+          14707,
+          14698,
+          14708,
+          14709,
+          14710,
+          13364,
+          13331,
+          13365,
+          11601,
+          14692
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.25,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is directly supported by the excerpts and matches the reference that REINDEX CONCURRENTLY cannot run inside a transaction block."
+        },
+        "answer": "No. `REINDEX CONCURRENTLY`, which rebuilds an index without blocking concurrent inserts, updates, or deletes, cannot be run inside a transaction block. [c14698] [c14709]\n\nA regular `REINDEX TABLE` or `REINDEX INDEX` can be run inside a transaction block, except that reindexing a partitioned index cannot. [c14709] [c14692]",
+        "retrieveMs": 2102.3625000000466,
+        "queries": [
+          "Rebuilding an index without blocking writes — can that be run inside a transaction?",
+          "CREATE INDEX CONCURRENTLY transaction block restriction",
+          "REINDEX CONCURRENTLY transaction block",
+          "concurrent index build without locking out writes"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2017.1117000000086,
+        "rewriteTokens": {
+          "input": 624,
+          "output": 31
+        }
+      },
+      {
+        "id": "q046",
+        "question": "Can I speed a dump up with several worker processes no matter which output format I picked?",
+        "trap": "custom 포맷도 아카이브라서 병렬이 될 것처럼 읽힌다",
+        "goldChunkIds": [
+          10601,
+          10673
+        ],
+        "retrievedIds": [
+          11392,
+          10598,
+          10439,
+          10583,
+          10601,
+          10599,
+          10602,
+          11391,
+          10654,
+          11771
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.2,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states, with direct support from the excerpts, that pg_dump parallel dumping with -j is available only for the directory format."
+        },
+        "answer": "No. Parallel dumps with `pg_dump -j njobs` are supported **only with the directory output format** (`-Fd`), because it is the only format that allows multiple processes to write data simultaneously. [c10601] The directory format supports parallel dumps, while the custom format supports parallel restoration but not parallel dumping. [c10583]\n\nExample:\n\n```bash\npg_dump -j num -F d -f out.dir dbname\n```\n\n[c11392]",
+        "retrieveMs": 3983.276500000007,
+        "queries": [
+          "Can I speed a dump up with several worker processes no matter which output format I picked?",
+          "pg_dump parallel dump -j jobs directory format",
+          "pg_dump output formats parallel backup limitations",
+          "pg_dump --jobs directory archive format"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3910.637699999992,
+        "rewriteTokens": {
+          "input": 626,
+          "output": 90
+        }
+      }
+    ],
+    "rerankOn": [
+      {
+        "id": "q001",
+        "question": "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+        "trap": "메모리 한도를 정하는 설정이 여럿이고 설명 문장이 거의 같다",
+        "goldChunkIds": [
+          12189
+        ],
+        "retrievedIds": [
+          12189,
+          12190,
+          12206,
+          10901,
+          12065,
+          12194,
+          12192,
+          12191,
+          12228,
+          11712
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The excerpts explicitly identify work_mem as the per-operation base memory limit before spilling to disk and give its default as 4MB, matching the reference value of 4096 kB."
+        },
+        "answer": "The setting is `work_mem`. It limits the base maximum memory available to each sort or hash operation before writing to temporary disk files. Its default is four megabytes (`4MB`). [c12189]",
+        "retrieveMs": 5550.353500000017,
+        "queries": [
+          "A query keeps writing temporary files to disk while sorting. Which setting limits how much memory one sort or hash operation may use first, and what is its default?",
+          "work_mem memory for sort operations and hash tables",
+          "temporary files caused by sorts exceeding work_mem",
+          "resource consumption work_mem default setting"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 1634.8029000000001,
+        "rewriteTokens": {
+          "input": 640,
+          "output": 33
+        }
+      },
+      {
+        "id": "q002",
+        "question": "Does routine table cleanup get the same memory budget as an ordinary query, or its own? What is that budget by default?",
+        "trap": "q001 과 거의 동일한 문장 구조 — 검색이 둘을 구분해야 한다",
+        "goldChunkIds": [
+          12191,
+          12192,
+          12229
+        ],
+        "retrievedIds": [
+          12191,
+          12192,
+          13370,
+          12189,
+          12190,
+          15036,
+          10901,
+          11814,
+          11813,
+          11815
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is fully supported by the excerpts and matches the reference: routine VACUUM uses the separate maintenance_work_mem budget, which defaults to 64MB, while autovacuum inherits it by default."
+        },
+        "answer": "Routine table cleanup uses its own maintenance memory budget, not the ordinary query budget: `VACUUM` uses `maintenance_work_mem`, which defaults to 64 megabytes (64MB) [c12191]. Autovacuum uses `autovacuum_work_mem`; its default is `-1`, meaning it inherits `maintenance_work_mem` [c12192].\n\nBy comparison, ordinary query operations use `work_mem`, whose default is four megabytes (4MB) per sort or hash operation [c12189].",
+        "retrieveMs": 6099.281999999979,
+        "queries": [
+          "Does routine table cleanup get the same memory budget as an ordinary query, or its own? What is that budget by default?",
+          "maintenance_work_mem memory for VACUUM and other maintenance operations",
+          "maintenance_work_mem default setting",
+          "work_mem versus maintenance_work_mem for routine VACUUM"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3222.8621,
+        "rewriteTokens": {
+          "input": 633,
+          "output": 94
+        }
+      },
+      {
+        "id": "q003",
+        "question": "Each automatic cleanup worker has its own memory limit. What does the default value of that limit actually mean?",
+        "trap": "-1 의 의미가 파라미터마다 다르고, q002 로 흘러가기 쉽다",
+        "goldChunkIds": [
+          12191,
+          12192
+        ],
+        "retrievedIds": [
+          12192,
+          12191,
+          12189,
+          12190,
+          11858,
+          11847,
+          12194,
+          10901,
+          11846,
+          11848
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer correctly states that the default -1 makes each autovacuum worker use maintenance_work_mem instead, and its additional note that maintenance_work_mem defaults to 64MB is supported by the excerpts."
+        },
+        "answer": "The default `autovacuum_work_mem` value is `-1`, meaning each autovacuum worker uses the `maintenance_work_mem` setting instead.[c12192] `maintenance_work_mem` defaults to 64 megabytes (64MB).[c12191]",
+        "retrieveMs": 5628.453799999996,
+        "queries": [
+          "Each automatic cleanup worker has its own memory limit. What does the default value of that limit actually mean?",
+          "autovacuum_work_mem default value meaning",
+          "autovacuum worker memory uses maintenance_work_mem",
+          "resource consumption autovacuum_work_mem parameter"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3483.6659,
+        "rewriteTokens": {
+          "input": 629,
+          "output": 89
+        }
+      },
+      {
+        "id": "q004",
+        "question": "Which memory setting applies only to temporary tables inside a session, and how much is it by default?",
+        "trap": "이름이 shared_buffers 와 비슷하고 설명 구조가 work_mem 계열과 같다",
+        "goldChunkIds": [
+          12187
+        ],
+        "retrievedIds": [
+          12187,
+          12184,
+          13993,
+          12189,
+          11530,
+          14419,
+          12206,
+          12195,
+          13728,
+          12201
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately identifies temp_buffers as the session-local setting for temporary tables and gives its default as 8MB, matching both the excerpt and reference answer."
+        },
+        "answer": "`temp_buffers` applies to temporary tables within each database session. Its default is eight megabytes (`8MB`). [c12187]",
+        "retrieveMs": 4658.514099999991,
+        "queries": [
+          "Which memory setting applies only to temporary tables inside a session, and how much is it by default?",
+          "temp_buffers temporary tables session-local buffers",
+          "Resource Consumption Memory temp_buffers parameter",
+          "temporary table buffers per database session"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2235.0681999999997,
+        "rewriteTokens": {
+          "input": 628,
+          "output": 58
+        }
+      },
+      {
+        "id": "q005",
+        "question": "There is a setting that tells the planner how much disk cache it can assume. Does the server actually reserve that much memory?",
+        "trap": "이름 때문에 할당하는 것처럼 읽힌다. 실제로는 플래너 추정치일 뿐",
+        "goldChunkIds": [
+          12129
+        ],
+        "retrievedIds": [
+          12129,
+          12184,
+          12120,
+          12221,
+          12198,
+          12147,
+          12199,
+          12185,
+          12201,
+          12105
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states, as supported by excerpt c12129 and the reference, that effective_cache_size is only a planner estimate and does not allocate shared memory or reserve kernel disk cache."
+        },
+        "answer": "No. `effective_cache_size` is used only for planner cost estimates; it neither allocates PostgreSQL shared memory nor reserves kernel disk cache. [c12129]",
+        "retrieveMs": 4650.546300000044,
+        "queries": [
+          "There is a setting that tells the planner how much disk cache it can assume. Does the server actually reserve that much memory?",
+          "effective_cache_size planner cost estimate available disk cache",
+          "effective_cache_size does not allocate or reserve memory",
+          "query planning assumptions about operating system and PostgreSQL shared buffer cache"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2076.2096,
+        "rewriteTokens": {
+          "input": 633,
+          "output": 38
+        }
+      },
+      {
+        "id": "q006",
+        "question": "How much memory does the server reserve for its shared buffer pool out of the box?",
+        "trap": "다른 여러 파라미터 설명이 shared_buffers 를 참조한다",
+        "goldChunkIds": [
+          12184
+        ],
+        "retrievedIds": [
+          12184,
+          12201,
+          12195,
+          12199,
+          12197,
+          12200,
+          12198,
+          12196,
+          12193,
+          12258
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately gives the typical default of 128MB and its kernel-dependent caveat, matching both the excerpt and the reference value."
+        },
+        "answer": "The server typically reserves **128 megabytes (128MB)** for `shared_buffers` by default. It might reserve less if kernel settings cannot support that amount, as determined during `initdb`. [c12184]",
+        "retrieveMs": 3058.4570999999924,
+        "queries": [
+          "How much memory does the server reserve for its shared buffer pool out of the box?",
+          "shared_buffers default setting",
+          "shared memory buffer pool configuration",
+          "resource consumption shared_buffers parameter"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 1274.3911000000007,
+        "rewriteTokens": {
+          "input": 625,
+          "output": 22
+        }
+      },
+      {
+        "id": "q007",
+        "question": "Rewriting a table to reclaim disk space blocks even readers, while ordinary cleanup does not. Which lock causes that?",
+        "trap": "VACUUM / VACUUM FULL / autovacuum 이 같은 페이지에 붙어 있다",
+        "goldChunkIds": [
+          15015,
+          15025
+        ],
+        "retrievedIds": [
+          15015,
+          15016,
+          11817,
+          11813,
+          11814,
+          11815,
+          15025,
+          15036,
+          15021,
+          13704
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately identifies the ACCESS EXCLUSIVE table lock required by VACUUM FULL and correctly contrasts it with plain VACUUM, matching both the excerpts and reference answer."
+        },
+        "answer": "`VACUUM FULL` requires an `ACCESS EXCLUSIVE` lock on the table, so it cannot run concurrently with other use of the table, including readers. Standard `VACUUM` does not obtain an exclusive lock and can operate alongside normal reads and writes. [c11813] [c15015]",
+        "retrieveMs": 12066.751699999968,
+        "queries": [
+          "Rewriting a table to reclaim disk space blocks even readers, while ordinary cleanup does not. Which lock causes that?",
+          "VACUUM FULL table-level lock mode",
+          "VACUUM FULL AccessExclusiveLock blocks SELECT",
+          "routine VACUUM locking behavior ShareUpdateExclusiveLock"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 9089.392100000001,
+        "rewriteTokens": {
+          "input": 631,
+          "output": 141
+        }
+      },
+      {
+        "id": "q008",
+        "question": "Can the routine table cleanup command be wrapped in BEGIN and COMMIT?",
+        "goldChunkIds": [
+          15036
+        ],
+        "retrievedIds": [
+          12965,
+          11855,
+          11832,
+          15022,
+          11884,
+          11813,
+          15036,
+          11814,
+          11831,
+          11835
+        ],
+        "recallAt5": 0,
+        "mrrAt10": 0.14285714285714285,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is directly supported by excerpt c15036 and substantively matches the reference answer."
+        },
+        "answer": "No. `VACUUM` cannot be executed inside a transaction block, so it cannot be wrapped in `BEGIN` and `COMMIT`. [c15036]",
+        "retrieveMs": 10108.534100000026,
+        "queries": [
+          "Can the routine table cleanup command be wrapped in BEGIN and COMMIT?",
+          "VACUUM SQL command transaction block",
+          "VACUUM execution inside BEGIN and COMMIT",
+          "VACUUM transaction processing restrictions"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 7089.6414,
+        "rewriteTokens": {
+          "input": 622,
+          "output": 162
+        }
+      },
+      {
+        "id": "q009",
+        "question": "What fraction of a table has to change before automatic cleanup decides to process it, by default?",
+        "trap": "analyze 쪽 대응 설정과 값도 문장도 비슷하다",
+        "goldChunkIds": [
+          11852
+        ],
+        "retrievedIds": [
+          11852,
+          11853,
+          11854,
+          11849,
+          11850,
+          11851,
+          13707,
+          11840,
+          13703,
+          11841
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states the default 0.2 (20%) scale factor and its additional threshold details are fully supported by the excerpts."
+        },
+        "answer": "By default, automatic `VACUUM` uses a scale factor of `0.2`—that is, **20% of the table size**—in addition to a base threshold of `50 tuples` for updated or deleted tuples. [c11852] [c11849]\n\nThe trigger formula is:\n\n```text\nvacuum threshold = 50 tuples + 0.2 * number of tuples\n```\n\n[c11840]",
+        "retrieveMs": 5837.331200000008,
+        "queries": [
+          "What fraction of a table has to change before automatic cleanup decides to process it, by default?",
+          "autovacuum_vacuum_scale_factor table fraction",
+          "autovacuum_vacuum_threshold and autovacuum_vacuum_scale_factor vacuum trigger",
+          "automatic vacuum threshold dead tuples table size"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3024.7955,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 122
+        }
+      },
+      {
+        "id": "q010",
+        "question": "I need to move users and tablespaces to a new cluster, not just the tables in one database. Which dump tool covers that?",
+        "trap": "세 도구의 설명 문단이 서로를 참조해서 벡터 검색이 엉뚱한 쪽을 집는다",
+        "goldChunkIds": [
+          10312
+        ],
+        "retrievedIds": [
+          11390,
+          10312,
+          10316,
+          10367,
+          13769,
+          10073,
+          10439,
+          10310,
+          12771,
+          10346
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer correctly identifies pg_dumpall as the tool that preserves cluster-wide roles and tablespaces, and all additional claims are supported by the excerpts."
+        },
+        "answer": "Use `pg_dumpall`. It dumps the entire PostgreSQL cluster and preserves cluster-wide objects, including roles (“users”) and tablespace definitions; `pg_dump` only dumps one database and does not save those objects. [c11390] [c10312]\n\nBasic usage:\n\n```sh\npg_dumpall > dumpfile\npsql -X -f dumpfile postgres\n```\n\nRestoring requires database superuser privileges, and any required tablespace directories must already exist on the destination cluster. [c11390] [c10367]",
+        "retrieveMs": 3864.147700000016,
+        "queries": [
+          "I need to move users and tablespaces to a new cluster, not just the tables in one database. Which dump tool covers that?",
+          "pg_dumpall cluster-wide backup of global objects",
+          "pg_dumpall roles and tablespaces",
+          "dumping all databases and cluster-wide data"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 1473.3813999999984,
+        "rewriteTokens": {
+          "input": 635,
+          "output": 32
+        }
+      },
+      {
+        "id": "q011",
+        "question": "Which dump file formats can the restore utility read back, and which one cannot be used with it?",
+        "trap": "plain 포맷은 pg_restore 로 못 읽는다 — 문서를 안 보면 틀리기 쉽다",
+        "goldChunkIds": [
+          10770,
+          10771
+        ],
+        "retrievedIds": [
+          10770,
+          10598,
+          10600,
+          10599,
+          10782,
+          10583,
+          10771,
+          11386,
+          10584,
+          10672
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 4,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately lists custom, directory, and tar formats as supported by pg_restore and correctly states that plain-text dumps must be restored with psql."
+        },
+        "answer": "`pg_restore` can read these `pg_dump` archive formats:\n\n- **Custom** (`-Fc`) [c10598]\n- **Directory** (`-Fd`) [c10599]\n- **Tar** (`-Ft`) [c10600]\n\nIt cannot restore **plain-text/script dumps**; those must be restored with `psql` instead. [c10583]",
+        "retrieveMs": 5348.8033999999825,
+        "queries": [
+          "Which dump file formats can the restore utility read back, and which one cannot be used with it?",
+          "pg_restore archive file formats custom directory tar",
+          "pg_dump non-plain-text output formats readable by pg_restore",
+          "plain-text SQL script cannot be restored with pg_restore"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3602.8490999999995,
+        "rewriteTokens": {
+          "input": 628,
+          "output": 96
+        }
+      },
+      {
+        "id": "q012",
+        "question": "If I dump a database without passing any format option, what kind of file do I get?",
+        "goldChunkIds": [
+          10597,
+          10648
+        ],
+        "retrievedIds": [
+          10595,
+          10596,
+          10598,
+          10318,
+          10597,
+          10583,
+          10438,
+          10599,
+          10600,
+          10782
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.2,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The excerpts explicitly state that plain format is the default and produces a plain-text SQL script file; the additional note about standard output is also supported."
+        },
+        "answer": "You get a **plain-text SQL script file**, because the plain format is the default. [c10597] If you do not specify an output file, `pg_dump` writes it to standard output. [c10595]",
+        "retrieveMs": 5145.625400000048,
+        "queries": [
+          "If I dump a database without passing any format option, what kind of file do I get?",
+          "pg_dump default output format",
+          "pg_dump -F --format option",
+          "pg_dump output file format selection"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3494.7114,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 129
+        }
+      },
+      {
+        "id": "q013",
+        "question": "Why does building an index without blocking writes fail when I put it inside a transaction?",
+        "trap": "REINDEX 쪽 대응 기능과 제약이 겹치면서도 다르다",
+        "goldChunkIds": [
+          13364,
+          13365,
+          13366,
+          13373
+        ],
+        "retrievedIds": [
+          13364,
+          13366,
+          13365,
+          14709,
+          14692,
+          13775,
+          13331,
+          11601,
+          14707,
+          13000
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is fully supported by the excerpts and correctly explains that CREATE INDEX CONCURRENTLY cannot run inside a transaction block because the concurrent build uses multiple internal transactions."
+        },
+        "answer": "Building without blocking writes requires `CREATE INDEX CONCURRENTLY`, and PostgreSQL explicitly does not allow that command inside a transaction block [c13366].\n\nA concurrent build itself spans multiple internal transactions: PostgreSQL registers an “invalid” index in one transaction, then performs two table scans in two more transactions [c13364]. Run it outside your explicit `BEGIN`/`COMMIT` block:\n\n```sql\nCREATE INDEX CONCURRENTLY index_name ON table_name (column_name);\n```\n\nThis allows inserts, updates, and deletes to continue during the build, unlike a standard index build, which blocks writes [c13331].",
+        "retrieveMs": 5260.153000000006,
+        "queries": [
+          "Why does building an index without blocking writes fail when I put it inside a transaction?",
+          "CREATE INDEX CONCURRENTLY cannot run inside a transaction block",
+          "building indexes concurrently transaction limitations",
+          "CREATE INDEX CONCURRENTLY multiple transactions"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2519.7839999999997,
+        "rewriteTokens": {
+          "input": 625,
+          "output": 79
+        }
+      },
+      {
+        "id": "q014",
+        "question": "A non-blocking index build failed partway through. Is anything left behind on the table?",
+        "trap": "실패한 인덱스가 남는다는 사실이 별도 문단에 있다",
+        "goldChunkIds": [
+          13364,
+          13365,
+          13366
+        ],
+        "retrievedIds": [
+          13365,
+          13364,
+          14708,
+          14709,
+          13366,
+          14691,
+          14133,
+          14707,
+          14698,
+          13373
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is fully supported by the excerpts and matches the reference that a failed concurrent build leaves an invalid index that is not used for queries and should be dropped or rebuilt."
+        },
+        "answer": "Yes. A failed `CREATE INDEX CONCURRENTLY` can leave an **invalid index** on the table. PostgreSQL ignores it for queries because it may be incomplete, but it still adds update overhead; if it is unique, it may continue enforcing uniqueness after a second-scan failure. [c13365] [c13366]\n\nThe recommended recovery is to drop it and retry `CREATE INDEX CONCURRENTLY`, or rebuild it with `REINDEX INDEX CONCURRENTLY`. [c13365]",
+        "retrieveMs": 7090.918299999961,
+        "queries": [
+          "A non-blocking index build failed partway through. Is anything left behind on the table?",
+          "CREATE INDEX CONCURRENTLY failure invalid index left behind",
+          "failed concurrent index build invalid index entry in system catalogs",
+          "recovering from errors in concurrent index builds DROP INDEX and retry"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4536.506200000003,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 88
+        }
+      },
+      {
+        "id": "q015",
+        "question": "Emptying a table completely in one statement — does that block other sessions from reading it?",
+        "trap": "행을 지우는 다른 방법과 비교 문단이 붙어 있어 섞이기 쉽다",
+        "goldChunkIds": [
+          14976
+        ],
+        "retrievedIds": [
+          14976,
+          14601,
+          14596,
+          14133,
+          14595,
+          14968,
+          14836,
+          12790,
+          11525,
+          11879
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The excerpts support that TRUNCATE takes an ACCESS EXCLUSIVE lock blocking concurrent reads, and this substantively matches the reference despite not mentioning the additional locks on indexes."
+        },
+        "answer": "Yes. `TRUNCATE` empties a table in one statement, but it acquires an `ACCESS EXCLUSIVE` lock, which blocks all other concurrent operations on the table, including reads, until the transaction ends [c14968] [c14976] [c14595].\n\nIf concurrent access is required, use `DELETE` instead [c14976].",
+        "retrieveMs": 9139.606399999997,
+        "queries": [
+          "Emptying a table completely in one statement — does that block other sessions from reading it?",
+          "TRUNCATE command locking behavior",
+          "TRUNCATE ACCESS EXCLUSIVE lock concurrent SELECT",
+          "table-level lock modes and conflicting locks"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 6449.507099999995,
+        "rewriteTokens": {
+          "input": 626,
+          "output": 96
+        }
+      },
+      {
+        "id": "q016",
+        "question": "Physically reordering a table to match an index — what lock does that take while it runs?",
+        "trap": "q007 과 같은 락이라 두 문서가 서로 헷갈린다",
+        "goldChunkIds": [
+          12993
+        ],
+        "retrievedIds": [
+          12993,
+          14704,
+          14708,
+          14133,
+          12767,
+          14698,
+          14707,
+          12768,
+          12998,
+          13000
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer directly matches the excerpt and reference: CLUSTER takes an ACCESS EXCLUSIVE lock that blocks reads and writes until completion."
+        },
+        "answer": "`CLUSTER` acquires an `ACCESS EXCLUSIVE` lock on the table while physically reordering it. This blocks all other operations, including reads and writes, until clustering finishes. [c12993]",
+        "retrieveMs": 7407.209499999997,
+        "queries": [
+          "Physically reordering a table to match an index — what lock does that take while it runs?",
+          "CLUSTER command locking behavior ACCESS EXCLUSIVE lock",
+          "physically reorder table based on an index with CLUSTER",
+          "CLUSTER table rewrite concurrent access and locks"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4511.778099999996,
+        "rewriteTokens": {
+          "input": 628,
+          "output": 84
+        }
+      },
+      {
+        "id": "q017",
+        "question": "One setting kills a query that runs too long overall; another only caps how long it waits for a lock. How do they differ, and what are their defaults?",
+        "trap": "같은 페이지의 인접 문단이고 문장 구조가 동일하다",
+        "goldChunkIds": [
+          11879
+        ],
+        "retrievedIds": [
+          11879,
+          10636,
+          10377,
+          11880,
+          10338,
+          11876,
+          12058,
+          11881,
+          12011,
+          11877
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately reflects the excerpts and reference: statement_timeout caps total statement duration, lock_timeout applies separately to each lock acquisition wait, and both default to 0 (disabled)."
+        },
+        "answer": "- `statement_timeout` aborts any statement whose total execution time exceeds the configured limit. Its default is zero, which disables the timeout. [c11876]\n- `lock_timeout` aborts a statement only when an individual attempt to acquire a lock exceeds the configured limit; the limit applies separately to each lock acquisition. Its default is also zero, which disables the timeout. [c11879]\n\nIf `statement_timeout` is nonzero, setting `lock_timeout` to the same or a larger value is ineffective because `statement_timeout` will trigger first. [c11879]",
+        "retrieveMs": 4052.772900000018,
+        "queries": [
+          "One setting kills a query that runs too long overall; another only caps how long it waits for a lock. How do they differ, and what are their defaults?",
+          "statement_timeout maximum allowed duration of any statement defaults",
+          "lock_timeout maximum duration waiting to acquire a lock defaults",
+          "statement_timeout versus lock_timeout client connection defaults"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2185.357100000001,
+        "rewriteTokens": {
+          "input": 641,
+          "output": 35
+        }
+      },
+      {
+        "id": "q018",
+        "question": "How long may a session sit idle with an open transaction before the server terminates it, by default?",
+        "trap": "비슷한 이름의 타임아웃 설정이 같은 절에 여러 개 있다",
+        "goldChunkIds": [
+          11877,
+          11880,
+          11881
+        ],
+        "retrievedIds": [
+          11880,
+          11881,
+          11877,
+          11940,
+          11878,
+          11876,
+          11935,
+          11874,
+          11871,
+          12172
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states that the default is 0, meaning idle sessions with open transactions are not terminated by this timeout."
+        },
+        "answer": "By default, there is no limit: `idle_in_transaction_session_timeout` is `0`, which disables the timeout. [c11880]",
+        "retrieveMs": 6870.056700000023,
+        "queries": [
+          "How long may a session sit idle with an open transaction before the server terminates it, by default?",
+          "idle_in_transaction_session_timeout default setting",
+          "client connection defaults for terminating idle sessions with open transactions",
+          "idle-in-transaction session timeout"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 5302.006000000001,
+        "rewriteTokens": {
+          "input": 629,
+          "output": 74
+        }
+      },
+      {
+        "id": "q019",
+        "question": "Which values can I choose from to control how much detail goes into the write-ahead log?",
+        "goldChunkIds": [
+          12247
+        ],
+        "retrievedIds": [
+          12261,
+          12247,
+          12291,
+          12254,
+          12292,
+          12258,
+          12252,
+          12256,
+          15059,
+          12259
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately lists minimal, replica, and logical as the wal_level choices, while correctly noting the documented legacy aliases archive and hot_standby."
+        },
+        "answer": "For `wal_level`, you can choose:\n\n- `minimal` — logs only what is required for crash or immediate-shutdown recovery.\n- `replica` — the default; supports WAL archiving, replication, and read-only queries on a standby.\n- `logical` — includes `replica` information plus what is needed for logical decoding.\n\nEach level includes all information logged by lower levels. The legacy values `archive` and `hot_standby` are also accepted but map to `replica`. [c12247]",
+        "retrieveMs": 5652.8514,
+        "queries": [
+          "Which values can I choose from to control how much detail goes into the write-ahead log?",
+          "wal_level parameter settings",
+          "write-ahead log detail level",
+          "runtime configuration WAL wal_level"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3366.4105000000127,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 62
+        }
+      },
+      {
+        "id": "q020",
+        "question": "What choices are there for how much confirmation a transaction waits for before commit returns?",
+        "trap": "on/off 만 있는 줄 알기 쉽다 — 실제로는 local, remote_write, remote_apply 도 있다",
+        "goldChunkIds": [
+          12249,
+          12250,
+          12251
+        ],
+        "retrievedIds": [
+          12249,
+          12250,
+          15052,
+          12159,
+          15053,
+          13617,
+          14904,
+          11691,
+          12263,
+          12262
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer lists exactly the five supported synchronous_commit choices from the excerpts and matches the reference answer, with accurate supporting descriptions."
+        },
+        "answer": "The `synchronous_commit` choices are `remote_apply`, `on` (the default), `remote_write`, `local`, and `off` [c12249]:\n\n- `remote_apply`: Waits until synchronous standbys have received, durably stored, and applied the commit record, making it visible to standby queries [c12249].\n- `on`: Waits until synchronous standbys have received and flushed the commit record to durable storage [c12250].\n- `remote_write`: Waits until synchronous standbys have received the record and written it to their file systems, but not necessarily to durable storage [c12250].\n- `local`: Waits for the local WAL flush to disk, but does not wait for replication [c12250].\n- `off`: Does not wait for WAL flush; commit returns sooner, with a risk of losing recent transactions after a crash but not of database inconsistency [c12249].\n\nAll non-`off` modes wait for local WAL to be flushed to disk [c12249]. If `synchronous_standby_names` is empty, only `on` and `off` are meaningfully different; `remote_apply`, `remote_write`, and `local` provide the same local synchronization level as `on` [c12249].",
+        "retrieveMs": 8695.474000000002,
+        "queries": [
+          "What choices are there for how much confirmation a transaction waits for before commit returns?",
+          "synchronous_commit parameter settings and transaction commit wait behavior",
+          "synchronous replication levels of transaction durability and visibility",
+          "commit returns after local or remote WAL confirmation"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 5793.939700000003,
+        "rewriteTokens": {
+          "input": 624,
+          "output": 104
+        }
+      },
+      {
+        "id": "q021",
+        "question": "How often does the server force a checkpoint if nothing else triggers one?",
+        "goldChunkIds": [
+          12264,
+          12267
+        ],
+        "retrievedIds": [
+          12264,
+          15057,
+          15058,
+          15059,
+          12273,
+          15062,
+          12267,
+          11670,
+          15060,
+          12979
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is supported by the excerpts and matches the reference default of five minutes (300 seconds), with an accurate caveat about checkpoints being skipped when no WAL was written."
+        },
+        "answer": "The server begins an automatic checkpoint every `checkpoint_timeout`, which defaults to five minutes (`5min`). [c12264] However, if no WAL has been written since the previous checkpoint, the new checkpoint is skipped even after `checkpoint_timeout` passes. [c15058]",
+        "retrieveMs": 7164.5334,
+        "queries": [
+          "How often does the server force a checkpoint if nothing else triggers one?",
+          "checkpoint_timeout automatic checkpoint interval",
+          "time-driven checkpoints when no other checkpoint is triggered",
+          "WAL configuration automatic checkpoints timeout"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4537.9853999999905,
+        "rewriteTokens": {
+          "input": 622,
+          "output": 66
+        }
+      },
+      {
+        "id": "q022",
+        "question": "How many client connections will a freshly installed server accept at once?",
+        "goldChunkIds": [
+          11927,
+          11928,
+          11929
+        ],
+        "retrievedIds": [
+          11927,
+          11929,
+          10898,
+          12151,
+          10423,
+          10133,
+          11928,
+          13516,
+          13208,
+          12342
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer’s typical value of 100, with the documented kernel-dependent caveat, is supported by the excerpts and matches the reference answer."
+        },
+        "answer": "A freshly initialized server will typically accept **100 concurrent connections**, though `initdb` may choose a lower value if kernel settings cannot support 100. [c11927] The `-N max-connections` option controls the same `max_connections` parameter. [c10898]",
+        "retrieveMs": 5148.71639999999,
+        "queries": [
+          "How many client connections will a freshly installed server accept at once?",
+          "max_connections default setting",
+          "connection settings maximum concurrent connections",
+          "fresh installation max_connections"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3849.7204000000056,
+        "rewriteTokens": {
+          "input": 621,
+          "output": 77
+        }
+      },
+      {
+        "id": "q023",
+        "question": "What cost does the planner assume for fetching a page out of order, compared to a sequential one?",
+        "trap": "순차 읽기 비용 설정과 인접 문단이고 값 형식이 같다",
+        "goldChunkIds": [
+          12120,
+          12121
+        ],
+        "retrievedIds": [
+          12120,
+          12117,
+          12119,
+          12121,
+          12831,
+          13774,
+          14412,
+          12124,
+          11588,
+          12122
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The excerpts state that random_page_cost defaults to 4.0 while seq_page_cost defaults to 1.0, so an out-of-order fetch is assumed to cost four times as much."
+        },
+        "answer": "The planner assumes an out-of-order page fetch costs **4.0**, compared with **1.0** for a sequential page fetch—four times as much by default. [c12120] [c12119]",
+        "retrieveMs": 4703.994599999991,
+        "queries": [
+          "What cost does the planner assume for fetching a page out of order, compared to a sequential one?",
+          "random_page_cost compared with seq_page_cost",
+          "planner cost constants for nonsequential disk page fetches",
+          "query planning cost parameters for random and sequential page access"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2490.9332999999897,
+        "rewriteTokens": {
+          "input": 628,
+          "output": 74
+        }
+      },
+      {
+        "id": "q024",
+        "question": "How detailed are the column statistics the planner collects by default?",
+        "goldChunkIds": [
+          12094,
+          12141
+        ],
+        "retrievedIds": [
+          12753,
+          12439,
+          12512,
+          12958,
+          12141,
+          12706,
+          12959,
+          12094,
+          11821,
+          12948
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.2,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The excerpts state that the default statistics target is 100 and that it permits up to 100 most-common-value entries and 100 histogram bins, matching the reference answer."
+        },
+        "answer": "By default, the per-column statistics target is **100**. This allows up to **100 entries** in the most-common-value list and up to **100 bins** in the histogram. [c12141] [c12958]",
+        "retrieveMs": 5452.112700000027,
+        "queries": [
+          "How detailed are the column statistics the planner collects by default?",
+          "default_statistics_target planner statistics detail",
+          "ALTER TABLE SET STATISTICS per-column statistics target",
+          "ANALYZE column statistics target"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2704.6196000000054,
+        "rewriteTokens": {
+          "input": 620,
+          "output": 73
+        }
+      },
+      {
+        "id": "q025",
+        "question": "A backend seems stuck. Which columns of the activity view tell me what it is waiting on?",
+        "trap": "두 개로 나뉘어 있어 하나만 답하기 쉽다",
+        "goldChunkIds": [
+          11665,
+          11668,
+          11685,
+          11732,
+          11733
+        ],
+        "retrievedIds": [
+          11668,
+          11665,
+          11733,
+          11664,
+          11670,
+          11681,
+          11176,
+          11677,
+          11666,
+          11734
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": false,
+          "reason": "The answer is fully supported by the excerpts, but it incorrectly includes `state` as a column that tells what the backend is waiting on, whereas the reference specifies only `wait_event_type` and `wait_event`."
+        },
+        "answer": "Use these `pg_stat_activity` columns:\n\n- `wait_event_type`: the type of event the backend is waiting for, or `NULL` if it is not waiting. [c11665]\n- `wait_event`: the specific wait event name, or `NULL` if it is not waiting. [c11665]\n- `state`: the backend’s overall state, such as `active`, `idle`, or `idle in transaction`. [c11665]\n\nInterpret `state` and the wait columns independently. In particular, `state = 'active'` with a non-null `wait_event` means that a query is executing but blocked somewhere in the system. [c11668]",
+        "retrieveMs": 5298.815200000012,
+        "queries": [
+          "A backend seems stuck. Which columns of the activity view tell me what it is waiting on?",
+          "pg_stat_activity wait_event_type and wait_event columns",
+          "backend activity view wait event information",
+          "monitoring database activity backend wait events"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2417.397100000002,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 31
+        }
+      },
+      {
+        "id": "q026",
+        "question": "Some rows in the activity view have no client address at all. What does that tell me about those connections?",
+        "goldChunkIds": [
+          11664,
+          11687,
+          11732
+        ],
+        "retrievedIds": [
+          11664,
+          11699,
+          11665,
+          11666,
+          12055,
+          12243,
+          11731,
+          11228,
+          11700,
+          11930
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states both documented meanings of a NULL client_addr and adds a supported method using client_port to distinguish them."
+        },
+        "answer": "A `NULL` `client_addr` means either:\n\n- the client connected through a Unix socket on the server machine, or\n- the row represents an internal process, such as autovacuum. [c11664]\n\nTo distinguish them, inspect `client_port`: `-1` indicates a Unix socket, while `NULL` indicates an internal server process. [c11664]",
+        "retrieveMs": 5300.329899999997,
+        "queries": [
+          "Some rows in the activity view have no client address at all. What does that tell me about those connections?",
+          "pg_stat_activity client_addr NULL",
+          "client_addr Unix-domain socket connections",
+          "pg_stat_activity backend_type internal processes"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2566.312699999995,
+        "rewriteTokens": {
+          "input": 630,
+          "output": 79
+        }
+      },
+      {
+        "id": "q027",
+        "question": "I raised the per-table parallel worker setting but queries still start only two workers. Which setting caps how many workers a single scan node may use, and what is its default?",
+        "trap": "max_parallel_workers / max_worker_processes / max_parallel_maintenance_workers 와 이름도 설명도 겹친다",
+        "goldChunkIds": [
+          12227,
+          12228,
+          12230
+        ],
+        "retrievedIds": [
+          13701,
+          12228,
+          12230,
+          12227,
+          12229,
+          12183,
+          11259,
+          12182,
+          12181,
+          12125
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer identifies max_parallel_workers_per_gather with a default of 2, exactly as supported by the excerpts and matching the reference answer."
+        },
+        "answer": "`max_parallel_workers_per_gather` caps the workers started by a single `Gather` or `Gather Merge` node. Its default value is `2`; setting it to `0` disables parallel query execution. [c12228]\n\nThe per-table `parallel_workers` setting does not guarantee that many workers; the planner may choose fewer. [c13701]",
+        "retrieveMs": 6813.530300000013,
+        "queries": [
+          "I raised the per-table parallel worker setting but queries still start only two workers. Which setting caps how many workers a single scan node may use, and what is its default?",
+          "max_parallel_workers_per_gather maximum workers per Gather or Gather Merge node",
+          "parallel_workers table storage parameter limited by max_parallel_workers_per_gather",
+          "default setting for max_parallel_workers_per_gather"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4291.159899999999,
+        "rewriteTokens": {
+          "input": 643,
+          "output": 116
+        }
+      },
+      {
+        "id": "q028",
+        "question": "Building an index can be spread across several processes. Which setting limits how many, and what is its default?",
+        "trap": "q027 과 값도 2 로 같아서, 이름을 구분하지 못하면 둘 다 맞아 보인다",
+        "goldChunkIds": [
+          12227,
+          12229,
+          12230
+        ],
+        "retrievedIds": [
+          13370,
+          12229,
+          12230,
+          13371,
+          13372,
+          12227,
+          13701,
+          15026,
+          11259,
+          12183
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is directly supported by excerpt c12229 and matches the reference setting and default value."
+        },
+        "answer": "`max_parallel_maintenance_workers` limits the number of parallel workers that a single `CREATE INDEX` operation can start. Its default value is `2`. [c12229]",
+        "retrieveMs": 6050.813299999936,
+        "queries": [
+          "Building an index can be spread across several processes. Which setting limits how many, and what is its default?",
+          "max_parallel_maintenance_workers parameter default",
+          "parallel CREATE INDEX worker limit",
+          "parallel utility commands maintenance worker processes"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3499.0525000000052,
+        "rewriteTokens": {
+          "input": 630,
+          "output": 63
+        }
+      },
+      {
+        "id": "q029",
+        "question": "How large may the write-ahead log grow between automatic checkpoints before one is forced, and is that a hard ceiling?",
+        "trap": "min_wal_size(80MB) / wal_keep_size(0) 가 같은 절에 있고 셋 다 'WAL 을 얼마나'로 읽힌다",
+        "goldChunkIds": [
+          12267,
+          12268
+        ],
+        "retrievedIds": [
+          12268,
+          12264,
+          12093,
+          12269,
+          12267,
+          15057,
+          10257,
+          15058,
+          12258,
+          15060
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states the 1 GB default for max_wal_size and correctly explains that it is a soft limit that may be exceeded under the documented circumstances."
+        },
+        "answer": "By default, the WAL may grow to **1 GB** before an automatic checkpoint is triggered. A checkpoint begins when `max_wal_size` is about to be exceeded or when `checkpoint_timeout` is reached, whichever occurs first. [c12268] [c15057]\n\nThis is a **soft limit**, not a hard ceiling. WAL can exceed `max_wal_size` under circumstances such as heavy load, a failing `archive_command` or `archive_library`, or a high `wal_keep_size` setting. [c12268]",
+        "retrieveMs": 5853.053000000029,
+        "queries": [
+          "How large may the write-ahead log grow between automatic checkpoints before one is forced, and is that a hard ceiling?",
+          "max_wal_size automatic checkpoints soft limit",
+          "WAL growth between automatic checkpoints checkpoint forced",
+          "checkpoint scheduling WAL size limit"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3178.3712000000087,
+        "rewriteTokens": {
+          "input": 632,
+          "output": 68
+        }
+      },
+      {
+        "id": "q030",
+        "question": "With no replication slot in place, how much write-ahead log does a primary hold on to for standbys by default?",
+        "trap": "q029 의 max_wal_size/min_wal_size 와 단위도 설명 구조도 같다",
+        "goldChunkIds": [
+          12153,
+          12154
+        ],
+        "retrievedIds": [
+          12153,
+          12154,
+          12269,
+          10467,
+          10460,
+          12247,
+          12165,
+          15061,
+          12268,
+          12175
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately reflects the excerpt and reference: wal_keep_size defaults to 0, so no extra WAL is retained specifically for standbys beyond normal checkpointing and archival effects."
+        },
+        "answer": "By default, `wal_keep_size` is zero, so the primary keeps **no extra WAL segments specifically for standbys**. The WAL still available depends on the previous checkpoint and WAL archiving status, so there is no guaranteed standby backlog by default [c12153].",
+        "retrieveMs": 7553.002399999939,
+        "queries": [
+          "With no replication slot in place, how much write-ahead log does a primary hold on to for standbys by default?",
+          "wal_keep_size minimum WAL retained in pg_wal for standby servers",
+          "WAL retention for streaming replication without replication slots",
+          "wal_keep_size default setting and checkpoint WAL segment removal"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4640.246199999994,
+        "rewriteTokens": {
+          "input": 633,
+          "output": 106
+        }
+      },
+      {
+        "id": "q031",
+        "question": "Two sessions are blocked on each other. How long does the server wait before it even starts checking for a deadlock, and what is that wait by default?",
+        "trap": "lock_timeout / statement_timeout(q017) 과 헷갈린다 — 셋 다 기다리는 시간이다",
+        "goldChunkIds": [
+          12011
+        ],
+        "retrievedIds": [
+          12011,
+          12058,
+          11984,
+          12059,
+          10377,
+          11879,
+          10636,
+          11881,
+          11880,
+          11975
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states that deadlock detection begins after deadlock_timeout and that its default is 1 second, fully supported by excerpt c12011 and matching the reference."
+        },
+        "answer": "The server waits for the duration configured by `deadlock_timeout` before checking for a deadlock. The default is one second (`1s`); values specified without units are interpreted as milliseconds. [c12011]",
+        "retrieveMs": 5940.223199999949,
+        "queries": [
+          "Two sessions are blocked on each other. How long does the server wait before it even starts checking for a deadlock, and what is that wait by default?",
+          "deadlock_timeout delay before checking for deadlock",
+          "deadlock detection configuration parameter deadlock_timeout",
+          "lock waits and deadlock detection"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3914.0035999999964,
+        "rewriteTokens": {
+          "input": 640,
+          "output": 33
+        }
+      },
+      {
+        "id": "q032",
+        "question": "I hit an out-of-shared-memory error with a hint pointing at a lock setting. Is that setting a hard per-transaction limit, and what is its default?",
+        "trap": "max_pred_locks_per_transaction 도 기본값 64 라 값만 보면 구분이 안 된다",
+        "goldChunkIds": [
+          12012
+        ],
+        "retrievedIds": [
+          12012,
+          12013,
+          14601,
+          12014,
+          12201,
+          14596,
+          10816,
+          12015,
+          14836,
+          12188
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states from excerpt c12012 that max_locks_per_transaction defaults to 64 and is an average allocation rather than a hard per-transaction limit, since one transaction may exceed it if the shared lock table has room."
+        },
+        "answer": "No. `max_locks_per_transaction` limits the **average** number of object locks per transaction; an individual transaction can lock more objects as long as all transactions’ locks fit in the shared lock table. It does not limit row locks, which are unlimited. The default is `64`. [c12012]",
+        "retrieveMs": 8540.959699999963,
+        "queries": [
+          "I hit an out-of-shared-memory error with a hint pointing at a lock setting. Is that setting a hard per-transaction limit, and what is its default?",
+          "max_locks_per_transaction out of shared memory",
+          "max_locks_per_transaction shared lock table sizing and default",
+          "maximum number of locks per transaction is not an individual hard limit"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 5866.5378000000055,
+        "rewriteTokens": {
+          "input": 642,
+          "output": 92
+        }
+      },
+      {
+        "id": "q033",
+        "question": "At what table age does the server force a cleanup pass even when automatic cleanup has been disabled for that table?",
+        "trap": "vacuum_freeze_min_age(5천만) / vacuum_freeze_table_age(1억5천만) 과 같은 계열이다",
+        "goldChunkIds": [
+          11855
+        ],
+        "retrievedIds": [
+          11855,
+          11856,
+          11252,
+          11884,
+          13714,
+          11827,
+          13713,
+          11831,
+          11882,
+          13716
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer matches the excerpt and reference: a forced VACUUM occurs at autovacuum_freeze_max_age, whose default is 200 million transactions, even when autovacuum is disabled."
+        },
+        "answer": "The server forces a VACUUM when the table’s `pg_class.relfrozenxid` reaches `autovacuum_freeze_max_age`, even if autovacuum is disabled; the default is **200 million transactions** [c11855].",
+        "retrieveMs": 7570.9372000000585,
+        "queries": [
+          "At what table age does the server force a cleanup pass even when automatic cleanup has been disabled for that table?",
+          "autovacuum_freeze_max_age forced VACUUM despite autovacuum disabled",
+          "transaction ID wraparound prevention relfrozenxid age",
+          "anti-wraparound autovacuum table storage parameter autovacuum_enabled"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4659.878299999997,
+        "rewriteTokens": {
+          "input": 630,
+          "output": 112
+        }
+      },
+      {
+        "id": "q034",
+        "question": "Two settings tell the storage layer how many reads it may have in flight — one for ordinary queries, one for maintenance work. What are their defaults?",
+        "trap": "이름이 한 낱말만 다르고 문단이 붙어 있다",
+        "goldChunkIds": [
+          12225
+        ],
+        "retrievedIds": [
+          12225,
+          12224,
+          12120,
+          15067,
+          11703,
+          12831,
+          11936,
+          11935,
+          12189,
+          11704
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The excerpts explicitly give effective_io_concurrency as 1 and maintenance_io_concurrency as 10 on supported systems, matching the reference answer."
+        },
+        "answer": "- `effective_io_concurrency` (ordinary queries): **1 on supported systems, otherwise 0**. [c12224]\n- `maintenance_io_concurrency` (maintenance work): **10 on supported systems, otherwise 0**. [c12225]",
+        "retrieveMs": 5158.490200000058,
+        "queries": [
+          "Two settings tell the storage layer how many reads it may have in flight — one for ordinary queries, one for maintenance work. What are their defaults?",
+          "effective_io_concurrency default parameter",
+          "maintenance_io_concurrency default parameter",
+          "concurrent disk I/O operations for ordinary queries and maintenance work"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2624.23550000001,
+        "rewriteTokens": {
+          "input": 638,
+          "output": 79
+        }
+      },
+      {
+        "id": "q035",
+        "question": "When a user sets a password, how does a freshly installed server store it?",
+        "trap": "md5 가 오랫동안 기본값이었고 문서에 둘 다 나온다",
+        "goldChunkIds": [
+          11941
+        ],
+        "retrievedIds": [
+          11323,
+          13518,
+          11941,
+          11069,
+          13517,
+          13526,
+          13525,
+          10162,
+          11964,
+          13527
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The excerpts state that password_encryption defaults to scram-sha-256 and that passwords are stored encrypted in the system catalogs, matching the reference answer."
+        },
+        "answer": "A freshly installed server stores a newly set password as a **SCRAM-SHA-256 encrypted password**, because `password_encryption` defaults to `scram-sha-256`. [c11941] Passwords are stored encrypted in the system catalogs. [c13518]",
+        "retrieveMs": 6351.614900000044,
+        "queries": [
+          "When a user sets a password, how does a freshly installed server store it?",
+          "password_encryption parameter password storage format",
+          "CREATE ROLE PASSWORD encrypted password",
+          "default password encryption method for new PostgreSQL installation"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4334.426399999997,
+        "rewriteTokens": {
+          "input": 624,
+          "output": 113
+        }
+      },
+      {
+        "id": "q036",
+        "question": "The connection limit says 100. Can ordinary users really open all 100 at once?",
+        "trap": "PG16 에서 들어온 reserved_connections(기본 0)와 이름이 거의 같다",
+        "goldChunkIds": [
+          11928,
+          11929
+        ],
+        "retrievedIds": [
+          11928,
+          11929,
+          11927,
+          10133,
+          13516,
+          10826,
+          10898,
+          10163,
+          10364,
+          11189
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is fully supported by the excerpts and matches the reference: with max_connections 100 and the default three superuser-reserved slots, ordinary users can use at most 97 connections."
+        },
+        "answer": "No. If `max_connections` is `100` and the default `superuser_reserved_connections` is `3`, ordinary users can occupy at most `97` simultaneous slots; once 97 connections are active, new connections are accepted only for superusers. [c11929]\n\nThe default `reserved_connections` is zero, so no additional slots are reserved for roles with `pg_use_reserved_connections`. [c11928] A role-specific `CONNECTION LIMIT` can reduce the number further; its default is `-1`, meaning no role-specific limit. [c13516]",
+        "retrieveMs": 6171.425400000007,
+        "queries": [
+          "The connection limit says 100. Can ordinary users really open all 100 at once?",
+          "max_connections and connection slots available to ordinary users",
+          "superuser_reserved_connections reserved connection slots",
+          "reserved_connections and pg_use_reserved_connections role privilege"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4334.605500000005,
+        "rewriteTokens": {
+          "input": 626,
+          "output": 120
+        }
+      },
+      {
+        "id": "q037",
+        "question": "A newly installed server refuses connections coming from other machines. Which setting causes that, and what is its default?",
+        "trap": "pg_hba.conf 인증 문제로 읽히기 쉬워 검색이 auth 문서로 샌다",
+        "goldChunkIds": [
+          11925
+        ],
+        "retrievedIds": [
+          11333,
+          11926,
+          11925,
+          10894,
+          10895,
+          10159,
+          10116,
+          10203,
+          11228,
+          10181
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately identifies `listen_addresses` and its default `localhost`, matching both the excerpts and the reference answer."
+        },
+        "answer": "The `listen_addresses` setting causes this. Its default value is `localhost`, so the server accepts only local TCP/IP loopback connections and not connections from other machines. [c11925]\n\nTo allow remote connections, set `listen_addresses` to an appropriate address or interface; `*` means all available IP interfaces. This parameter can only be set at server start. [c11925]",
+        "retrieveMs": 6873.535199999984,
+        "queries": [
+          "A newly installed server refuses connections coming from other machines. Which setting causes that, and what is its default?",
+          "listen_addresses default setting",
+          "listen_addresses remote TCP/IP connections",
+          "server listening addresses connection parameter"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4290.310200000007,
+        "rewriteTokens": {
+          "input": 630,
+          "output": 122
+        }
+      },
+      {
+        "id": "q038",
+        "question": "Oversized column values are compressed before being stored out of line. Which method is used by default, and what is the alternative?",
+        "trap": "lz4 가 더 새롭고 빠르다는 이유로 기본값이라고 짐작하기 쉽다",
+        "goldChunkIds": [
+          11866
+        ],
+        "retrievedIds": [
+          11866,
+          13645,
+          13867,
+          12756,
+          10644,
+          10347,
+          13700,
+          12755,
+          13656,
+          10617
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer exactly matches the excerpts and reference: pglz is the default, while lz4 is available when PostgreSQL is built with LZ4 support."
+        },
+        "answer": "The default TOAST compression method is `pglz`. The alternative is `lz4`, available only if PostgreSQL was compiled with `--with-lz4` [c11866].",
+        "retrieveMs": 15263.674100000004,
+        "queries": [
+          "Oversized column values are compressed before being stored out of line. Which method is used by default, and what is the alternative?",
+          "TOAST compression methods pglz lz4",
+          "default_toast_compression parameter",
+          "ALTER TABLE column COMPRESSION storage option"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 12647.723999999987,
+        "rewriteTokens": {
+          "input": 634,
+          "output": 154
+        }
+      },
+      {
+        "id": "q039",
+        "question": "Binary column values come back as a string beginning with backslash-x. Which setting decides that, and what is its default?",
+        "goldChunkIds": [
+          11888
+        ],
+        "retrievedIds": [
+          11888,
+          11889,
+          13056,
+          11918,
+          13081,
+          13964,
+          13076,
+          14425,
+          13958,
+          14950
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer directly matches the excerpt and reference: bytea_output controls bytea formatting, defaults to hex, and supports escape as the alternative."
+        },
+        "answer": "The `bytea_output` setting controls the output format for `bytea` values. Its valid values are `hex` and `escape`, and the default is `hex` [c11888].",
+        "retrieveMs": 8211.033900000068,
+        "queries": [
+          "Binary column values come back as a string beginning with backslash-x. Which setting decides that, and what is its default?",
+          "bytea_output configuration parameter",
+          "bytea hex output format \\x",
+          "binary string output format for bytea values"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 5631.979800000001,
+        "rewriteTokens": {
+          "input": 633,
+          "output": 78
+        }
+      },
+      {
+        "id": "q040",
+        "question": "I want slow statements to show up in the log. Which setting does that by duration, and is it active out of the box?",
+        "trap": "log_statement(기본 none) 도 무엇을 기록하나라서 헷갈리고, log_min_duration_sample 은 이름까지 비슷하다",
+        "goldChunkIds": [
+          12033,
+          12035,
+          12050
+        ],
+        "retrievedIds": [
+          12036,
+          12049,
+          12033,
+          12034,
+          12050,
+          12035,
+          12037,
+          13719,
+          12063,
+          14422
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately identifies log_min_duration_statement and states that its default value of -1 disables statement-duration logging, exactly as supported by the excerpt and reference."
+        },
+        "answer": "Use `log_min_duration_statement`. It logs each completed statement whose duration is at least the configured threshold; values without units are interpreted as milliseconds. It is **not active by default**: the default is `-1`, which disables statement-duration logging. [c12033]",
+        "retrieveMs": 4112.646700000012,
+        "queries": [
+          "I want slow statements to show up in the log. Which setting does that by duration, and is it active out of the box?",
+          "log_min_duration_statement parameter logging statements by execution duration",
+          "runtime statistics statement logging configuration default setting",
+          "When To Log client statement duration"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2666.7161999999953,
+        "rewriteTokens": {
+          "input": 635,
+          "output": 33
+        }
+      },
+      {
+        "id": "q041",
+        "question": "Past a certain number of tables the planner stops trying to reorder joins. Which two settings decide that, and what are their defaults?",
+        "trap": "geqo_threshold(12)도 테이블 개수 임계값이라 셋이 섞인다",
+        "goldChunkIds": [
+          12146
+        ],
+        "retrievedIds": [
+          12135,
+          12146,
+          12144,
+          12137,
+          12134,
+          12111,
+          12106,
+          12107,
+          12098,
+          14412
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.5,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": false,
+          "correct": false,
+          "reason": "The answer incorrectly substitutes geqo_threshold (default 12), which switches to genetic optimization rather than stopping join reordering, for from_collapse_limit; the intended settings are from_collapse_limit and join_collapse_limit, both defaulting to 8."
+        },
+        "answer": "- `join_collapse_limit`: default is the same as `from_collapse_limit`, whose default is `eight`; it limits how many explicit JOIN items the planner will flatten for reordering. [c12146] [c12144]\n- `geqo_threshold`: default is `12`; at this many FROM items, the planner switches to genetic query optimization rather than exhaustive search. [c12135]",
+        "retrieveMs": 8897.714000000007,
+        "queries": [
+          "Past a certain number of tables the planner stops trying to reorder joins. Which two settings decide that, and what are their defaults?",
+          "join_collapse_limit join reordering FROM items",
+          "geqo_threshold genetic query optimizer table count",
+          "Controlling the Planner with Explicit JOIN Clauses join_collapse_limit geqo_threshold"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 6434.112300000008,
+        "rewriteTokens": {
+          "input": 634,
+          "output": 197
+        }
+      },
+      {
+        "id": "q042",
+        "question": "Checkpoint writes are spread out rather than done all at once. What fraction of the interval does the server aim to finish within, by default?",
+        "trap": "checkpoint_timeout(q021) / checkpoint_warning(30s) 과 같은 절에 붙어 있다",
+        "goldChunkIds": [
+          12265
+        ],
+        "retrievedIds": [
+          12265,
+          15059,
+          10453,
+          15058,
+          15060,
+          15057,
+          12267,
+          12281,
+          12264,
+          12266
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 1,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states the documented default checkpoint_completion_target of 0.9, meaning 90% of the checkpoint interval."
+        },
+        "answer": "The server aims to complete checkpoint writes within **0.9**, or **90%**, of the checkpoint interval by default. [c12265]",
+        "retrieveMs": 4690.143299999996,
+        "queries": [
+          "Checkpoint writes are spread out rather than done all at once. What fraction of the interval does the server aim to finish within, by default?",
+          "checkpoint_completion_target default setting",
+          "checkpoint write activity spread across checkpoint interval",
+          "WAL checkpoint completion target configuration parameter"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2066.0056999999797,
+        "rewriteTokens": {
+          "input": 636,
+          "output": 66
+        }
+      },
+      {
+        "id": "q043",
+        "question": "If I empty a table and then change my mind before committing, do the rows come back?",
+        "trap": "다른 DB(MySQL/Oracle)에서는 TRUNCATE 가 암묵 커밋이라 반대로 기억하기 쉽다",
+        "goldChunkIds": [
+          14977
+        ],
+        "retrievedIds": [
+          14977,
+          13759,
+          13694,
+          14976,
+          14968,
+          11126,
+          14757,
+          11525,
+          12297,
+          14755
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is directly supported by the excerpts and matches the reference that rolling back a transaction containing TRUNCATE restores the table rows."
+        },
+        "answer": "Yes—if you empty the table with `TRUNCATE` inside a transaction, the truncation is safely rolled back when the transaction does not commit, so the rows come back. [c14977]\n\nUse `ROLLBACK` (or `ABORT`) before committing; it discards all updates made by the current transaction. [c14757] [c12297]",
+        "retrieveMs": 8749.242200000037,
+        "queries": [
+          "If I empty a table and then change my mind before committing, do the rows come back?",
+          "TRUNCATE transaction rollback table data",
+          "TRUNCATE is transaction-safe with respect to table data",
+          "DELETE rows ROLLBACK before COMMIT"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 6943.927199999976,
+        "rewriteTokens": {
+          "input": 627,
+          "output": 162
+        }
+      },
+      {
+        "id": "q044",
+        "question": "Can creating a new database be wrapped in BEGIN and COMMIT so I can undo it?",
+        "trap": "q008(VACUUM) 과 같은 형태의 질문이라 검색이 그쪽으로 샌다",
+        "goldChunkIds": [
+          13212
+        ],
+        "retrievedIds": [
+          13212,
+          14067,
+          10967,
+          12963,
+          13189,
+          12965,
+          13775,
+          12969,
+          14936,
+          10591
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 2,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer accurately states that CREATE DATABASE cannot run inside a transaction block, and its additional DROP DATABASE details are fully supported by the excerpts."
+        },
+        "answer": "No. `CREATE DATABASE` cannot be executed inside a transaction block, so it cannot be wrapped in `BEGIN` and `COMMIT` for rollback [c13212]. To remove a created database, use `DROP DATABASE`; that command also cannot run inside a transaction block and cannot be executed while connected to the target database [c13212] [c14067].",
+        "retrieveMs": 5859.858300000051,
+        "queries": [
+          "Can creating a new database be wrapped in BEGIN and COMMIT so I can undo it?",
+          "CREATE DATABASE cannot run inside a transaction block",
+          "CREATE DATABASE with BEGIN and COMMIT transaction commands",
+          "CREATE DATABASE rollback and transactional behavior"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 4131.905400000018,
+        "rewriteTokens": {
+          "input": 626,
+          "output": 89
+        }
+      },
+      {
+        "id": "q045",
+        "question": "Rebuilding an index without blocking writes — can that be run inside a transaction?",
+        "trap": "q013(CREATE INDEX CONCURRENTLY)과 사실상 같은 제약이라 두 문서가 서로 걸린다",
+        "goldChunkIds": [
+          14709
+        ],
+        "retrievedIds": [
+          14707,
+          14698,
+          14709,
+          13364,
+          14711,
+          14692,
+          13331,
+          14708,
+          13365,
+          14689
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 0.3333333333333333,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The excerpts explicitly state that REINDEX CONCURRENTLY avoids blocking writes and cannot run inside a transaction block, while the additional notes about regular REINDEX and partitioned indexes are also supported."
+        },
+        "answer": "No. `REINDEX CONCURRENTLY`, which rebuilds an index without blocking concurrent inserts, updates, or deletes, cannot be run inside a transaction block. [c14698] [c14709]\n\nA regular `REINDEX TABLE` or `REINDEX INDEX` can run inside a transaction block, except that `REINDEX INDEX` on a partitioned index cannot. [c14709] [c14692]",
+        "retrieveMs": 4548.122800000012,
+        "queries": [
+          "Rebuilding an index without blocking writes — can that be run inside a transaction?",
+          "CREATE INDEX CONCURRENTLY transaction block restriction",
+          "REINDEX CONCURRENTLY transaction block",
+          "concurrent index build without locking out writes"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 2017.1117000000086,
+        "rewriteTokens": {
+          "input": 624,
+          "output": 31
+        }
+      },
+      {
+        "id": "q046",
+        "question": "Can I speed a dump up with several worker processes no matter which output format I picked?",
+        "trap": "custom 포맷도 아카이브라서 병렬이 될 것처럼 읽힌다",
+        "goldChunkIds": [
+          10601,
+          10673
+        ],
+        "retrievedIds": [
+          10601,
+          11392,
+          10598,
+          10583,
+          10599,
+          10602,
+          10600,
+          10603,
+          10654,
+          10438
+        ],
+        "recallAt5": 1,
+        "mrrAt10": 1,
+        "citationsTotal": 3,
+        "citationsHallucinated": 0,
+        "verdict": {
+          "grounded": true,
+          "correct": true,
+          "reason": "The answer is fully supported by the excerpts and matches the reference: parallel pg_dump workers are available only with the directory format."
+        },
+        "answer": "No. Parallel dumps with multiple worker processes (`-j`/`--jobs`) are supported only with the **directory** output format (`-Fd`), because it is the only format that permits multiple processes to write data simultaneously. [c10601] [c10583]\n\nExample:\n\n```bash\npg_dump -j num -F d -f out.dir dbname\n```\n\n[c11392]",
+        "retrieveMs": 5695.911599999905,
+        "queries": [
+          "Can I speed a dump up with several worker processes no matter which output format I picked?",
+          "pg_dump parallel dump -j jobs directory format",
+          "pg_dump output formats parallel backup limitations",
+          "pg_dump --jobs directory archive format"
+        ],
+        "rewriteFailed": false,
+        "rewriteFromCache": true,
+        "rewriteMs": 3910.637699999992,
+        "rewriteTokens": {
+          "input": 626,
+          "output": 90
+        }
+      }
+    ]
+  }
+}

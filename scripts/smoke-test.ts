@@ -10,7 +10,7 @@ import { parseHtml } from "../src/lib/ingest/html.ts";
 import { parseMarkdown, parseText } from "../src/lib/ingest/text.ts";
 import { chunkDoc } from "../src/lib/ingest/chunk.ts";
 import { verifyCitations } from "../src/lib/answer/citations.ts";
-import type { RetrievedChunk } from "../src/lib/retrieve/index.ts";
+import { rerankDocText, type RetrievedChunk } from "../src/lib/retrieve/index.ts";
 
 let failed = 0;
 function check(name: string, cond: boolean, detail = "") {
@@ -145,6 +145,59 @@ check("코드펜스 안의 # 은 헤딩이 아님", !mdDoc.blocks.some((b) => b.
 check("H2 경로 인식", mdDoc.blocks.some((b) => b.headingPath.includes("Sec A")));
 const txtDoc = parseText("para one\nline two\n\n\npara two\n", "README");
 check("빈 줄로 문단 분리", txtDoc.blocks.length === 2, `${txtDoc.blocks.length}개`);
+
+/*
+ * CRLF 회귀 (D19). 헤딩 정규식의 `$` 가 `\r` 앞에서 매칭되지 않아서, 예전에는 CRLF 파일의
+ * 헤딩이 **전부 무시되고** `#` 줄이 본문으로 섞였다. 에러도 경고도 없다.
+ * Windows 에서 작성한 문서는 CRLF 가 기본이므로 클라이언트 문서에서 정상적으로 일어난다.
+ */
+const CRLF_MD = "# Title\r\n\r\nintro text here\r\n\r\n## Sec A\r\n\r\nbody of a\r\n";
+const crlfDoc = parseMarkdown(CRLF_MD, "f.md");
+const lfDoc = parseMarkdown(CRLF_MD.replace(/\r\n/g, "\n"), "f.md");
+check("CRLF 도 제목을 찾는다", crlfDoc.title === "Title", crlfDoc.title);
+check("CRLF 도 헤딩을 경계로 인식", crlfDoc.blocks.some((b) => b.headingPath.includes("Sec A")), JSON.stringify(crlfDoc.blocks.map((b) => b.headingPath)));
+check(
+  "CRLF 본문에 `#` 줄이 섞이지 않는다",
+  crlfDoc.blocks.every((b) => !b.text.includes("#")),
+  JSON.stringify(crlfDoc.blocks.map((b) => b.text.slice(0, 24))),
+);
+check("CRLF 본문에 \\r 이 남지 않는다", crlfDoc.blocks.every((b) => !b.text.includes("\r")));
+check(
+  "CRLF 결과가 LF 결과와 같다",
+  JSON.stringify(crlfDoc) === JSON.stringify(lfDoc),
+  `블록 ${crlfDoc.blocks.length} vs ${lfDoc.blocks.length}`,
+);
+const crlfTxt = parseText("para one\r\nline two\r\n\r\n\r\npara two\r\n", "README");
+check("plain text 도 CRLF 에서 같게 나온다", crlfTxt.blocks.length === 2 && crlfTxt.blocks.every((b) => !b.text.includes("\r")), `${crlfTxt.blocks.length}개`);
+
+/*
+ * 리랭커에 넣는 문서 텍스트 (D19).
+ *
+ * 여기서 문서 제목이 빠지면 리랭커는 `pg_dump > … > p plain` 과
+ * `pg_basebackup > … > p plain` 을 **구분할 정보를 못 받는다.** 실제로 그래서 q012 이
+ * 틀렸고, 지표로는 "짧은 청크가 검색이 안 된다"처럼 보였다. 회귀로 못 박아둔다.
+ */
+console.log("\n리랭커 입력 텍스트 (D19)");
+const rc = (docTitle: string, headingPath: string | null, content: string): RetrievedChunk => ({
+  id: 1,
+  docId: 1,
+  sourcePath: "a.html",
+  docTitle,
+  headingPath,
+  content,
+  distance: 0.1,
+});
+const rdt1 = rerankDocText(rc("pg_dump", "Options > -F format > p plain", "Output a plain-text SQL script file (the default)."));
+check("문서 제목이 앞에 붙는다", rdt1.startsWith("pg_dump > Options"), rdt1.split("\n")[0] ?? "");
+check("본문은 그대로 유지", rdt1.endsWith("Output a plain-text SQL script file (the default)."));
+const rdt2 = rerankDocText(rc("25.1. SQL Dump", "25.1. SQL Dump > 25.1.3. Handling Large Databases", "body"));
+check(
+  "헤딩이 이미 제목으로 시작하면 제목을 두 번 넣지 않는다",
+  rdt2.startsWith("25.1. SQL Dump > 25.1.3."),
+  rdt2.split("\n")[0] ?? "",
+);
+const rdt3 = rerankDocText(rc("VACUUM", null, "notes body"));
+check("헤딩이 없어도 제목은 들어간다", rdt3.startsWith("VACUUM\n\n"), JSON.stringify(rdt3));
 
 console.log("\n인용 검증 (D6)");
 const provided: RetrievedChunk[] = [

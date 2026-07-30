@@ -23,17 +23,25 @@ reranking). Every number here was produced by `npm run eval`; the raw runs are c
 | | Reranking off | Reranking on |
 |---|---|---|
 | recall@5 | 0.957 | **0.978** |
-| MRR@10 | 0.778 | **0.853** |
+| MRR@10 | 0.778 | **0.834** |
 | recall@5 (confusable questions only) | 0.947 | **1.000** |
 | citation validity | 1.000 | **1.000** |
-| grounded | 1.000 | **1.000** |
-| answer correctness | **1.000** | 0.978 |
+| grounded | 0.978 – 1.000 | 0.978 – 1.000 |
+| answer correctness | 0.978 – 1.000 | 0.957 – 0.978 |
+
+The last two rows are ranges, and that is deliberate. Citation validity is checked by code, so
+it does not move. `grounded` and `answer correctness` are judged by a model, and a model can
+score the *same* answer differently on a re-run — 3 out of roughly 138 paired questions did,
+which is one or two questions on a 46-question set. Reporting a single decimal there would
+overstate the precision. See [`docs/decisions.md`](docs/decisions.md) D19.
 
 The same 46 questions with no rewriting and no reranking — plain vector search — score
 **0.652**. How each technique got from there to here is broken down below.
 
-**Zero hallucinated citations, out of 168 citations across the two runs.** Every `[chunk_id]` the
-model emitted matched a chunk that had actually been retrieved for that question.
+**Zero hallucinated citations, out of 170 citations across the two runs.** Every `[chunk_id]` the
+model emitted matched a chunk that had actually been retrieved for that question. This is the one
+number that has never moved across any run, because it is not a judgement — the server compares
+each citation against the chunks it actually sent.
 
 **`grounded` is 1.000 in both runs**, including the one question where retrieval failed. Asked
 what format `pg_dump` writes by default, the system said the excerpts did not state it rather
@@ -60,11 +68,17 @@ thing to the row above it:
 | Configuration | recall@5 | MRR@10 | confusable recall@5 |
 |---|---|---|---|
 | Vector search only | 0.652 | 0.467 | 0.684 |
-| \+ cross-encoder reranking | 0.783 | 0.527 | 0.842 |
-| \+ query rewriting | 0.848 | 0.606 | 0.921 |
-| \+ giving the reranker the rewritten queries too | **0.978** | **0.853** | **1.000** |
+| \+ cross-encoder reranking | 0.826 | 0.544 | 0.868 |
+| \+ query rewriting | 0.913 | 0.619 | 0.974 |
+| \+ giving the reranker the rewritten queries too | **0.978** | **0.834** | **1.000** |
 
 The last row is the interesting one, and it is worth being precise about what changed.
+
+Rows 2 and 3 were once lower — 0.783 and 0.848. The reranker was being handed each passage as
+heading path plus body, with **no document title**, so it could not tell one command's page from
+another's. The embedding side had included the title for a long time, for exactly that reason and
+with a measurement behind it. Fixing the reranker to match lifted both rows. Row 1 is the control:
+reranking is off there, so it is unchanged to four decimals. D19 has the full account.
 
 ### Reranking can undo the work retrieval just did
 
@@ -80,7 +94,7 @@ use, then searches with all of them:
 
 That works: with rewriting on and **no reranking at all**, recall@5 is 0.957.
 
-Turn reranking back on with its default configuration and it drops to **0.848**. Six questions
+Turn reranking back on with its default configuration and it drops to **0.913**. Three questions
 whose answers were sitting in the candidate list got pushed out of the top 5.
 
 The cause is that the cross-encoder was still scoring against the *original* wording.
@@ -94,8 +108,8 @@ but only once it can cross the same bridge:
 | Reranking (rewriting on, identical candidates) | recall@5 | MRR@10 |
 |---|---|---|
 | Off | 0.957 | 0.778 |
-| On, scored against the original question | 0.848 | 0.606 |
-| On, scored against the expanded query | **0.978** | **0.853** |
+| On, scored against the original question | 0.913 | 0.619 |
+| On, scored against the expanded query | **0.978** | **0.834** |
 
 Those three rows searched the *same* candidates — rewrites are frozen in a committed cache, so
 the run is reproducible and only the reranker's input differs. Measuring techniques one at a
@@ -107,8 +121,8 @@ The same 46 facts were asked twice — once as symptoms, once with the exact ide
 
 | Question style | Reranking (recall@5) | Query rewriting (recall@5) |
 |---|---|---|
-| Describes the symptom | 0.652 → **0.783** ✅ | 0.783 → **0.978** ✅ |
-| Uses the exact parameter name | 0.978 → 0.957 ❌ | 0.957 → 0.957 (no change) |
+| Describes the symptom | 0.652 → **0.826** ✅ | 0.826 → **0.978** ✅ |
+| Uses the exact parameter name | 0.978 → 0.978 (no change) | 0.978 → 0.978 (no change) |
 
 Anyone who already knows the identifier `work_mem` does not need search. People reading a manual
 describe symptoms — and that is exactly where both techniques pay off. On identifier-phrased
@@ -128,12 +142,18 @@ question and passage together, so it separates them, and by a wide margin.
 ### A finding that did not survive a larger sample
 
 At 26 questions this README reported that reranking *hurt* MRR on identifier-phrased questions
-(0.839 → 0.804). At 46 it goes the other way (0.823 → **0.857**), while recall@5 drops slightly
-instead (0.978 → 0.957).
+(0.839 → 0.804). At 46 it goes the other way (0.823 → **0.867**).
 
-The original claim was a 26-question artefact. It is called out rather than quietly edited
-because it is the honest illustration of a limit stated below: at this sample size the third
-decimal is noise, and a difference of one or two questions can reverse a conclusion.
+It then said recall@5 dropped slightly instead (0.978 → 0.957). **That was wrong too, and for a
+different reason.** It was not a sampling artefact — it was the missing document title in the
+reranker's input. With the title supplied, reranking costs nothing on identifier-phrased
+questions: 0.978 → **0.978**. The loss was a bug wearing the costume of a trade-off.
+
+So one paragraph got reversed twice, and the two reversals have different lessons. The first is
+the one stated below: at this sample size the third decimal is noise, and one or two questions can
+flip a conclusion. The second is less comfortable — **when a metric drops, suspect the pipeline
+before you blame the sample.** A plausible story about why a technique should lose is the easiest
+thing in the world to accept.
 
 ### And a technique that stayed switched off
 
@@ -150,7 +170,7 @@ finds the right document and hybrid is no longer harmful:
 | Symptom-phrased, rewriting on | Hybrid off | Hybrid on |
 |---|---|---|
 | recall@5 | 0.978 | 0.978 |
-| MRR@10 | 0.853 | 0.865 |
+| MRR@10 | 0.834 | 0.849 |
 
 It still ships disabled. recall@5 is identical, and +0.012 MRR is one question moving one place
 at this sample size — not enough to justify an extra full-text query per rewritten query.

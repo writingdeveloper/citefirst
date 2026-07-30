@@ -1,8 +1,8 @@
 # Decisions — English extract
 
-The full decision log is [`decisions.md`](decisions.md), in Korean, sixteen entries.
-This file translates the three that matter most to a reader evaluating whether the
-numbers in [`portfolio.md`](portfolio.md) can be trusted:
+The full decision log is [`decisions.md`](decisions.md), in Korean. This file translates
+the three entries that matter most to a reader evaluating whether the numbers in
+[`portfolio.md`](portfolio.md) can be trusted:
 
 - [**D13** — Hybrid search is implemented and ships switched off, because the measurement said so](#d13)
 - [**D14** — The corpus had three silent defects, and the metrics said nothing](#d14)
@@ -180,12 +180,12 @@ always kept — and fuse the rankings with RRF.
 
 | Configuration | recall@5 OFF → ON | MRR@10 OFF → ON | confusable recall (ON) |
 |---|---|---|---|
-| A. Baseline | 0.652 → 0.783 | 0.467 → 0.527 | 0.842 |
-| B. Rewriting · reranker scores the **original** wording | 0.957 → **0.848** | 0.778 → **0.606** | 0.921 |
-| C. Rewriting · reranker scores the **expanded** query | 0.957 → **0.978** | 0.778 → **0.853** | **1.000** |
-| D. C + hybrid search | 0.935 → 0.978 | 0.759 → 0.865 | 1.000 |
+| A. Baseline | 0.652 → 0.826 | 0.467 → 0.544 | 0.868 |
+| B. Rewriting · reranker scores the **original** wording | 0.957 → **0.913** | 0.778 → **0.619** | 0.974 |
+| C. Rewriting · reranker scores the **expanded** query | 0.957 → **0.978** | 0.778 → **0.834** | **1.000** |
+| D. C + hybrid search | 0.935 → 0.978 | 0.759 → 0.849 | 1.000 |
 
-**Rewriting alone took recall@5 from 0.783 to 0.978 and MRR from 0.527 to 0.853** — a
+**Rewriting alone took recall@5 from 0.826 to 0.978 and MRR from 0.544 to 0.834** — a
 larger effect than any other change tried on this corpus.
 
 ### Row B is the real finding here — reranking gives the gain back
@@ -194,7 +194,7 @@ B and C saw **exactly the same retrieved candidates.** The rewrites were frozen 
 before the runs, which is why the reranking-OFF column reads 0.957 in both. The only
 difference is **what the reranker is asked to score against.**
 
-Give it the original wording and recall@5 falls 0.957 → **0.848.** Six questions had the
+Give it the original wording and recall@5 falls 0.957 → **0.913.** Three questions had the
 right passage among the candidates and were pushed out of the top 5 anyway.
 
 **Why.** The cross-encoder (`bge-reranker-base`) is a small model with no domain knowledge
@@ -217,7 +217,7 @@ documents and displaced good vector candidates.
 
 Rewriting removes that cause. The rewrites contain the identifiers, so keyword search finds
 the right document too. In configuration D, confusable recall is 0.974 with reranking off —
-higher than C's 0.947 — and MRR goes 0.853 → 0.865.
+higher than C's 0.947 — and MRR goes 0.834 → 0.849.
 
 **The default stays OFF anyway.** recall@5 is identical at 0.978, and +0.012 MRR is what one
 question moving one rank does in a 46-question sample. That does not justify an extra

@@ -20,9 +20,17 @@
     --lose: #f87171;
   }
   * { box-sizing: border-box; }
+  /*
+   * 캡처 전용 페이지다. 이 이미지를 쓰는 곳이 목록에서 첫 이미지를 **잘라서** 보여주는 경우가
+   * 있어, 카드 바깥에 균일한 여백이 있어야 잘려도 내용이 안 상한다. 지난 캡처는 뷰포트를
+   * 그대로 찍어 오른쪽·아래에만 여백이 남았다. 가운데 정렬로 사방을 같게 만든다.
+   *
+   * 1360×940 뷰포트로 `/results-card.html` 을 열어 캡처하면 카드(1200×808)가 가운데 온다.
+   */
   body {
     margin: 0; background: var(--bg); color: var(--fg);
     font: 17px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    min-height: 100vh; display: grid; place-items: center;
   }
   main { width: 1200px; padding: 44px 56px 40px; }
 
@@ -52,6 +60,11 @@
   .panel table { font-size: 15px; }
   .panel tbody td { font-size: 17px; }
   .panel tbody td:first-child { font-size: 14px; }
+  .tag {
+    display: inline-block; margin-left: 7px; padding: 1px 6px; border-radius: 4px;
+    border: 1px solid var(--line); color: var(--muted); font-size: 11px;
+    text-transform: uppercase; letter-spacing: .06em; vertical-align: 1px;
+  }
   .win { color: var(--win); }
   .lose { color: var(--lose); }
 
@@ -65,7 +78,7 @@
   <h1>Retrieval, measured at every step</h1>
   <p class="sub">
     46 questions over the PostgreSQL&nbsp;17 manual · every reference answer verified by running the database ·
-    <b>zero hallucinated citations out of 168</b>
+    <b>zero hallucinated citations out of 170</b>
   </p>
 
   <table>
@@ -75,9 +88,9 @@
     </thead>
     <tbody>
       <tr class="base"><td><span class="step">1</span>Vector search only</td><td>0.652</td><td>0.467</td><td>0.684</td></tr>
-      <tr class="base"><td><span class="step">2</span>+ cross-encoder reranking</td><td>0.783</td><td>0.527</td><td>0.842</td></tr>
-      <tr class="base"><td><span class="step">3</span>+ LLM query rewriting</td><td>0.848</td><td>0.606</td><td>0.921</td></tr>
-      <tr class="final"><td><span class="step">4</span>+ reranker sees the rewritten queries</td><td>0.978</td><td>0.853</td><td>1.000</td></tr>
+      <tr class="base"><td><span class="step">2</span>+ cross-encoder reranking</td><td>0.826</td><td>0.544</td><td>0.868</td></tr>
+      <tr class="base"><td><span class="step">3</span>+ LLM query rewriting</td><td>0.913</td><td>0.619</td><td>0.974</td></tr>
+      <tr class="final"><td><span class="step">4</span>+ reranker sees the rewritten queries</td><td>0.978</td><td>0.834</td><td>1.000</td></tr>
     </tbody>
   </table>
 
@@ -86,9 +99,9 @@
       <h2>Answer quality</h2>
       <table>
         <tbody>
-          <tr><td>Citation validity</td><td>1.000</td></tr>
-          <tr><td>Grounded in retrieved excerpts</td><td>1.000</td></tr>
-          <tr><td>Matches verified reference answer</td><td>0.978</td></tr>
+          <tr><td>Citation validity <span class="tag">checked by code</span></td><td>1.000</td></tr>
+          <tr><td>Grounded in retrieved excerpts <span class="tag">judged</span></td><td>0.978&ndash;1.000</td></tr>
+          <tr><td>Matches verified reference answer <span class="tag">judged</span></td><td>0.957&ndash;0.978</td></tr>
         </tbody>
       </table>
     </div>
@@ -97,8 +110,8 @@
       <table>
         <tbody>
           <tr><td>Hybrid search (BM25 + vector)</td><td class="lose">shipped off</td></tr>
-          <tr><td>Reranking on identifier-phrased questions</td><td class="lose">−0.021 recall</td></tr>
-          <tr><td>Reranking scored on the original wording</td><td class="lose">−0.130 recall</td></tr>
+          <tr><td>Query rewriting on identifier-phrased questions</td><td class="lose">no gain, +3.3s</td></tr>
+          <tr><td>Reranking scored on the original wording</td><td class="lose">−0.065 recall</td></tr>
         </tbody>
       </table>
     </div>
@@ -106,7 +119,7 @@
 
   <p class="note">
     <b>Step 3 → 4 is one setting.</b> Query rewriting finds the right passage, then a reranker still
-    scoring against the user's original wording pushes it back out of the top 5 — six questions' worth.
+    scoring against the user's original wording pushes it back out of the top 5 — three questions' worth.
     Techniques interact, and measuring them one at a time hides where the loss happens.
   </p>
 
