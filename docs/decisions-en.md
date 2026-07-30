@@ -30,7 +30,12 @@ computed from the `content` column that was already stored.
 
 **Result: wrong.**
 
-| Metric (reranking ON, symptom-phrased questions) | Hybrid OFF | Hybrid ON |
+> The table below is from **26 questions, before query rewriting existed.** Re-running the
+> same comparison at 46 questions with rewriting on weakens the conclusion — see the
+> follow-up after D15, and `portfolio.md`. The numbers are not edited to match, because
+> what this decision was actually based on *is* the record.
+
+| Metric (reranking ON, symptom-phrased, **26 questions · pre-rewriting**) | Hybrid OFF | Hybrid ON |
 |---|---|---|
 | recall@5 | 0.808 | 0.808 |
 | MRR@10 | **0.556** | 0.551 |
@@ -43,8 +48,9 @@ promote the wrong documents, which then displace good vector candidates during f
 The −0.053 on confusable questions is that displacement actually happening.
 
 **When it does help.** On a question set where users type the exact identifier, MRR@10
-went 0.804 → **0.821**. If that is how a client's users actually search, it is worth
-turning on.
+went 0.804 → **0.821** (same 26-question run). If that is how a client's users actually
+search, it is worth turning on. **The identifier-phrased hybrid comparison was never
+re-run at 46 questions** — that sentence rests on 26-question evidence only.
 
 ### It is the mirror image of reranking — this is the point
 
